@@ -1,0 +1,32 @@
+﻿@model WebAsada.ViewModels.UpdateCurrencyVM
+ 
+<partial name="_PageTitle" model="@("Crear Tipo Identificación")" />
+<div class="row">
+    <div class="col-md-11">
+        <form asp-action="Create" asp-antiforgery="true">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label asp-for="CurrencyCode" class="control-label"></label>
+                        <input asp-for="CurrencyCode" class="form-control" />
+                        <span asp-validation-for="CurrencyCode" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label asp-for="Acronym" class="control-label"></label>
+                        <input asp-for="Acronym" class="form-control" />
+                        <span asp-validation-for="Acronym" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+            <partial name="_GeneralEntityLayout" model="Model" />
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");} 
+}

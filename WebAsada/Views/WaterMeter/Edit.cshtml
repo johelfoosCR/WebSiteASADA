@@ -1,0 +1,15 @@
+﻿@model WebAsada.ViewModels.WaterMeterVM
+<partial name="_PageTitle" model="@("Editar Medidor")" />
+
+<div class="row">
+    <div class="col-md-11">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <partial name="../WaterMeter/Partial/_Editor" model="Model" />
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

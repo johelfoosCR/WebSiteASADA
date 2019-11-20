@@ -1,0 +1,32 @@
+﻿@model IEnumerable<WebAsada.ViewModels.MeasurementVM>
+
+
+
+<partial name="_PageTitle" model="@("Lecturas")" />
+<partial name="_CreateNewButton" />
+@(Html
+    .Grid(Model)
+    .Build(columns =>
+    {
+        columns.Add(model => model.MeasurementId).Titled("Código");
+        columns.Add(model => model.ReadDate).Titled("Fecha Lectura").Formatted("{0: dd/MM/yyyy}");
+        columns.Add(model => model.MaxPaymentDate).Titled("Fecha Máxima Pago").Formatted("{0: dd/MM/yyyy}");
+        columns.Add(model => model.PaymentPlace).Titled("Lugar de pago");
+        columns.Add(model => model.MessageOfTheMonth).Titled("Mensaje del Mes");
+        columns.Add().Titled("Editar").Encoded(false).RenderedAs(o => Html.ActionLink("Editar", "Edit", new { id = o.Id }));
+        columns.Add().Titled("Eliminar").Encoded(false).RenderedAs(o => Html.ActionLink("Eliminar", "Delete", new { id = o.Id }));
+    })
+    .Empty("No se encontraron datos")
+    .Filterable()
+    .Sortable()
+)
+ 
+@section Scripts {
+    <script>
+
+        @if (TempData["javascriptMessage"] != null)
+        {
+             @Html.Raw(TempData["javascriptMessage"])
+        }
+    </script>
+} 

@@ -1,0 +1,32 @@
+@model IEnumerable<WebAsada.ViewModels.SupplierVM>
+
+<partial name="_PageTitle" model="@("Proveedores")" />
+<partial name="_CreateNewButton" />
+
+@(Html
+    .Grid(Model)
+    .Build(columns =>
+    { 
+        columns.Add(model => model.ProductType.ShortDesc).Titled("Producto");
+        columns.Add(model => model.Name).Titled("Nombre");
+        columns.Add(model => model.PhoneNumber).Titled("Teléfono");
+        columns.Add(model => model.Email).Titled("E-Mail");
+        columns.Add(model => model.Schedule).Titled("Horario");
+        columns.Add(model => model.IsActive ? "Sí": "No").Titled("Activo");
+        columns.Add().Titled("Editar").Encoded(false).RenderedAs(o => Html.ActionLink("Editar", "Edit", new { id = o.Id })); 
+    })
+    .Empty("No se encontraron datos")
+    .Filterable()
+    .Sortable()
+    .Pageable()
+)
+
+
+@section Scripts {
+    <script> 
+        @if (TempData["javascriptMessage"] != null)
+        {
+             @Html.Raw(TempData["javascriptMessage"])
+        }
+    </script>
+} 

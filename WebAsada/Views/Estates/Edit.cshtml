@@ -1,0 +1,20 @@
+﻿@model WebAsada.ViewModels.EstateVM
+
+<partial name="_PageTitle" model="@("Modificaciones de Propiedades")" />
+
+@{
+    ViewData["showAddButton"] = false;
+    ViewData["showProcessButton"] = true;
+    ViewData["showReturnButton"] = false;
+    ViewData["disableControls"] = false;
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <form asp-action="Edit" asp-antiforgery="true" id="IdForm">
+            <partial name="../Estates/Partial/_Editor" model="Model" /> 
+
+        </form>
+    </div>
+</div>
+

@@ -1,0 +1,29 @@
+﻿@model IEnumerable<WebAsada.ViewModels.DetailIdentificationTypeVM>
+
+
+<partial name="_PageTitle" model="@("Tipos de Identificación")" />
+<partial name="_CreateNewButton" />
+@(Html
+    .Grid(Model)
+    .Build(columns =>
+    {
+        columns.Add(model => model.IdentificationTypeCode).Titled("Código");
+        columns.Add(model => model.ShortDesc).Titled("Nombre");
+        columns.Add(model => model.LongDesc).Titled("Descripción");
+        columns.Add(model => model.IsActive ? "Sí": "No").Titled("Activo");
+        columns.Add().Titled("Editar").Encoded(false).RenderedAs(o => Html.ActionLink("Editar", "Edit", new { id = o.Id }));
+        columns.Add().Titled("Eliminar").Encoded(false).RenderedAs(o => Html.ActionLink("Eliminar", "Delete", new { id = o.Id }));
+    })
+    .Empty("No se encontraron datos")
+    .Filterable()
+    .Sortable()
+)
+
+@section Scripts {
+    <script> 
+        @if (TempData["javascriptMessage"] != null)
+        {
+             @Html.Raw(TempData["javascriptMessage"])
+        }
+    </script>
+} 

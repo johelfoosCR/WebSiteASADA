@@ -1,0 +1,32 @@
+﻿@model WebAsada.ViewModels.DetailsChargeVM
+ 
+<partial name="_PageTitle" model="@("Modificar Cargo")" />
+<div class="row">
+    <div class="col-md-12">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label asp-for="ChargeCode" class="control-label"></label>
+                        <input asp-for="ChargeCode" class="form-control" />
+                        <span asp-validation-for="ChargeCode" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label asp-for="Price" class="control-label"></label>
+                        <input asp-for="Price" class="form-control" />
+                        <span asp-validation-for="Price" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+            <input type="hidden" asp-for="Id" />
+            <partial name="_GeneralEntityLayout" model="Model" />
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

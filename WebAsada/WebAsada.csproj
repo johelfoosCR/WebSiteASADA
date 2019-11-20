@@ -1,0 +1,62 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
+    <UserSecretsId>aspnet-WebAsada-34757D26-F152-44C1-BBA1-B2B1B245E263</UserSecretsId>
+    <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Controllers\EntitiesController.cs" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="9.0.0" />
+    <PackageReference Include="bootstrap-select" Version="1.13.12" />
+    <PackageReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="3.3.1" />
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.7.12" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.4" />
+    <PackageReference Include="NonFactors.Grid.Mvc6" Version="5.1.1" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <Folder Include="wwwroot\lib\mvc-grid\css\" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <None Include="Views\Shared\Components\PersonListWidget\Default.cshtml" />
+    <None Include="wwwroot\lib\bootstrap-select\1.13.12\content\Content\bootstrap-select.css.map" />
+    <None Include="wwwroot\lib\bootstrap-select\1.13.12\content\Scripts\bootstrap-select.js" />
+    <None Include="wwwroot\lib\bootstrap-select\1.13.12\content\Scripts\bootstrap-select.js.map" />
+    <None Include="wwwroot\lib\bootstrap-select\1.13.12\content\Scripts\bootstrap-select.min.js" />
+    <None Include="wwwroot\lib\bootstrap-select\1.13.12\content\Scripts\bootstrap-select.min.js.map" />
+    <None Include="wwwroot\lib\bootstrap-select\1.13.12\content\Scripts\i18n\defaults-es_ES.js" />
+    <None Include="wwwroot\lib\bootstrap-select\1.13.12\content\Scripts\i18n\defaults-es_ES.js.map" />
+    <None Include="wwwroot\lib\bootstrap-select\1.13.12\content\Scripts\i18n\defaults-es_ES.min.js" />
+    <None Include="wwwroot\lib\font-awsome\webfonts\fa-brands-400.svg" />
+    <None Include="wwwroot\lib\font-awsome\webfonts\fa-brands-400.woff2" />
+    <None Include="wwwroot\lib\font-awsome\webfonts\fa-regular-400.svg" />
+    <None Include="wwwroot\lib\font-awsome\webfonts\fa-regular-400.woff2" />
+    <None Include="wwwroot\lib\font-awsome\webfonts\fa-solid-900.svg" />
+    <None Include="wwwroot\lib\font-awsome\webfonts\fa-solid-900.woff2" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <Content Update="Views\Shared\MvcGrid\_Grid.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="Views\Shared\MvcGrid\_Pager.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+  </ItemGroup>
+
+</Project>

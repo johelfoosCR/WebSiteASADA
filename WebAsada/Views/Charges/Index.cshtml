@@ -1,0 +1,31 @@
+﻿@model IEnumerable<WebAsada.ViewModels.DetailsChargeVM>
+
+<partial name="_PageTitle" model="@("Cargos")" />
+<partial name="_CreateNewButton" />
+
+@(Html
+    .Grid(Model)
+    .Build(columns =>
+    {
+        columns.Add(model => model.ChargeCode).Titled("Código");
+        columns.Add(model => model.ShortDesc).Titled("Nombre");
+        columns.Add(model => model.Price).Titled("Precio").Formatted("{0:N}");
+        columns.Add(model => model.LongDesc).Titled("Descripción");
+        columns.Add(model => model.IsActive ? "Sí" : "No").Titled("Activo");
+        columns.Add().Titled("Editar").Encoded(false).RenderedAs(o => Html.ActionLink("Editar", "Edit", new { id = o.Id }));
+        columns.Add().Titled("Eliminar").Encoded(false).RenderedAs(o => Html.ActionLink("Eliminar", "Delete", new { id = o.Id }));
+    })
+    .Empty("No se encontraron datos")
+    .Filterable()
+    .Sortable()
+)
+ 
+@section Scripts {
+    <script>
+
+        @if (TempData["javascriptMessage"] != null)
+        {
+             @Html.Raw(TempData["javascriptMessage"])
+        }
+    </script>
+} 

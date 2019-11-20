@@ -1,0 +1,31 @@
+@model IEnumerable<WebAsada.ViewModels.WaterMeterVM>
+
+<partial name="_PageTitle" model="@("Lista de Medidores")" />
+<partial name="_CreateNewButton" />
+
+@(Html
+    .Grid(Model)
+    .Build(columns =>
+    { 
+        columns.Add(model => model.Supplier.Name).Titled("Proveedor");
+        columns.Add(model => model.SerialNumber).Titled("Número Serie");
+        columns.Add(model => model.CurrentRead).Titled("Numeración Actual"); 
+        columns.Add(model => model.BougthDate).Titled("Fecha Compra").Formatted("{0:dd/MM/yyyy}");
+        columns.Add(model => model.IsActive ? "Sí": "No").Titled("Activo");
+        columns.Add().Titled("Editar").Encoded(false).RenderedAs(o => Html.ActionLink("Editar", "Edit", new { id = o.Id })); 
+    })
+    .Empty("No se encontraron datos")
+    .Filterable()
+    .Sortable()
+    .Pageable()
+)
+
+
+@section Scripts {
+    <script> 
+        @if (TempData["javascriptMessage"] != null)
+        {
+             @Html.Raw(TempData["javascriptMessage"])
+        }
+    </script>
+} 

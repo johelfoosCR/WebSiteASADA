@@ -1,0 +1,45 @@
+﻿@model WebAsada.ViewModels.GeneralTableVM
+
+<div class="row">
+    <div class="col-md-4">
+        <div class="form-group">
+            <label asp-for="Nemotecnico" class="control-label"></label>
+            <input asp-for="Nemotecnico"  readonly="@(Model != null && Model.Id > 0)" class="form-control" />
+            <span asp-validation-for="Nemotecnico" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group">
+            <label asp-for="ShortDesc" class="control-label"></label>
+            <input asp-for="ShortDesc" class="form-control" />
+            <span asp-validation-for="ShortDesc" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="col-md-2 vertical-align">
+        <div class="form-group">
+            <label>
+                @if (Model.HasValue())
+                {
+                    <input type="checkbox" asp-for="IsActive" />
+                }
+                else
+                {
+                    <input type="checkbox" checked="checked" asp-for="IsActive" />
+                }
+                @Html.DisplayNameFor(x => x.IsActive)
+            </label>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="form-group">
+            <label asp-for="LongDesc" class="control-label"></label>
+            <textarea asp-for="LongDesc" class="form-control" ></textarea>
+            <span asp-validation-for="LongDesc" class="text-danger"></span>
+        </div>
+    </div> 
+</div>
+
+<partial name="_UpdateButtons" />

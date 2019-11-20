@@ -1,0 +1,145 @@
+﻿@model WebAsada.ViewModels.EstateVM
+<div class="row">
+    <div class="col-md-3">
+        <div class="form-group">
+            <label asp-for="RealFolio" class="control-label"></label>
+            @if ((bool)ViewData["disableControls"])
+            {
+                <input asp-for="RealFolio" disabled class="form-control" />
+            }
+            else
+            {
+                <input asp-for="RealFolio" class="form-control" />
+            }
+            <span asp-validation-for="RealFolio" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="form-group">
+            <label asp-for="CadastralPlans" class="control-label"></label>
+
+            @if ((bool)ViewData["disableControls"])
+            {
+                <input asp-for="CadastralPlans" disabled class="form-control" />
+            }
+            else
+            {
+                <input asp-for="CadastralPlans" class="form-control" />
+            }
+
+            <span asp-validation-for="CadastralPlans" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="form-group">
+            <label asp-for="Area" class="control-label"></label>
+
+            @if ((bool)ViewData["disableControls"])
+            {
+                <input asp-for="Area" disabled class="form-control" />
+            }
+            else
+            {
+                <input asp-for="Area" class="form-control" />
+            }
+            <span asp-validation-for="Area" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="form-group">
+            <label asp-for="Alias" class="control-label"></label>
+
+            @if ((bool)ViewData["disableControls"])
+            {
+                <input asp-for="Alias" disabled class="form-control" />
+            }
+            else
+            {
+                <input asp-for="Alias" class="form-control" />
+            }
+            <span asp-validation-for="Alias" class="text-danger"></span>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-4">
+        <div class="form-group">
+            <label asp-for="ExactAddress" class="control-label"></label>
+            @if ((bool)ViewData["disableControls"])
+            {
+                <textarea asp-for="ExactAddress" disabled class="form-control"></textarea>
+            }
+            else
+            {
+                <textarea asp-for="ExactAddress" class="form-control"></textarea>
+            }
+            <span asp-validation-for="ExactAddress" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="form-group">
+            <label asp-for="Comments" class="control-label"></label>
+            @if ((bool)ViewData["disableControls"])
+            {
+                <textarea asp-for="Comments" disabled class="form-control"></textarea>
+            }
+            else
+            {
+                <textarea asp-for="Comments" class="form-control"></textarea>
+            }
+            <span asp-validation-for="Comments" class="text-danger"></span>
+        </div>
+    </div>
+
+    @if ((bool)ViewData["showProcessButton"])
+    {
+        <div class="col-md-4 vertical-align">
+            <partial name="_UpdateButtons" />
+        </div>
+    }
+
+</div>
+<hr />
+@if ((bool)ViewData["showAddButton"])
+{
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label asp-for="PersonId" class="control-label"></label>
+                <select asp-for="PersonId" data-live-search="true" class="form-control" asp-items="ViewBag.PersonCollection"></select>
+            </div>
+        </div>
+        <div class="col-md-4 vertical-align">
+            <div class="form-group">
+                <a id="addPerson" class="btn btn-info" href="#">Agregar</a>
+                @if ((bool)ViewData["showReturnButton"])
+                {
+                    <a asp-action="Index" class="btn btn-primary">Regresar</a>
+                }
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-8">
+            <div id="ownerListContainer">
+                <partial name="_PersonList" for="Owners" view-data="ViewData" />
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <div class="row">
+        <div class="col-md-12">
+            @(Html
+                .Grid(Model.Owners)
+                .Build(columns =>
+                {
+                    columns.Add(model => model.DisplayValue).Titled("Dueños");
+                })
+                .Empty("No se encontraron datos")
+                .Sortable()
+            )
+        </div>
+    </div>
+}

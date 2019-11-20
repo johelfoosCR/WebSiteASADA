@@ -1,0 +1,50 @@
+﻿@model WebAsada.ViewModels.EstateVM
+
+<partial name="_PageTitle" model="@("Modificación de Dueños")" />
+
+@{
+    ViewData["showAddButton"] = true;
+    ViewData["showProcessButton"] = false;
+    ViewData["showReturnButton"] = true;
+    ViewData["disableControls"] = true;
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <input type="hidden" id="idEstate" asp-for="Id" />
+        <partial name="../Estates/Partial/_Editor" model="Model" /> 
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script>
+        $(document).ready(function () {
+            $('#addPerson').click(function (e) {
+                e.preventDefault();
+                executeWhitConfirmation("/PersonsByEstate/AddOwner", "question", "Desea Registrar la persona seleccionada como dueño de la propiedad?", {
+                    id: $("#idEstate").val(),
+                    personItemVM: {
+                        Id: $("#PersonId option:selected").val(),
+                        DisplayValue: $("#PersonId option:selected").text()
+                    }
+                }, function () {
+                    location.reload();
+                });
+            });
+
+            $("body").on("click", "#pesonListGrid .deleteFunction", function () {
+                executeWhitConfirmation("/PersonsByEstate/DeleteOwner", "question", "Desea Eliminar la persona seleccionada como dueño de la propiedad?", {
+                    estateId: $("#idEstate").val(),
+                    personId: parseInt($(this).attr("value"))
+                }, function () {
+                    location.reload();
+                });
+
+            });
+        });
+
+    </script>
+}

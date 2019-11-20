@@ -1,0 +1,25 @@
+﻿@model WebAsada.ViewModels.UpdateIdentificationTypeVM
+ 
+<partial name="_PageTitle" model="@("Crear Tipo Identificación")" />
+<div class="row">
+    <div class="col-md-11">
+        <form asp-action="Create" asp-antiforgery="true" >
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label asp-for="IdentificationTypeCode" class="control-label"></label>
+                        <input asp-for="IdentificationTypeCode" class="form-control" />
+                        <span asp-validation-for="IdentificationTypeCode" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+            <partial name="_GeneralEntityLayout" model="Model" />
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");} 
+}

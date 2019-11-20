@@ -1,0 +1,32 @@
+﻿@model IEnumerable<WebAsada.ViewModels.EstateVM>
+
+<partial name="_PageTitle" model="@("Propiedades")" />
+<partial name="_CreateNewButton" />
+
+@(Html
+    .Grid(Model)
+    .Build(columns =>
+    {
+        columns.Add(model => model.RealFolio).Titled("Folio Real"); 
+        columns.Add(model => model.Alias).Titled("Alias");
+        columns.Add(model => model.ExactAddress).Titled("ExactAddress");
+        columns.Add().Titled("Dueños").Encoded(false).RenderedAs(o => Html.ActionLink("Modificar", "EditOwners", new { id = o.Id }));
+        columns.Add().Titled("Editar").Encoded(false).RenderedAs(o => Html.ActionLink("Editar", "Edit", new { id = o.Id }));
+        columns.Add().Titled("Eliminar").Encoded(false).RenderedAs(o => Html.ActionLink("Eliminar", "Delete", new { id = o.Id }));
+    })
+    .Empty("No se encontraron datos")
+    .Filterable()
+    .Sortable()
+)
+
+
+@section Scripts {
+    <script>
+
+        @if (TempData["javascriptMessage"] != null)
+        {
+             @Html.Raw(TempData["javascriptMessage"])
+        } 
+        //https://stackoverflow.com/questions/56918542/how-to-use-section-scripts-in-a-partial-view-mvc-core/56938853#56938853
+    </script>
+}

@@ -1,0 +1,13 @@
+﻿@model IEnumerable<WebAsada.ViewModels.MonthVM>
+  
+<partial name="_PageTitle" model="@("Lista de Meses")" /> 
+
+@(Html
+    .Grid(Model)
+    .Build(columns =>
+    {
+        columns.Add(model => model.Nemotecnico).Titled("Código");
+        columns.Add(model => model.ShortDesc).Titled("Nombre");
+    })
+    .Empty("No se encontraron datos") 
+)

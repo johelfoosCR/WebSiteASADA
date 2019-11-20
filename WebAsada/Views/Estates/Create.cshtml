@@ -1,0 +1,63 @@
+﻿@model WebAsada.ViewModels.EstateVM
+
+<partial name="_PageTitle" model="@("Registro de Propiedades")" />
+@{ 
+    ViewData["showAddButton"] = true;
+    ViewData["showProcessButton"] = true;
+    ViewData["showReturnButton"] = false; 
+    ViewData["disableControls"] = false;
+
+ }
+
+<div class="row">
+    <div class="col-md-12">
+        <form asp-action="Create" id="IdForm">
+            <partial name="../Estates/Partial/_Editor" model="Model" view-data="ViewData" /> 
+        </form>
+    </div>
+</div>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script>
+        $(document).ready(function () {
+
+            var localPersonList = [];
+
+            function RefreshList(data) {
+                $.post('/Estates/RefreshPersonCollection', { personListItemVM: data }, function (result) {
+                    $('#ownerListContainer').html(result);
+                })
+            }
+
+            $('#addPerson').click(function (e) {
+                e.preventDefault();
+                localPersonList.push({ Id: $("#PersonId option:selected").val(), DisplayValue: $("#PersonId option:selected").text() });
+                RefreshList(localPersonList);
+            });
+
+            $("body").on("click", "#pesonListGrid .deleteFunction", function () {
+                Swal.fire({
+                    title: 'Confirmación?',
+                    text: "Desea Eliminar la Persona seleccionada como dueño de la propiedad?",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Sí!'
+                }).then((result) => {
+                    if (result.value) {
+                        var selectedId = parseInt($(this).attr("value"));
+                        localPersonList = $.grep(localPersonList, function (e) {
+                            return parseInt(e.Id) !== selectedId;
+                        });
+                        RefreshList(localPersonList);
+                    }
+                });
+            });
+        });
+
+    </script>
+}
