@@ -23,7 +23,7 @@ namespace WebAsada.Data
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            builder.MonthsSeedData();
+            builder.SeedData();
             builder.ManyToManyRelations();
             base.OnModelCreating(builder); 
         }

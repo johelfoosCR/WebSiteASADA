@@ -19,7 +19,8 @@ namespace WebAsada.Repository
 
         public async override Task<IEnumerable<Contract>> GetAll()
         {
-            return await _dbContext.Contract.ToListAsync();
+            return await _dbContext.Contract.Include(x => x.PersonsByEstate) 
+                                            .ToListAsync();
         }
 
         public async Task<IEnumerable<WaterMeter>> GetValidWaterMeterToView()

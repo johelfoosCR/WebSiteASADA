@@ -8,8 +8,7 @@
     .Build(columns =>
     { 
         columns.Add(model => model.Supplier.Name).Titled("Proveedor");
-        columns.Add(model => model.SerialNumber).Titled("Número Serie");
-        columns.Add(model => model.CurrentRead).Titled("Numeración Actual"); 
+        columns.Add(model => model.SerialNumber).Titled("Número Serie"); 
         columns.Add(model => model.BougthDate).Titled("Fecha Compra").Formatted("{0:dd/MM/yyyy}");
         columns.Add(model => model.IsActive ? "Sí": "No").Titled("Activo");
         columns.Add().Titled("Editar").Encoded(false).RenderedAs(o => Html.ActionLink("Editar", "Edit", new { id = o.Id })); 

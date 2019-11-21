@@ -227,19 +227,25 @@ namespace WebAsada.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int>("ContractTypeId");
+
                     b.Property<bool>("DoubleBasicCharge");
 
                     b.Property<DateTime>("EmissionDate");
+
+                    b.Property<int>("EstateId");
 
                     b.Property<int>("InitialMeterRead");
 
                     b.Property<bool>("IsActive");
 
-                    b.Property<int?>("MeterId");
+                    b.Property<int>("MeterId");
 
                     b.Property<int?>("PersonsByEstateEstateId");
 
                     b.Property<int?>("PersonsByEstatePersonId");
+
+                    b.Property<int>("PersonsId");
 
                     b.Property<DateTime>("RegisterDatime");
 
@@ -250,6 +256,8 @@ namespace WebAsada.Migrations
                     b.Property<string>("UpdateUserId");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ContractTypeId");
 
                     b.HasIndex("MeterId");
 
@@ -820,8 +828,6 @@ namespace WebAsada.Migrations
 
                     b.Property<string>("Comments");
 
-                    b.Property<int>("CurrentRead");
-
                     b.Property<bool>("IsActive");
 
                     b.Property<string>("Model");
@@ -908,9 +914,15 @@ namespace WebAsada.Migrations
 
             modelBuilder.Entity("WebAsada.Models.Contract", b =>
                 {
+                    b.HasOne("WebAsada.Models.ContractType", "ContractType")
+                        .WithMany()
+                        .HasForeignKey("ContractTypeId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
                     b.HasOne("WebAsada.Models.WaterMeter", "Meter")
                         .WithMany()
-                        .HasForeignKey("MeterId");
+                        .HasForeignKey("MeterId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "RegisterUser")
                         .WithMany()

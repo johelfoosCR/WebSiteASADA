@@ -1,7 +1,7 @@
 ﻿@model WebAsada.ViewModels.WaterMeterVM
 
 <div class="row">
-    <div class="col-md-5">
+    <div class="col-md-6">
         <div class="form-group">
             <label asp-for="SupplierId" class="control-label"></label>
             <select asp-for="SupplierId" class="form-control" asp-items="ViewBag.SupplierId"></select>
@@ -24,20 +24,13 @@
 </div>
 
 <div class="row">
-    <div class="col-md-5">
+    <div class="col-md-6">
         <div class="form-group">
             <label asp-for="Model" class="control-label"></label>
             <input asp-for="Model" class="form-control" />
             <span asp-validation-for="Model" class="text-danger"></span>
         </div>
-    </div>
-    <div class="col-md-4">
-        <div class="form-group">
-            <label asp-for="CurrentRead" class="control-label"></label>
-            <input asp-for="CurrentRead" class="form-control" />
-            <span asp-validation-for="CurrentRead" class="text-danger"></span>
-        </div>
-    </div>
+    </div> 
     <div class="col-md-3">
         <div class="form-group">
             <label asp-for="BougthDate" class="control-label"></label>

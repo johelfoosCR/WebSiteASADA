@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using WebAsada.BaseObjects;
 using WebAsada.Data;
 using WebAsada.Data.Repository;
+using WebAsada.ViewModels;
 
 namespace WebAsada.Common
 {
@@ -33,7 +34,7 @@ namespace WebAsada.Common
         { 
         }
 
-        public virtual async Task<IEnumerable<T>> GetGeneralEntityValidData() => await GetValidData<T>();
+        public virtual async Task<IEnumerable<SelectItemVM<int>>> GetGeneralEntityValidData() => await GetValidData<T>();
     }
      
 }

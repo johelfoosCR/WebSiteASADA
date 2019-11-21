@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using WebAsada.Common;
 using WebAsada.Data;
 using WebAsada.Models;
+using WebAsada.ViewModels;
 
 namespace WebAsada.Repository
 {
@@ -23,10 +24,12 @@ namespace WebAsada.Repository
                                               .ToListAsync();
         }
 
-        public async Task<IEnumerable<WaterMeter>> GetValidWaterMeterToView()
+        public async Task<IEnumerable<SelectItemVM<int>>> GetValidWaterMeterToView()
         {
-            return await _dbContext.WaterMeter.Where(x => x.IsActive.Equals(true)) 
+            var data = await _dbContext.WaterMeter.Where(x => x.IsActive.Equals(true)) 
+                                             .Select(x => SelectItemVM<int>.Create(x.Id, x.SerialNumber))
                                              .ToListAsync();
+            return data;
         }
           
         public override async Task Update(int id, WaterMeter entity)

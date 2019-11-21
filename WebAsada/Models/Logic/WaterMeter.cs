@@ -9,10 +9,7 @@ namespace WebAsada.Models
         public string Model { get; private set; }
 
         [Required]
-        public string SerialNumber { get; private set; }
-
-        [Required]
-        public int CurrentRead { get; private set; }
+        public string SerialNumber { get; private set; } 
 
         [Required]
         public DateTime BougthDate { get; private set; }
@@ -30,8 +27,7 @@ namespace WebAsada.Models
         internal static WaterMeter SincronizeObject(WaterMeter currentObject, WaterMeter newObject)
         {
             currentObject.BougthDate = newObject.BougthDate;
-            currentObject.Comments = newObject.Comments;
-            currentObject.CurrentRead = newObject.CurrentRead;
+            currentObject.Comments = newObject.Comments; 
             currentObject.IsActive = newObject.IsActive;
             currentObject.Model = newObject.Model;
             currentObject.SerialNumber = newObject.SerialNumber;

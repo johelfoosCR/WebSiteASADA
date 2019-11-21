@@ -10,8 +10,8 @@ using WebAsada.Data;
 namespace WebAsada.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20191120201537_initial")]
-    partial class initial
+    [Migration("20191121012014_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -229,6 +229,26 @@ namespace WebAsada.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int>("ContractTypeId");
+
+                    b.Property<bool>("DoubleBasicCharge");
+
+                    b.Property<DateTime>("EmissionDate");
+
+                    b.Property<int>("EstateId");
+
+                    b.Property<int>("InitialMeterRead");
+
+                    b.Property<bool>("IsActive");
+
+                    b.Property<int>("MeterId");
+
+                    b.Property<int?>("PersonsByEstateEstateId");
+
+                    b.Property<int?>("PersonsByEstatePersonId");
+
+                    b.Property<int>("PersonsId");
+
                     b.Property<DateTime>("RegisterDatime");
 
                     b.Property<string>("RegisterUserId");
@@ -239,9 +259,15 @@ namespace WebAsada.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("ContractTypeId");
+
+                    b.HasIndex("MeterId");
+
                     b.HasIndex("RegisterUserId");
 
                     b.HasIndex("UpdateUserId");
+
+                    b.HasIndex("PersonsByEstateEstateId", "PersonsByEstatePersonId");
 
                     b.ToTable("Contract");
                 });
@@ -673,11 +699,7 @@ namespace WebAsada.Migrations
 
                     b.Property<int>("PersonId");
 
-                    b.Property<int>("Id");
-
                     b.HasKey("EstateId", "PersonId");
-
-                    b.HasAlternateKey("Id");
 
                     b.HasIndex("PersonId");
 
@@ -896,6 +918,16 @@ namespace WebAsada.Migrations
 
             modelBuilder.Entity("WebAsada.Models.Contract", b =>
                 {
+                    b.HasOne("WebAsada.Models.ContractType", "ContractType")
+                        .WithMany()
+                        .HasForeignKey("ContractTypeId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("WebAsada.Models.WaterMeter", "Meter")
+                        .WithMany()
+                        .HasForeignKey("MeterId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "RegisterUser")
                         .WithMany()
                         .HasForeignKey("RegisterUserId");
@@ -903,6 +935,10 @@ namespace WebAsada.Migrations
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "UpdateUser")
                         .WithMany()
                         .HasForeignKey("UpdateUserId");
+
+                    b.HasOne("WebAsada.Models.PersonsByEstate", "PersonsByEstate")
+                        .WithMany()
+                        .HasForeignKey("PersonsByEstateEstateId", "PersonsByEstatePersonId");
                 });
 
             modelBuilder.Entity("WebAsada.Models.ContractType", b =>

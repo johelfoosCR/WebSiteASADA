@@ -44,7 +44,7 @@ namespace WebAsada.Controllers
 
         private void RefreshCollections()
         { 
-            ViewData["SupplierId"] = new SelectList(_supplierReporsitory.GetValidSupplierByNemotecnicoToView("MEDIDOR").Result, "Id", "Name"); 
+            ViewData["SupplierId"] = new SelectList(_supplierReporsitory.GetValidSupplierByNemotecnicoToView("MEDIDOR").Result, "Value", "Text"); 
         }
     }
 }

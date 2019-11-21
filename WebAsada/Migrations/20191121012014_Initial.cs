@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace WebAsada.Migrations
 {
-    public partial class initial : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -182,34 +182,6 @@ namespace WebAsada.Migrations
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Charge_AspNetUsers_UpdateUserId",
-                        column: x => x.UpdateUserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Contract",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    RegisterUserId = table.Column<string>(nullable: true),
-                    RegisterDatime = table.Column<DateTime>(nullable: false),
-                    UpdateUserId = table.Column<string>(nullable: true),
-                    UpdateDateTime = table.Column<DateTime>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Contract", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Contract_AspNetUsers_RegisterUserId",
-                        column: x => x.RegisterUserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Contract_AspNetUsers_UpdateUserId",
                         column: x => x.UpdateUserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
@@ -628,13 +600,11 @@ namespace WebAsada.Migrations
                 columns: table => new
                 {
                     PersonId = table.Column<int>(nullable: false),
-                    EstateId = table.Column<int>(nullable: false),
-                    Id = table.Column<int>(nullable: false)
+                    EstateId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_PersonsByEstate", x => new { x.EstateId, x.PersonId });
-                    table.UniqueConstraint("AK_PersonsByEstate_Id", x => x.Id);
                     table.ForeignKey(
                         name: "FK_PersonsByEstate_Estate_EstateId",
                         column: x => x.EstateId,
@@ -647,6 +617,103 @@ namespace WebAsada.Migrations
                         principalTable: "Person",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "WaterMeter",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    RegisterUserId = table.Column<string>(nullable: true),
+                    RegisterDatime = table.Column<DateTime>(nullable: false),
+                    UpdateUserId = table.Column<string>(nullable: true),
+                    UpdateDateTime = table.Column<DateTime>(nullable: false),
+                    Model = table.Column<string>(nullable: true),
+                    SerialNumber = table.Column<string>(nullable: false),
+                    CurrentRead = table.Column<int>(nullable: false),
+                    BougthDate = table.Column<DateTime>(nullable: false),
+                    SupplierId = table.Column<int>(nullable: false),
+                    IsActive = table.Column<bool>(nullable: false),
+                    Comments = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_WaterMeter", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_WaterMeter_AspNetUsers_RegisterUserId",
+                        column: x => x.RegisterUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_WaterMeter_Supplier_SupplierId",
+                        column: x => x.SupplierId,
+                        principalTable: "Supplier",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_WaterMeter_AspNetUsers_UpdateUserId",
+                        column: x => x.UpdateUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Contract",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    RegisterUserId = table.Column<string>(nullable: true),
+                    RegisterDatime = table.Column<DateTime>(nullable: false),
+                    UpdateUserId = table.Column<string>(nullable: true),
+                    UpdateDateTime = table.Column<DateTime>(nullable: false),
+                    PersonsByEstateEstateId = table.Column<int>(nullable: true),
+                    PersonsByEstatePersonId = table.Column<int>(nullable: true),
+                    PersonsId = table.Column<int>(nullable: false),
+                    EstateId = table.Column<int>(nullable: false),
+                    ContractTypeId = table.Column<int>(nullable: false),
+                    MeterId = table.Column<int>(nullable: false),
+                    EmissionDate = table.Column<DateTime>(nullable: false),
+                    InitialMeterRead = table.Column<int>(nullable: false),
+                    DoubleBasicCharge = table.Column<bool>(nullable: false),
+                    IsActive = table.Column<bool>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Contract", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Contract_ContractType_ContractTypeId",
+                        column: x => x.ContractTypeId,
+                        principalTable: "ContractType",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Contract_WaterMeter_MeterId",
+                        column: x => x.MeterId,
+                        principalTable: "WaterMeter",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Contract_AspNetUsers_RegisterUserId",
+                        column: x => x.RegisterUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Contract_AspNetUsers_UpdateUserId",
+                        column: x => x.UpdateUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Contract_PersonsByEstate_PersonsByEstateEstateId_PersonsByEstatePersonId",
+                        columns: x => new { x.PersonsByEstateEstateId, x.PersonsByEstatePersonId },
+                        principalTable: "PersonsByEstate",
+                        principalColumns: new[] { "EstateId", "PersonId" },
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -687,47 +754,6 @@ namespace WebAsada.Migrations
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Receipt_AspNetUsers_UpdateUserId",
-                        column: x => x.UpdateUserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "WaterMeter",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    RegisterUserId = table.Column<string>(nullable: true),
-                    RegisterDatime = table.Column<DateTime>(nullable: false),
-                    UpdateUserId = table.Column<string>(nullable: true),
-                    UpdateDateTime = table.Column<DateTime>(nullable: false),
-                    Model = table.Column<string>(nullable: true),
-                    SerialNumber = table.Column<string>(nullable: false),
-                    CurrentRead = table.Column<int>(nullable: false),
-                    BougthDate = table.Column<DateTime>(nullable: false),
-                    SupplierId = table.Column<int>(nullable: false),
-                    IsActive = table.Column<bool>(nullable: false),
-                    Comments = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_WaterMeter", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_WaterMeter_AspNetUsers_RegisterUserId",
-                        column: x => x.RegisterUserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_WaterMeter_Supplier_SupplierId",
-                        column: x => x.SupplierId,
-                        principalTable: "Supplier",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_WaterMeter_AspNetUsers_UpdateUserId",
                         column: x => x.UpdateUserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
@@ -803,6 +829,16 @@ namespace WebAsada.Migrations
                 column: "UpdateUserId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Contract_ContractTypeId",
+                table: "Contract",
+                column: "ContractTypeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Contract_MeterId",
+                table: "Contract",
+                column: "MeterId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Contract_RegisterUserId",
                 table: "Contract",
                 column: "RegisterUserId");
@@ -811,6 +847,11 @@ namespace WebAsada.Migrations
                 name: "IX_Contract_UpdateUserId",
                 table: "Contract",
                 column: "UpdateUserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Contract_PersonsByEstateEstateId_PersonsByEstatePersonId",
+                table: "Contract",
+                columns: new[] { "PersonsByEstateEstateId", "PersonsByEstatePersonId" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_ContractType_RegisterUserId",
@@ -1009,31 +1050,16 @@ namespace WebAsada.Migrations
                 name: "Charge");
 
             migrationBuilder.DropTable(
-                name: "ContractType");
-
-            migrationBuilder.DropTable(
                 name: "Currency");
 
             migrationBuilder.DropTable(
                 name: "Entity");
 
             migrationBuilder.DropTable(
-                name: "PersonsByEstate");
-
-            migrationBuilder.DropTable(
                 name: "Receipt");
 
             migrationBuilder.DropTable(
-                name: "WaterMeter");
-
-            migrationBuilder.DropTable(
                 name: "AspNetRoles");
-
-            migrationBuilder.DropTable(
-                name: "Estate");
-
-            migrationBuilder.DropTable(
-                name: "Person");
 
             migrationBuilder.DropTable(
                 name: "Contract");
@@ -1042,19 +1068,34 @@ namespace WebAsada.Migrations
                 name: "Measurement");
 
             migrationBuilder.DropTable(
+                name: "ContractType");
+
+            migrationBuilder.DropTable(
+                name: "WaterMeter");
+
+            migrationBuilder.DropTable(
+                name: "PersonsByEstate");
+
+            migrationBuilder.DropTable(
+                name: "Month");
+
+            migrationBuilder.DropTable(
                 name: "Supplier");
+
+            migrationBuilder.DropTable(
+                name: "Estate");
+
+            migrationBuilder.DropTable(
+                name: "Person");
+
+            migrationBuilder.DropTable(
+                name: "ProductType");
 
             migrationBuilder.DropTable(
                 name: "IdentificationType");
 
             migrationBuilder.DropTable(
                 name: "CustomerType");
-
-            migrationBuilder.DropTable(
-                name: "Month");
-
-            migrationBuilder.DropTable(
-                name: "ProductType");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");

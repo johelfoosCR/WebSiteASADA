@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using WebAsada.Common;
 using WebAsada.Data;
 using WebAsada.Models;
+using WebAsada.ViewModels;
 
 namespace WebAsada.Repository
 {
@@ -26,10 +27,11 @@ namespace WebAsada.Repository
         } 
          
 
-        public async Task<IEnumerable<Supplier>> GetValidSupplierByNemotecnicoToView(string nemotecnico)
+        public async Task<IEnumerable<SelectItemVM<int>>> GetValidSupplierByNemotecnicoToView(string nemotecnico)
         {
             return await _dbContext.Supplier.Where(x => x.IsActive.Equals(true) 
                                                      && x.ProductType.Nemotecnico.Equals(nemotecnico))
+                                            .Select(x => SelectItemVM<int>.Create(x.Id, x.Name))
                                             .ToListAsync();
         }
 

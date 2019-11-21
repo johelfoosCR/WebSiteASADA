@@ -8,12 +8,20 @@ namespace WebAsada.ViewModels
 {
     public class ContractVM : BaseEntity
     {
-        [DisplayName("Finca")]
+        [DisplayName("Cliente")]
+        public int PersonId { get; set; }
+
+        public Person Person { get; set; }
+
+        [DisplayName("Tipo Contrato")]
+        public int ContractTypeId { get; set; }
+
+        public ContractType ContractType { get; set; } 
+
+        [DisplayName("Propiedad")]
         public int EstateId { get; set; }
 
         public Estate Estate { get; set; } 
-
-        public PersonsByEstate PersonsByEstate { get; set; } 
 
         [DisplayName("Medidor")]
         public int MeterId { get; set; }
@@ -29,6 +37,6 @@ namespace WebAsada.ViewModels
 
         [Required]
         [DisplayName("Activo?")]
-        public bool IsActive { get; set; } 
+        public bool IsActive { get; set; }
     }
 }

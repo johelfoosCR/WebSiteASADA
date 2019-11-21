@@ -12,11 +12,11 @@ namespace WebAsada.Components
         {
         }
 
-        public async Task<IViewComponentResult> InvokeAsync(PersonItemVM[] listPerson, PersonItemVM personItemVM)
+        public async Task<IViewComponentResult> InvokeAsync(SelectItemVM<int>[] listPerson, SelectItemVM<int> personItemVM)
         { 
             if (!listPerson.HasValue())
             {
-                listPerson = Array.Empty<PersonItemVM>();
+                listPerson = Array.Empty<SelectItemVM<int>>();
             }
 
 

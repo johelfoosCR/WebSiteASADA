@@ -26,8 +26,8 @@
 
             var localPersonList = [];
 
-            function RefreshList(data) {
-                $.post('/Estates/RefreshPersonCollection', { personListItemVM: data }, function (result) {
+            function RefreshList(data) { 
+                doPost('@Url.Action("RefreshPersonCollection")', { personListItemVM: data }, function (result) {
                     $('#ownerListContainer').html(result);
                 })
             }
@@ -36,25 +36,16 @@
                 e.preventDefault();
                 localPersonList.push({ Id: $("#PersonId option:selected").val(), DisplayValue: $("#PersonId option:selected").text() });
                 RefreshList(localPersonList);
+                 
             });
 
-            $("body").on("click", "#pesonListGrid .deleteFunction", function () {
-                Swal.fire({
-                    title: 'Confirmación?',
-                    text: "Desea Eliminar la Persona seleccionada como dueño de la propiedad?",
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: 'Sí!'
-                }).then((result) => {
-                    if (result.value) {
+            $("body").on("click", "#pesonListGrid .deleteFunction", function () { 
+                showVerificationMessage("question", "Desea Eliminar = la persona seleccionada como dueño de la propiedad?", function () {
                         var selectedId = parseInt($(this).attr("value"));
                         localPersonList = $.grep(localPersonList, function (e) {
                             return parseInt(e.Id) !== selectedId;
                         });
                         RefreshList(localPersonList);
-                    }
                 });
             });
         });

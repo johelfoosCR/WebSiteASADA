@@ -9,7 +9,7 @@ namespace WebAsada.BaseObjects
         }
 
         public GeneralEntity(string shortDesc, string longDesc, string officialId, string nemotecnico, bool isActive)
-        {
+        { 
             ShortDesc = shortDesc;
             LongDesc = longDesc;
             OfficialId = officialId;

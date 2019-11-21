@@ -46,8 +46,8 @@ namespace WebAsada.Controllers
 
         private void RefreshCollections()
         { 
-            ViewData["IdentificationTypeId"] = new SelectList(_identificationTypeRepository.GetGeneralEntityValidData().Result, "Id", "ShortDesc");
-            ViewData["PersonTypeId"] = new SelectList(_personTypeRepository.GetGeneralEntityValidData().Result, "Id", "ShortDesc"); 
+            ViewData["IdentificationTypeId"] = new SelectList(_identificationTypeRepository.GetGeneralEntityValidData().Result, "Value", "Text");
+            ViewData["PersonTypeId"] = new SelectList(_personTypeRepository.GetGeneralEntityValidData().Result, "Value", "Text"); 
         }
     }
 }

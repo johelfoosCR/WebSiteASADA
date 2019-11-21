@@ -44,7 +44,7 @@ namespace WebAsada.Controllers
 
         private void RefreshCollections()
         { 
-            ViewData["ProductTypeId"] = new SelectList(_productTypeRepository.GetGeneralEntityValidData().Result, "Id", "ShortDesc"); 
+            ViewData["ProductTypeId"] = new SelectList(_productTypeRepository.GetGeneralEntityValidData().Result, "Value", "Text"); 
         }
     }
 }

@@ -1,36 +1,34 @@
 ﻿@model WebAsada.ViewModels.ContractVM
 
-<div class="row">
-    <div class="col-md-6">
-        <div class="form-group">
-            <label asp-for="EstateId" class="control-label"></label>
-            <select id="SelectedEstate" asp-for="EstateId" class="form-control" asp-items="ViewBag.EstateId"></select>
-            <span asp-validation-for="EstateId" class="text-danger"></span>
-        </div>
-    </div>
-    <div class="col-md-6">
-        <div class="form-group">
-            <label asp-for="PersonsByEstate" class="control-label"></label>
-            <select id="SelectedEstate" asp-for="PersonsByEstate" class="form-control" asp-items="ViewBag.PersonsByEstateId"></select>
-            <span asp-validation-for="PersonsByEstate" class="text-danger"></span>
-        </div>
-    </div> 
-</div>
 
 <div class="row">
     <div class="col-md-4">
         <div class="form-group">
-            <label asp-for="MeterId" class="control-label"></label>
-            <select asp-for="MeterId" class="form-control" asp-items="ViewBag.MeterId"></select>
+            <label asp-for="ContractTypeId" class="control-label"></label>
+            <select data-live-search="true" asp-for="ContractTypeId" class="form-control" asp-items="ViewBag.ContractTypeCollection"></select>
+            <span asp-validation-for="ContractTypeId" class="text-danger"></span>
         </div>
     </div>
-    <div class="col-md-4">
+
+</div>
+<div class="row">
+    <div class="col-md-6">
         <div class="form-group">
-            <label asp-for="InitialMeterRead" class="control-label"></label>
-            <input asp-for="InitialMeterRead" class="form-control" />
-            <span asp-validation-for="InitialMeterRead" class="text-danger"></span>
+            <label asp-for="PersonId" class="control-label"></label>
+            <select id="PeopleSelect" data-live-search="true" asp-for="PersonId" class="form-control" asp-items="ViewBag.PersonCollection"></select>
+            <span asp-validation-for="PersonId" class="text-danger"></span>
         </div>
     </div>
+    <div class="col-md-6">
+        <div class="form-group">
+            <label asp-for="EstateId" class="control-label"></label>
+            <select id="EstatesSelect" data-live-search="true" asp-for="EstateId" class="form-control"></select>
+            <span asp-validation-for="EstateId" class="text-danger"></span>
+        </div>
+    </div>
+</div>
+
+<div class="row">
     <div class="col-md-2 vertical-align">
         <div class="form-group">
             <label>
@@ -45,7 +43,20 @@
             </label>
         </div>
     </div>
+    <div class="col-md-4">
+        <div class="form-group">
+            <label asp-for="MeterId" class="control-label"></label>
+            <select asp-for="MeterId" data-live-search="true" class="form-control" asp-items="ViewBag.MeterCollection"></select>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="form-group">
+            <label asp-for="InitialMeterRead" class="control-label"></label>
+            <input asp-for="InitialMeterRead" class="form-control" />
+            <span asp-validation-for="InitialMeterRead" class="text-danger"></span>
+        </div>
+    </div>
 </div>
- 
+
 
 <partial name="_UpdateButtons" />

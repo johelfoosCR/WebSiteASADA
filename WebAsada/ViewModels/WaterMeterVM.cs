@@ -13,11 +13,7 @@ namespace WebAsada.ViewModels
 
         [Required]
         [DisplayName("Número de Serie")]
-        public string SerialNumber { get; set; }
-        
-        [Required]
-        [DisplayName("Numeración Actual")]
-        public int CurrentRead { get; set; }
+        public string SerialNumber { get; set; } 
 
         [Required]
         [DataType(DataType.Date)] 

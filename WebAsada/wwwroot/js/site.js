@@ -35,14 +35,37 @@
             confirmButtonText: 'Sí!'
         }).then((result) => {
             if (result.value) {
-                $.post(route, data).done(function (response) {
-                    callback(response);
-                });
+                doPost(route, data, callback);
             }
         });
-    };
+    };   
+
+     doPost = function (route, data, callback) {
+        $.post(route, data).done(function (result) {
+            callback(result);
+        }).fail(function () {
+            alert("error");
+        })
+    };  
 
 });
+
+
+function showVerificationMessage(icon, message, callback) {
+    Swal.fire({
+        title: "Confirmación",
+        text: message,
+        icon: icon,
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Sí!'
+    }).then((result) => {
+        if (result.value) {
+            callback(result);
+        }
+    });
+}
 
 function showSuccessMessage() {
     Swal.fire(

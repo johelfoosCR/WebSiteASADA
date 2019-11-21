@@ -6,7 +6,7 @@ namespace WebAsada.Data
 {
     public static class ModelBuilderExtension
     {
-        public static void MonthsSeedData(this ModelBuilder modelBuilder)
+        public static void SeedData(this ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Month>().HasData(
                    new Month(1, "Enero", "ENERO"),
@@ -20,8 +20,10 @@ namespace WebAsada.Data
                    new Month(9, "Septiembre", "SEPTIEMBRE"),
                    new Month(10, "Octubre", "OCTUBRE"),
                    new Month(11, "Noviembre", "NOVIEMBRE"),
-                   new Month(12, "Diciembre", "DICIEMBRE"));
+                   new Month(12, "Diciembre", "DICIEMBRE")); 
         }
+         
+
         public static void ManyToManyRelations(this ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<PersonsByEstate>().HasKey(sc => new { sc.EstateId, sc.PersonId });

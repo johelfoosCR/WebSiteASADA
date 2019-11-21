@@ -56,6 +56,7 @@ namespace WebAsada
             services.AddTransient<SupplierReporsitory>();
             services.AddTransient<ProductTypeRepository>();
             services.AddTransient<WaterMeterRepository>();
+            services.AddTransient<ContractRepository>();
 
             services.AddTransient<ILoggedUserReader, LoggedUser>();
 

@@ -47,7 +47,7 @@ namespace WebAsada.Controllers
             ViewData["RegisterUserId"] = new SelectList(_measurementRepository.GetUsers(), "Id", "UserName");
             ViewData["UpdateUserId"] = new SelectList(_measurementRepository.GetUsers(), "Id", "UserName");
             ViewData["ReadUserId"] = new SelectList(_measurementRepository.GetUsers(), "Id", "UserName");
-            ViewData["MonthId"] = new SelectList(_monthRepository.GetAll().Result, "Id", "ShortDesc"); 
+            ViewData["MonthId"] = new SelectList(_monthRepository.GetAll().Result, "Value", "Text"); 
         }
     }
 }
