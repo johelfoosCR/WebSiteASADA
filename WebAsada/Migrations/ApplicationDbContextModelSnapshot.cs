@@ -227,6 +227,20 @@ namespace WebAsada.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<bool>("DoubleBasicCharge");
+
+                    b.Property<DateTime>("EmissionDate");
+
+                    b.Property<int>("InitialMeterRead");
+
+                    b.Property<bool>("IsActive");
+
+                    b.Property<int?>("MeterId");
+
+                    b.Property<int?>("PersonsByEstateEstateId");
+
+                    b.Property<int?>("PersonsByEstatePersonId");
+
                     b.Property<DateTime>("RegisterDatime");
 
                     b.Property<string>("RegisterUserId");
@@ -237,9 +251,13 @@ namespace WebAsada.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("MeterId");
+
                     b.HasIndex("RegisterUserId");
 
                     b.HasIndex("UpdateUserId");
+
+                    b.HasIndex("PersonsByEstateEstateId", "PersonsByEstatePersonId");
 
                     b.ToTable("Contract");
                 });
@@ -890,6 +908,10 @@ namespace WebAsada.Migrations
 
             modelBuilder.Entity("WebAsada.Models.Contract", b =>
                 {
+                    b.HasOne("WebAsada.Models.WaterMeter", "Meter")
+                        .WithMany()
+                        .HasForeignKey("MeterId");
+
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "RegisterUser")
                         .WithMany()
                         .HasForeignKey("RegisterUserId");
@@ -897,6 +919,10 @@ namespace WebAsada.Migrations
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "UpdateUser")
                         .WithMany()
                         .HasForeignKey("UpdateUserId");
+
+                    b.HasOne("WebAsada.Models.PersonsByEstate", "PersonsByEstate")
+                        .WithMany()
+                        .HasForeignKey("PersonsByEstateEstateId", "PersonsByEstatePersonId");
                 });
 
             modelBuilder.Entity("WebAsada.Models.ContractType", b =>

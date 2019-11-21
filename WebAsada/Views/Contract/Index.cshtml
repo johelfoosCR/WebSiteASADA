@@ -1,0 +1,31 @@
+@model IEnumerable<WebAsada.ViewModels.ContractVM>
+
+<partial name="_PageTitle" model="@("Lista de Contratos")" />
+<partial name="_CreateNewButton" />
+
+@(Html
+    .Grid(Model)
+    .Build(columns =>
+    { 
+        columns.Add(model => model.PersonsByEstate.Person.FullName).Titled("Cliente");
+        columns.Add(model => model.PersonsByEstate.Estate.Alias).Titled("Finca");
+        columns.Add(model => model.Meter.SerialNumber).Titled("Medidor");  
+        columns.Add(model => model.DoubleBasicCharge ? "Sí": "No").Titled("Cargo Doble");
+        columns.Add(model => model.IsActive ? "Sí": "No").Titled("Activo");
+        columns.Add().Titled("Editar").Encoded(false).RenderedAs(o => Html.ActionLink("Editar", "Edit", new { id = o.Id })); 
+    })
+    .Empty("No se encontraron datos")
+    .Filterable()
+    .Sortable()
+    .Pageable()
+)
+
+
+@section Scripts {
+    <script> 
+        @if (TempData["javascriptMessage"] != null)
+        {
+             @Html.Raw(TempData["javascriptMessage"])
+        }
+    </script>
+} 

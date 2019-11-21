@@ -74,5 +74,6 @@ namespace WebAsada.Data
         public DbSet<ProductType> ProductType { get; set; }
         public DbSet<Supplier> Supplier { get; set; }
         public DbSet<WaterMeter> WaterMeter { get; set; }
+        public DbSet<Contract> Contract { get; set; } 
     }
 }

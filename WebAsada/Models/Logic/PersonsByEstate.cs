@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace WebAsada.Models
 {  
@@ -22,7 +23,7 @@ namespace WebAsada.Models
                 PersonId = person.Id,
             };
         }
-
+         
         public int PersonId { get; private set; }
         public Person Person { get; private set; } 
         public int EstateId { get; private set; }

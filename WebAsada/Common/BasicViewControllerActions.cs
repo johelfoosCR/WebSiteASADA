@@ -138,7 +138,7 @@ namespace WebAsada.Common
         #endregion
 
         #region Local utilities
-        private static T CreateInstanceFromDTO<DtoType>(DtoType dtoObject)
+        private T CreateInstanceFromDTO<DtoType>(DtoType dtoObject)
         {
             var mapperSave = new MapperConfiguration(cfg => { cfg.CreateMap<DtoType, T>(); }); 
             return MapperHelper<DtoType, T>.MapEntity(mapperSave, dtoObject);

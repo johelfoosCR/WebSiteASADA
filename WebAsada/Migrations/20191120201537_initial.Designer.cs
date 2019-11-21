@@ -10,8 +10,8 @@ using WebAsada.Data;
 namespace WebAsada.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20191119170812_modificacionesEstates")]
-    partial class modificacionesEstates
+    [Migration("20191120201537_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -202,6 +202,8 @@ namespace WebAsada.Migrations
 
                     b.Property<string>("OfficialId");
 
+                    b.Property<double>("Price");
+
                     b.Property<DateTime>("RegisterDatime");
 
                     b.Property<string>("RegisterUserId");
@@ -242,6 +244,78 @@ namespace WebAsada.Migrations
                     b.HasIndex("UpdateUserId");
 
                     b.ToTable("Contract");
+                });
+
+            modelBuilder.Entity("WebAsada.Models.ContractType", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("ContractTypeCode");
+
+                    b.Property<bool>("IsActive");
+
+                    b.Property<string>("LongDesc");
+
+                    b.Property<string>("Nemotecnico");
+
+                    b.Property<string>("OfficialId");
+
+                    b.Property<DateTime>("RegisterDatime");
+
+                    b.Property<string>("RegisterUserId");
+
+                    b.Property<string>("ShortDesc");
+
+                    b.Property<DateTime>("UpdateDateTime");
+
+                    b.Property<string>("UpdateUserId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RegisterUserId");
+
+                    b.HasIndex("UpdateUserId");
+
+                    b.ToTable("ContractType");
+                });
+
+            modelBuilder.Entity("WebAsada.Models.Currency", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Acronym");
+
+                    b.Property<string>("CurrencyCode");
+
+                    b.Property<bool>("IsActive");
+
+                    b.Property<string>("LongDesc");
+
+                    b.Property<string>("Nemotecnico");
+
+                    b.Property<string>("OfficialId");
+
+                    b.Property<DateTime>("RegisterDatime");
+
+                    b.Property<string>("RegisterUserId");
+
+                    b.Property<string>("ShortDesc");
+
+                    b.Property<DateTime>("UpdateDateTime");
+
+                    b.Property<string>("UpdateUserId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RegisterUserId");
+
+                    b.HasIndex("UpdateUserId");
+
+                    b.ToTable("Currency");
                 });
 
             modelBuilder.Entity("WebAsada.Models.Entity", b =>
@@ -599,11 +673,50 @@ namespace WebAsada.Migrations
 
                     b.Property<int>("PersonId");
 
+                    b.Property<int>("Id");
+
                     b.HasKey("EstateId", "PersonId");
+
+                    b.HasAlternateKey("Id");
 
                     b.HasIndex("PersonId");
 
                     b.ToTable("PersonsByEstate");
+                });
+
+            modelBuilder.Entity("WebAsada.Models.ProductType", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<bool>("IsActive");
+
+                    b.Property<string>("LongDesc");
+
+                    b.Property<string>("Nemotecnico");
+
+                    b.Property<string>("OfficialId");
+
+                    b.Property<string>("ProductTypeCode");
+
+                    b.Property<DateTime>("RegisterDatime");
+
+                    b.Property<string>("RegisterUserId");
+
+                    b.Property<string>("ShortDesc");
+
+                    b.Property<DateTime>("UpdateDateTime");
+
+                    b.Property<string>("UpdateUserId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RegisterUserId");
+
+                    b.HasIndex("UpdateUserId");
+
+                    b.ToTable("ProductType");
                 });
 
             modelBuilder.Entity("WebAsada.Models.Receipt", b =>
@@ -639,6 +752,90 @@ namespace WebAsada.Migrations
                     b.HasIndex("UpdateUserId");
 
                     b.ToTable("Receipt");
+                });
+
+            modelBuilder.Entity("WebAsada.Models.Supplier", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Address");
+
+                    b.Property<string>("Comments");
+
+                    b.Property<string>("ContactName");
+
+                    b.Property<string>("Email");
+
+                    b.Property<bool>("IsActive");
+
+                    b.Property<string>("Name")
+                        .IsRequired();
+
+                    b.Property<string>("PhoneNumber");
+
+                    b.Property<int>("ProductTypeId");
+
+                    b.Property<DateTime>("RegisterDatime");
+
+                    b.Property<string>("RegisterUserId");
+
+                    b.Property<string>("Schedule");
+
+                    b.Property<DateTime>("UpdateDateTime");
+
+                    b.Property<string>("UpdateUserId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductTypeId");
+
+                    b.HasIndex("RegisterUserId");
+
+                    b.HasIndex("UpdateUserId");
+
+                    b.ToTable("Supplier");
+                });
+
+            modelBuilder.Entity("WebAsada.Models.WaterMeter", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("BougthDate");
+
+                    b.Property<string>("Comments");
+
+                    b.Property<int>("CurrentRead");
+
+                    b.Property<bool>("IsActive");
+
+                    b.Property<string>("Model");
+
+                    b.Property<DateTime>("RegisterDatime");
+
+                    b.Property<string>("RegisterUserId");
+
+                    b.Property<string>("SerialNumber")
+                        .IsRequired();
+
+                    b.Property<int>("SupplierId");
+
+                    b.Property<DateTime>("UpdateDateTime");
+
+                    b.Property<string>("UpdateUserId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RegisterUserId");
+
+                    b.HasIndex("SupplierId");
+
+                    b.HasIndex("UpdateUserId");
+
+                    b.ToTable("WaterMeter");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -698,6 +895,28 @@ namespace WebAsada.Migrations
                 });
 
             modelBuilder.Entity("WebAsada.Models.Contract", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "RegisterUser")
+                        .WithMany()
+                        .HasForeignKey("RegisterUserId");
+
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "UpdateUser")
+                        .WithMany()
+                        .HasForeignKey("UpdateUserId");
+                });
+
+            modelBuilder.Entity("WebAsada.Models.ContractType", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "RegisterUser")
+                        .WithMany()
+                        .HasForeignKey("RegisterUserId");
+
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "UpdateUser")
+                        .WithMany()
+                        .HasForeignKey("UpdateUserId");
+                });
+
+            modelBuilder.Entity("WebAsada.Models.Currency", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "RegisterUser")
                         .WithMany()
@@ -817,6 +1036,17 @@ namespace WebAsada.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
+            modelBuilder.Entity("WebAsada.Models.ProductType", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "RegisterUser")
+                        .WithMany()
+                        .HasForeignKey("RegisterUserId");
+
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "UpdateUser")
+                        .WithMany()
+                        .HasForeignKey("UpdateUserId");
+                });
+
             modelBuilder.Entity("WebAsada.Models.Receipt", b =>
                 {
                     b.HasOne("WebAsada.Models.Contract", "Contract")
@@ -830,6 +1060,38 @@ namespace WebAsada.Migrations
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "RegisterUser")
                         .WithMany()
                         .HasForeignKey("RegisterUserId");
+
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "UpdateUser")
+                        .WithMany()
+                        .HasForeignKey("UpdateUserId");
+                });
+
+            modelBuilder.Entity("WebAsada.Models.Supplier", b =>
+                {
+                    b.HasOne("WebAsada.Models.ProductType", "ProductType")
+                        .WithMany()
+                        .HasForeignKey("ProductTypeId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "RegisterUser")
+                        .WithMany()
+                        .HasForeignKey("RegisterUserId");
+
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "UpdateUser")
+                        .WithMany()
+                        .HasForeignKey("UpdateUserId");
+                });
+
+            modelBuilder.Entity("WebAsada.Models.WaterMeter", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "RegisterUser")
+                        .WithMany()
+                        .HasForeignKey("RegisterUserId");
+
+                    b.HasOne("WebAsada.Models.Supplier", "Supplier")
+                        .WithMany()
+                        .HasForeignKey("SupplierId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "UpdateUser")
                         .WithMany()
