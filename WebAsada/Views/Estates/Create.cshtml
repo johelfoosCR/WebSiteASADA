@@ -36,11 +36,10 @@
                 e.preventDefault();
                 localPersonList.push({ Id: $("#PersonId option:selected").val(), DisplayValue: $("#PersonId option:selected").text() });
                 RefreshList(localPersonList);
-                 
             });
 
             $("body").on("click", "#pesonListGrid .deleteFunction", function () { 
-                showVerificationMessage("question", "Desea Eliminar = la persona seleccionada como dueño de la propiedad?", function () {
+                showVerificationMessage("question", "Desea Eliminar la persona seleccionada como dueño de la propiedad?", function () {
                         var selectedId = parseInt($(this).attr("value"));
                         localPersonList = $.grep(localPersonList, function (e) {
                             return parseInt(e.Id) !== selectedId;

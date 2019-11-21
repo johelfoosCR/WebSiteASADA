@@ -28,6 +28,8 @@ namespace WebAsada.ViewModels
 
         public WaterMeter Meter { get; set; }
 
+        public PersonsByEstate PersonsByEstate{ get; set; }
+
         [DisplayName("Lectura Medidor")]
         public int InitialMeterRead { get; set; }
 

@@ -15,15 +15,17 @@ namespace WebAsada.Controllers
         private readonly WaterMeterRepository _waterMeterRepository;
         private readonly ContractTypeRepository _contractTypeRepository;
         private readonly PersonsByEstateRepository _personsByEstateRepository;
+        private readonly EstateRepository _estateRepository;
 
         public ContractController(ContractRepository contractRepository, PersonRepository personRepository, 
                                   WaterMeterRepository waterMeterRepository, ContractTypeRepository contractTypeRepository,
-                                  PersonsByEstateRepository personsByEstateRepository) : base(contractRepository) {
+                                  PersonsByEstateRepository personsByEstateRepository, EstateRepository estateRepository) : base(contractRepository) {
 
             _personRepository = personRepository;
             _waterMeterRepository = waterMeterRepository;
             _contractTypeRepository = contractTypeRepository;
             _personsByEstateRepository = personsByEstateRepository;
+            _estateRepository = estateRepository;
         }
 
         public async Task<IActionResult> Index() => await GetIndexViewWhitAllData<ContractVM>();
@@ -32,7 +34,7 @@ namespace WebAsada.Controllers
 
         public async Task<IActionResult> Details(int? id) => await GetViewByObjectId<ContractVM>(id);
 
-        public async Task<IActionResult> Edit(int? id) => await GetViewByObjectId<ContractVM>(id);
+        public async Task<IActionResult> Edit(int? id) => await GetViewByObjectId<ContractVM>(id, RefreshCollections);
 
         public async Task<IActionResult> Delete(int? id) => await GetViewByObjectId<ContractVM>(id);
 
@@ -42,11 +44,27 @@ namespace WebAsada.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind(ATTRIBUTES_TO_BIND)] ContractVM UpdateVm) => await ConfirmSave(UpdateVm);
+        public async Task<IActionResult> Create([Bind(ATTRIBUTES_TO_BIND)] ContractVM UpdateVm) {
+
+            Person person = await _personRepository.GetById(UpdateVm.PersonId);
+            Estate estate = await _estateRepository.GetById(UpdateVm.EstateId);
+            WaterMeter meter = await _waterMeterRepository.GetById(UpdateVm.MeterId);
+            ContractType contractType = await _contractTypeRepository.GetById(UpdateVm.ContractTypeId);
+
+            Contract localContract = Contract.Create(contractType: contractType, 
+                                                     personsByEstate: PersonsByEstate.Create(person,estate),
+                                                     meter: meter,
+                                                     initialMeterRead: UpdateVm.InitialMeterRead,
+                                                     doubleBasicCharge: UpdateVm.DoubleBasicCharge,
+                                                     isActive: UpdateVm.IsActive);
+
+            return await ConfirmSaveConcrete(UpdateVm, localContract);
+        }
+           
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind(ATTRIBUTES_TO_BIND)] ContractVM UpdateVm) => await ConfirmEdit(id, UpdateVm);
+        public async Task<IActionResult> Edit(int id, [Bind(ATTRIBUTES_TO_BIND)] ContractVM UpdateVm) => await ConfirmEdit(id, UpdateVm, RefreshCollections);
 
 
         [HttpGet]

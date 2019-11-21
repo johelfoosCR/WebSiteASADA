@@ -7,8 +7,8 @@
     .Grid(Model)
     .Build(columns =>
     { 
-        columns.Add(model => model.Person.FullName).Titled("Cliente");
-        columns.Add(model => model.Estate.Alias).Titled("Finca");
+        columns.Add(model => model.PersonsByEstate.Person.FullName).Titled("Cliente");
+        columns.Add(model => model.PersonsByEstate.Estate.Alias).Titled("Finca");
         columns.Add(model => model.Meter.SerialNumber).Titled("Medidor");  
         columns.Add(model => model.DoubleBasicCharge ? "Sí": "No").Titled("Cargo Doble");
         columns.Add(model => model.IsActive ? "Sí": "No").Titled("Activo");

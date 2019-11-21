@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using WebAsada.Common;
 using WebAsada.Data;
 using WebAsada.Models;
+using WebAsada.ViewModels;
 
 namespace WebAsada.Repository
 {
@@ -19,8 +20,16 @@ namespace WebAsada.Repository
 
         public async override Task<IEnumerable<Contract>> GetAll()
         {
-            return await _dbContext.Contract.Include(x => x.PersonsByEstate) 
-                                            .ToListAsync();
+            return await _dbContext.Contract.Include(x => x.PersonsByEstate)
+                                             .ThenInclude(x => x.Estate)
+                                             .Include(x => x.PersonsByEstate)
+                                             .ThenInclude(x => x.Person)
+                                             .Include(x => x.Meter)
+                                             //.Select(x => new ContractVM() { 
+                                             //    Meter = x.Meter,
+                                             //    IsActive = x.IsActive
+                                             //})
+                                             .ToListAsync(); 
         }
 
         public async Task<IEnumerable<WaterMeter>> GetValidWaterMeterToView()
