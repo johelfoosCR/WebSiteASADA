@@ -67,13 +67,12 @@ namespace WebAsada.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind(ATTRIBUTES_TO_BIND)] ContractVM UpdateVm) {
 
-            Person person = await _personRepository.GetById(UpdateVm.PersonId);
-            Estate estate = await _estateRepository.GetById(UpdateVm.EstateId);
             WaterMeter meter = await _waterMeterRepository.GetById(UpdateVm.MeterId);
-            ContractType contractType = await _contractTypeRepository.GetById(UpdateVm.ContractTypeId); 
-
+            ContractType contractType = await _contractTypeRepository.GetById(UpdateVm.ContractTypeId);
+            PersonsByEstate personByEstate = await _personsByEstateRepository.GetDataByIdentifier(UpdateVm.PersonId, UpdateVm.EstateId);
+              
             Contract localContract = Contract.Create(contractType: contractType,
-                                                 personsByEstate: PersonsByEstate.Create(person, estate),
+                                                 personsByEstate: personByEstate,
                                                  meter: meter,
                                                  initialMeterRead: UpdateVm.InitialMeterRead,
                                                  doubleBasicCharge: UpdateVm.DoubleBasicCharge,

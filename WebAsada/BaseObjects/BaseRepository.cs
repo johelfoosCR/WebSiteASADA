@@ -23,7 +23,7 @@ namespace WebAsada.Data.Repository
 
         protected void MarkAsUpdated(EntityType entity) => _applicationDbContext.Entry(entity).State = EntityState.Modified;
 
-        protected Task<EntityType> FindById(int Id) => _applicationDbContext.Set<EntityType>().FirstOrDefaultAsync(x => x.Id.Equals(Id)).;
+        protected Task<EntityType> FindById(int Id) => _applicationDbContext.Set<EntityType>().FirstOrDefaultAsync(x => x.Id.Equals(Id));
 
         protected async Task<bool> EntityExist(int? Id) => Id.HasValue ? await _applicationDbContext.Set<EntityType>().AnyAsync(x => x.Id.Equals(Id.Value)) : false;
 
