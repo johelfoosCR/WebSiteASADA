@@ -12,4 +12,25 @@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+            $('#PeopleSelect').change(function () {
+                var selectedPersonId = $("#PeopleSelect").val();
+                if (selectedPersonId != null && selectedPersonId != '') {
+                    $.getJSON('@Url.Action("GetEstatesByPerson")', { id: selectedPersonId }, function (estates) {
+                        if (estates != null && !jQuery.isEmptyObject(estates))
+                        {
+                            var estatesSelect = $('#EstatesSelect');
+                            estatesSelect.empty();
+                            $.each(estates, function (index, item) {
+                                estatesSelect.append(
+                                    $("<option></option>").attr("value", item.value).text(item.text)
+                                );
+                            });
+                            $('#EstatesSelect').selectpicker('refresh');
+                        };
+                    });
+                }
+            });
+            $('#PeopleSelect').trigger("change");
+    </script>
 }

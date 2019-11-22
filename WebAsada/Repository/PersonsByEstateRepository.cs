@@ -25,6 +25,11 @@ namespace WebAsada.Repository
                                                    .ToListAsync();
         }
 
+        public async Task<PersonsByEstate> GetDataByIdentifier(int personId, int estateId)
+        {
+            return await _dbContext.PersonsByEstate.SingleAsync(x => x.PersonId.Equals(personId) && x.EstateId.Equals(estateId));
+        }
+
         public async Task Save(Person person, Estate estate)
         {  
             _dbContext.Add(PersonsByEstate.Create(person, estate));

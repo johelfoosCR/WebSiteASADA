@@ -13,9 +13,9 @@ namespace WebAsada.Models
                                       bool isActive = true) {
             return new Contract()
             {
-                PersonsByEstate = personsByEstate,
-                ContractType = contractType,
-                Meter = meter,
+                PersonsByEstate = personsByEstate, 
+                ContractTypeId = contractType.Id,  
+                MeterId = meter.Id,
                 InitialMeterRead = initialMeterRead,
                 DoubleBasicCharge = doubleBasicCharge,
                 IsActive = isActive
@@ -45,12 +45,12 @@ namespace WebAsada.Models
         public bool IsActive { get; private set; }
          
         internal static Contract SincronizeObject(Contract currentObject, Contract newObject)
-        {
-            currentObject.PersonsId = newObject.PersonsId;
-            currentObject.EstateId = newObject.EstateId;
+        { 
+            currentObject.PersonsByEstate = newObject.PersonsByEstate; 
             currentObject.ContractTypeId = newObject.ContractTypeId;
             currentObject.IsActive = newObject.IsActive;
-            currentObject.MeterId = newObject.MeterId;  
+            currentObject.MeterId = newObject.MeterId;
+            currentObject.InitialMeterRead = newObject.InitialMeterRead;
             return currentObject;
         }
     }

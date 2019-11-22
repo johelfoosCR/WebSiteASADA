@@ -78,33 +78,9 @@ namespace WebAsada.Common
 
         protected async Task<IActionResult> ConfirmEdit<DtoType>(int? id, DtoType dtoObject)
         {
-            if (!id.HasValue) return NotFound();
-
-            T entity = CreateInstanceFromDTO(dtoObject);
-
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                  await _repository.Update(id.Value, entity);
-                }
-                catch (Exception)
-                {
-                    if (!await EntityExists(entity.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-
-                TempData["javascriptMessage"] = Constants.JAVASCRIPT_UPDATE_FUNCTION;
-                return RedirectToAction("Index");
-            }
-
-            return View(dtoObject);
+            if (!id.HasValue) return NotFound(); 
+            T entity = CreateInstanceFromDTO(dtoObject);  
+            return  await ConfirmUpdateConcrete(id, entity, dtoObject); 
         }
 
         #endregion
@@ -129,6 +105,34 @@ namespace WebAsada.Common
             {
                 TempData["javascriptMessage"] = Constants.JAVASCRIPT_SUCCESS_FUNCTION;
                 await _repository.Save(instance);
+                return RedirectToAction("Index");
+            }
+
+            return View(dtoObject);
+        }
+
+
+        protected async Task<IActionResult> ConfirmUpdateConcrete<DtoType>(int? id, T entity, DtoType dtoObject)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                  await _repository.Update(id.Value, entity);
+                }
+                catch (Exception ex)
+                {
+                    if (!await EntityExists(entity.Id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+
+                TempData["javascriptMessage"] = Constants.JAVASCRIPT_UPDATE_FUNCTION;
                 return RedirectToAction("Index");
             }
 

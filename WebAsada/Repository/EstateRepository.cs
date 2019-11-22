@@ -5,7 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using WebAsada.Common;
 using WebAsada.Data;
-using WebAsada.Models;
+using WebAsada.Models; 
 
 namespace WebAsada.Repository
 {  
@@ -25,13 +25,12 @@ namespace WebAsada.Repository
                                               .Include(m => m.PersonsByEstateCollection)
                                               .ThenInclude(x => x.Person)
                                               .FirstOrDefaultAsync(); 
-        } 
-
+        }
+           
         public override async Task Update(int id, Estate newCharge)
         {
             MarkAsUpdated(Estate.SincronizeObject(currentState: await GetById(id), newCharge));
             await SaveChanges();
-        }
-         
+        } 
     }
 }
