@@ -46,9 +46,12 @@ namespace WebAsada.Models
          
         internal static Contract SincronizeObject(Contract currentObject, Contract newObject)
         { 
-            currentObject.PersonsByEstate = newObject.PersonsByEstate; 
+            currentObject.PersonsByEstate = newObject.PersonsByEstate;
+            currentObject.PersonsId = newObject.PersonsId;
+            currentObject.EstateId = newObject.EstateId;
             currentObject.ContractTypeId = newObject.ContractTypeId;
             currentObject.IsActive = newObject.IsActive;
+            currentObject.DoubleBasicCharge = newObject.DoubleBasicCharge;
             currentObject.MeterId = newObject.MeterId;
             currentObject.InitialMeterRead = newObject.InitialMeterRead;
             return currentObject;
