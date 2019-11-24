@@ -9,6 +9,12 @@
 
   <ItemGroup>
     <Compile Remove="Controllers\EntitiesController.cs" />
+    <Compile Remove="Migrations\20191123172740_datos.cs" />
+    <Compile Remove="Migrations\20191123172740_datos.Designer.cs" />
+    <Compile Remove="Migrations\20191123172859_Contract_status.cs" />
+    <Compile Remove="Migrations\20191123172859_Contract_status.Designer.cs" />
+    <Compile Remove="Migrations\20191124044125_receipts.cs" />
+    <Compile Remove="Migrations\20191124044125_receipts.Designer.cs" />
   </ItemGroup>
 
 

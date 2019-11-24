@@ -30,8 +30,8 @@ namespace WebAsada.Repository
                                              .Select(x => SelectItemVM<int>.Create(x.Id, x.SerialNumber))
                                              .ToListAsync();
             return data;
-        }
-          
+        }  
+         
         public override async Task Update(int id, WaterMeter entity)
         {
             WaterMeter.SincronizeObject(currentObject: await GetById(id), newObject: entity);

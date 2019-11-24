@@ -1,10 +1,12 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using WebAsada.Common;
 using WebAsada.Data;
 using WebAsada.Models;
+using WebAsada.ViewModels;
 
 namespace WebAsada.Repository
 {
@@ -34,6 +36,7 @@ namespace WebAsada.Repository
                                               .Include(m => m.Month)
                                               .FirstOrDefaultAsync(m => m.Id == id);
         }
+
 
         public DbSet<IdentityUser> GetUsers()
         {

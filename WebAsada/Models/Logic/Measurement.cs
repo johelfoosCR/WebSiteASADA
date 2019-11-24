@@ -17,6 +17,7 @@ namespace WebAsada.Models
         public DateTime MaxPaymentDate { get; private set; }
         public string MessageOfTheMonth { get; private set; }
         public string PaymentPlace { get; private set; }
+        public bool IsActive { get; private set; }
 
         internal static Measurement SincronizeObject(Measurement currentMeasurement, Measurement newMeasurement)
         { 

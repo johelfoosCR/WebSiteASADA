@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using WebAsada.BaseObjects;
 
@@ -17,6 +18,10 @@ namespace WebAsada.Models
         [Required]
         public int SupplierId { get; private set; }
 
+        [Required]
+        [DefaultValue(0)]
+        public int CurrentRead { get; private set; }
+
         public Supplier Supplier { get; private set; }
 
         [Required]
@@ -33,6 +38,12 @@ namespace WebAsada.Models
             currentObject.SerialNumber = newObject.SerialNumber;
             currentObject.SupplierId = newObject.SupplierId;
             return currentObject;
+        }
+
+        // falta actualizar valor actual al registrar medidor o leerlo al momento de iniciar
+        internal void AddWaterConsume(int waterConsume)
+        {
+            CurrentRead =+ waterConsume;
         }
     }
 }

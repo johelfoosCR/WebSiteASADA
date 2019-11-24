@@ -13,8 +13,8 @@
         columns.Add(model => model.MaxPaymentDate).Titled("Fecha Máxima Pago").Formatted("{0: dd/MM/yyyy}");
         columns.Add(model => model.PaymentPlace).Titled("Lugar de pago");
         columns.Add(model => model.MessageOfTheMonth).Titled("Mensaje del Mes");
-        columns.Add().Titled("Editar").Encoded(false).RenderedAs(o => Html.ActionLink("Editar", "Edit", new { id = o.Id }));
-        columns.Add().Titled("Eliminar").Encoded(false).RenderedAs(o => Html.ActionLink("Eliminar", "Delete", new { id = o.Id }));
+        columns.Add().Titled("Editar").Encoded(false).RenderedAs(o => Html.ActionLink("Editar", "Edit", new { id = o.Id })); 
+        columns.Add().Titled("Recibos").Encoded(false).RenderedAs(o => Html.ActionLink("Recibos", "Edit","Receipt", new { id = o.Id })); 
     })
     .Empty("No se encontraron datos")
     .Filterable()

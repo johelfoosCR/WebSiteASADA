@@ -57,6 +57,38 @@ namespace WebAsada.ViewModels
         [DataType(DataType.MultilineText)]
         public string PaymentPlace { get; set; }
     }
- 
-    
+
+
+    public class MeasurementDetailVM
+    { 
+        public int Id { get; set; }
+
+        public Month Month { get; set; }
+
+        [Required]
+        [DisplayName("Código")]
+        public string MeasurementId => $"{Month?.ShortDesc.ToUpper()}-{Year}";
+
+        [Required]
+        [Range(2000, 2500)]
+        [DisplayName("Año")]
+        public int Year { get; set; }
+         
+        [DataType(DataType.Date)]
+        [DisplayName("Fecha Desde")]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
+        public DateTime DateFrom { get; set; }
+
+        [DataType(DataType.Date)]
+        [DisplayName("Fecha Hasta")]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
+        public DateTime DateTo { get; set; }
+
+        [DataType(DataType.Date)]
+        [DisplayName("Fecha de pago máxima")]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
+        public DateTime MaxPaymentDate { get; set; }
+         
+    }
+
 }

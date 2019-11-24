@@ -1,59 +1,135 @@
-﻿@model WebAsada.Models.Receipt
+﻿@model WebAsada.ViewModels.ReceiptVM
+<partial name="_PageTitle" model="@("Registro de Recibos")" />
 
-@{
-    ViewData["Title"] = "Edit";
-}
-
-<h1>Edit</h1>
-
-<h4>Receipt</h4>
-<hr />
 <div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="NewRead" class="control-label"></label>
-                <input asp-for="NewRead" class="form-control" />
-                <span asp-validation-for="NewRead" class="text-danger"></span>
+    <div class="col-md-12">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <input id="receiptIdInput" asp-for="Id" type="hidden" class="form-control" />
+        <div class="row">
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label class="control-label">Código</label>
+                    <input disabled value="@(Model.Measurement.Month.Nemotecnico + "-"+ Model.Measurement.Year)" class="form-control" />
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="TotalAmount" class="control-label"></label>
-                <input asp-for="TotalAmount" class="form-control" />
-                <span asp-validation-for="TotalAmount" class="text-danger"></span>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label class="control-label">Fecha de Pago</label>
+                    <input disabled value="@(Model.Measurement.MaxPaymentDate.ToString("dd/MM/yyyy"))" class="form-control" />
+                </div>
             </div>
-            <input type="hidden" asp-for="Id" />
-            <div class="form-group">
-                <label asp-for="RegisterUserId" class="control-label"></label>
-                <select asp-for="RegisterUserId" class="form-control" asp-items="ViewBag.RegisterUserId"></select>
-                <span asp-validation-for="RegisterUserId" class="text-danger"></span>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label class="control-label">Fecha Desde</label>
+                    <input disabled value="@(Model.Measurement.DateFrom.ToString("dd/MM/yyyy"))" class="form-control" />
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="RegisterDatime" class="control-label"></label>
-                <input asp-for="RegisterDatime" class="form-control" />
-                <span asp-validation-for="RegisterDatime" class="text-danger"></span>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label class="control-label">Fecha Hasta</label>
+                    <input disabled value="@(Model.Measurement.DateTo.ToString("dd/MM/yyyy"))" class="form-control" />
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="UpdateUserId" class="control-label"></label>
-                <select asp-for="UpdateUserId" class="form-control" asp-items="ViewBag.UpdateUserId"></select>
-                <span asp-validation-for="UpdateUserId" class="text-danger"></span>
+        </div>
+        <hr />
+        <div class="row">
+            <div class="col-md-7">
+                <div class="form-group">
+                    <label asp-for="Contract" class="control-label"></label>
+                    <select id="ContractSelect" asp-for="Contract" data-live-search="true" class="form-control" asp-items="ViewBag.ContractCollection"></select>
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="UpdateDateTime" class="control-label"></label>
-                <input asp-for="UpdateDateTime" class="form-control" />
-                <span asp-validation-for="UpdateDateTime" class="text-danger"></span>
+        </div>
+
+        <div class="row">
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label asp-for="NewRead" class="control-label"></label>
+                    <input id="newReadInput" asp-for="NewRead" class="form-control" />
+                </div>
             </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label asp-for="CurrentRead" class="control-label"></label>
+                    <input asp-for="CurrentRead" readonly class="form-control" />
+                </div>
             </div>
-        </form>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label class="control-label">Consumo m3</label>
+                    <input value="@(Model.NewRead - Model.CurrentRead)" readonly class="form-control" />
+                </div>
+            </div>  
+            <div class="col-md-3 vertical-align">
+                <div class="form-group">
+                    <a id="addReceipt" class="btn btn-info" href="#">Agregar</a>
+                    <a asp-action="Index" asp-controller="Measurements" class="btn btn-primary">Regresar</a>
+                </div>
+            </div>
+        </div>
+         
+        <br />
+        <div class="row">
+            <div class="col-md-12">
+                @(Html
+                        .Grid(Model.Receipts)
+                        .Build(columns =>
+                        {
+                            columns.Add(model => model.FullName).Titled("Nombre");
+                            columns.Add(model => model.MeterSerialNumber).Titled("Medidor");
+                            columns.Add(model => model.CurrentRead).Titled("Lectura Actual");
+                            columns.Add(model => model.NewRead).Titled("Nueva Actual");
+                            columns.Add(model => model.CubicMetersConsume).Titled("Consumo m3");
+                            columns.Add(model => model.TotalAmount).Titled("Monto Total");
+                            columns.Add().Titled("Editar").Encoded(false).RenderedAs(model => $"<a class='deleteFunction' value='{model.ReceiptId}' href='#'>Eliminar</a>");
+                        })
+                        .Id("receiptGrid")
+                        .Empty("No se encontraron datos")
+                        .Filterable()
+                        .Sortable()
+                        .Pageable(pager =>
+                        { 
+                            pager.RowsPerPage = 10;
+                        })
+                )
+            </div>
+        </div>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+<script>
+    $(document).ready(function () {
+        $('#addReceipt').click(function (e) {
+            e.preventDefault();
+            executeWhitConfirmation("/Receipt/Add", "question", "Desea Registrar el Recibo seleccionado de la lectura actual?", {
+                Measurement: {
+                    Id: $("#receiptIdInput").val()
+                },
+                Contract: {
+                    Id: $("#ContractSelect option:selected").val()
+                },
+                NewRead: $("#newReadInput").val()
+            }, function () {
+                location.reload();
+            });
+        });
+
+        $("body").on("click", "#receiptGrid .deleteFunction", function () {
+            console.log("click");
+            console.log(parseInt($(this).attr("value")));
+
+            executeWhitConfirmation("/Receipt/Delete", "question", "Desea Eliminar el Recibo seleccionado de la lectura actual?", { 
+                id : parseInt($(this).attr("value"))
+            }, function () {
+                location.reload();
+            });
+
+        });
+    });
+
+</script>
 }

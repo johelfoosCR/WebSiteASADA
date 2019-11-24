@@ -13,12 +13,13 @@ namespace WebAsada.Models
                                       bool isActive = true) {
             return new Contract()
             {
-                PersonsByEstate = personsByEstate, 
-                ContractTypeId = contractType.Id,  
+                PersonsByEstate = personsByEstate,
+                ContractTypeId = contractType.Id,
                 MeterId = meter.Id,
                 InitialMeterRead = initialMeterRead,
                 DoubleBasicCharge = doubleBasicCharge,
-                IsActive = isActive
+                IsActive = isActive,
+                EmissionDate = DateTime.Now
             };
         }
 

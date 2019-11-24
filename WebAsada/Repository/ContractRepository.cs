@@ -24,12 +24,20 @@ namespace WebAsada.Repository
                                              .ThenInclude(x => x.Estate)
                                              .Include(x => x.PersonsByEstate)
                                              .ThenInclude(x => x.Person)
-                                             .Include(x => x.Meter)
-                                             //.Select(x => new ContractVM() { 
-                                             //    Meter = x.Meter,
-                                             //    IsActive = x.IsActive
-                                             //})
+                                             .Include(x => x.Meter) 
                                              .ToListAsync(); 
+        }
+
+        public List<SelectItemVM<int>> GetValidData()
+        {
+            return _dbContext.Contract.Include(x => x.PersonsByEstate)
+                                                .ThenInclude(x => x.Estate)
+                                            .Include(x => x.PersonsByEstate)
+                                                .ThenInclude(x => x.Person)
+                                            .Include(x => x.Meter)
+                                            .Where(x => x.IsActive.Equals(true))
+                                            .Select(x => SelectItemVM<int>.Create(x.Id, $"{x.PersonsByEstate.Person.FullName} / {x.PersonsByEstate.Estate.Alias} / {x.Meter.SerialNumber}" ))
+                                            .ToList();
         }
 
         public async Task<IEnumerable<WaterMeter>> GetValidWaterMeterToView()
@@ -44,6 +52,5 @@ namespace WebAsada.Repository
             await SaveChanges(); 
         }
          
-    }
-
+    } 
 }

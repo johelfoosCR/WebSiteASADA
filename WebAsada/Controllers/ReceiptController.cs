@@ -11,39 +11,48 @@ namespace WebAsada.Controllers
     public class ReceiptController : BasicViewControllerActions<Receipt>
     {
         private readonly ReceiptRepository _receiptRepository;
-        private const string ATTRIBUTES_TO_BIND = "NewRead,Measurement,Contract"; 
+        private readonly ContractRepository _contractRepository;
+        private readonly MeasurementRepository _measurementRepository;
 
-        public ReceiptController(ReceiptRepository receiptRepository) : base(receiptRepository)
+        public ReceiptController(ReceiptRepository receiptRepository, ContractRepository contractRepository, MeasurementRepository measurementRepository) : base(receiptRepository)
         {
             _receiptRepository = receiptRepository;
+            _contractRepository = contractRepository;
+            _measurementRepository = measurementRepository;
         }
 
-        public async Task<IActionResult> Index() => await GetIndexViewWhitAllData<ReceiptVM>();
-
-        public async Task<IActionResult> Details(int? id) => await GetViewByObjectId<ReceiptVM>(id);
-
-        public IActionResult Create() => GetView(RefreshCollections);
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind(ATTRIBUTES_TO_BIND)] ReceiptVM ReceiptVM) => await ConfirmSave(ReceiptVM, RefreshCollections);
-
-        public async Task<IActionResult> Edit(int? id) => await GetViewByObjectId<ReceiptVM>(id, RefreshCollections);
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind(ATTRIBUTES_TO_BIND)] ReceiptVM ReceiptVM) => await ConfirmEdit(id, ReceiptVM, RefreshCollections);
-
-        public async Task<IActionResult> Delete(int? id) => await GetViewByObjectId<ReceiptVM>(id);
-
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id) => await ConfirmDelete(id);
-
-        private void RefreshCollections()
+        public async Task<IActionResult> Edit(int? id)
         {
-            ViewData["RegisterUserId"] = new SelectList(_receiptRepository.GetUsers(), "Id", "UserName");
-            ViewData["UpdateUserId"] = new SelectList(_receiptRepository.GetUsers(), "Id", "UserName");  
+            var measurement = await _measurementRepository.GetById(id.Value);
+            var receipts = await _receiptRepository.GetByMeasurement(measurement);
+
+            var receipt = new ReceiptVM() { Measurement = new MeasurementDetailVM() { Id = measurement.Id,
+                                                                                      DateFrom =  measurement.DateFrom,
+                                                                                      DateTo = measurement.DateTo,
+                                                                                      MaxPaymentDate = measurement.MaxPaymentDate,
+                                                                                      Month = measurement.Month,
+                                                                                      Year = measurement.Year}, 
+                                            Receipts = receipts };
+
+            ViewData["ContractCollection"] = new SelectList(_contractRepository.GetValidData(), "Value", "Text");
+            return View(receipt);
         }
+
+        [HttpPost]
+        public async Task<IActionResult> Add(ReceiptVM receiptVM)
+        {
+            var measurement = await _measurementRepository.GetById(receiptVM.Measurement.Id);
+            var contract = await _contractRepository.GetById(receiptVM.Contract.Id);  
+            await _receiptRepository.Save(Receipt.Create(measurement, contract, receiptVM.NewRead)); 
+            return Ok();
+        }
+         
+        public async Task<IActionResult> Delete(int? id)
+        {
+            if (!id.HasValue) return NotFound(); 
+            await _receiptRepository.Delete(id.Value); 
+            return Ok();
+        }
+
     }
 }

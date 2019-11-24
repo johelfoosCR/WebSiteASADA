@@ -29,6 +29,12 @@ namespace WebAsada.ViewModels
         public WaterMeter Meter { get; set; }
 
         public PersonsByEstate PersonsByEstate{ get; set; }
+         
+        [Required]
+        [DataType(DataType.Date)]
+        [DisplayName("Fecha de Emision")]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
+        public DateTime EmissionDate { get; set; }
 
         [DisplayName("Lectura Medidor")]
         public int InitialMeterRead { get; set; }

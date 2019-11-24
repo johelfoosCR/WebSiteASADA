@@ -11,6 +11,7 @@ using WebAsada.Data;
 using WebAsada.Helpers;
 using WebAsada.Interfaces;
 using WebAsada.Repository;
+using WebAsada.Services;
 
 namespace WebAsada
 {
@@ -59,6 +60,7 @@ namespace WebAsada
             services.AddTransient<ContractRepository>();
 
             services.AddTransient<ILoggedUserReader, LoggedUser>();
+            services.AddTransient<IYesNoOptions, YesNoOptions>(); 
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }

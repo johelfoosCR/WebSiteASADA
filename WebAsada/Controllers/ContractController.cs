@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System;
 using System.Threading.Tasks;
 using WebAsada.Common; 
 using WebAsada.Models;
@@ -10,8 +11,7 @@ namespace WebAsada.Controllers
 {
     public class ContractController : BasicViewControllerActions<Contract>
     {
-        private const string ATTRIBUTES_TO_BIND = "PersonId,ContractTypeId,EstateId,MeterId,InitialMeterRead,DoubleBasicCharge,IsActive";
-        private readonly ContractRepository _contractRepository;
+        private const string ATTRIBUTES_TO_BIND = "PersonId,ContractTypeId,EstateId,MeterId,InitialMeterRead,DoubleBasicCharge,IsActive"; 
         private readonly PersonRepository _personRepository;
         private readonly WaterMeterRepository _waterMeterRepository;
         private readonly ContractTypeRepository _contractTypeRepository;
@@ -20,8 +20,7 @@ namespace WebAsada.Controllers
 
         public ContractController(ContractRepository contractRepository, PersonRepository personRepository, 
                                   WaterMeterRepository waterMeterRepository, ContractTypeRepository contractTypeRepository,
-                                  PersonsByEstateRepository personsByEstateRepository, EstateRepository estateRepository) : base(contractRepository) {
-            _contractRepository = contractRepository;
+                                  PersonsByEstateRepository personsByEstateRepository, EstateRepository estateRepository) : base(contractRepository) { 
             _personRepository = personRepository;
             _waterMeterRepository = waterMeterRepository;
             _contractTypeRepository = contractTypeRepository;
@@ -30,8 +29,12 @@ namespace WebAsada.Controllers
         }
 
         public async Task<IActionResult> Index() => await GetIndexViewWhitAllData<ContractVM>();
-
-        public IActionResult Create() => GetView(RefreshCollections);
+         
+        public IActionResult Create()
+        {
+            RefreshCollections();
+            return View(new ContractVM() { EmissionDate =  DateTime.Now });
+        }
 
         public async Task<IActionResult> Details(int? id) => await GetViewByObjectId<ContractVM>(id);
 

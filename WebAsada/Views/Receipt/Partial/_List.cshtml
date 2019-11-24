@@ -1,0 +1,39 @@
+﻿@model List<WebAsada.ViewModels.ReceiptItemVM>
+
+<table id="receipt" class="table table-fluid table-striped">
+    <thead>
+        <tr>
+            <th>
+                Persona 
+            </th>
+            <th>
+                Medidor
+            </th>
+            <th>
+                Lectura
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @for (var i = 0; i < Model?.Count(); i++)
+        {
+        <tr>
+            @* <input data-val="true" name="@(ViewData["attributeName"].ToString())[@i].Id" type="hidden" value="@(Model[i].Id)" />*@
+
+            <td>
+                @Html.DisplayFor(modelItem => modelItem[i].FullName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => modelItem[i].MeterSerialNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => modelItem[i].NewRead)
+            </td>
+            <td>
+                <a class="deleteFunction" value="@(Model[i].ReceiptId)" href="#">Eliminar</a>
+            <td>
+        </tr>
+        }
+    </tbody>
+</table> 

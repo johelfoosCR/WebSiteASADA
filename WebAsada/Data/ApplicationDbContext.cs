@@ -30,8 +30,15 @@ namespace WebAsada.Data
 
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
-            ProcessSaveChanges();
-            return base.SaveChangesAsync(cancellationToken);
+            try
+            {
+                ProcessSaveChanges();
+                return base.SaveChangesAsync(cancellationToken);
+            }
+            catch (Exception ex) {
+                var message = ex.Message;
+                throw;                
+            }
         }
 
         private void ProcessSaveChanges() {

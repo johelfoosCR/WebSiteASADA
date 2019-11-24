@@ -11,8 +11,8 @@
         @for (var i = 0; i < Model?.Count(); i++)
         {
             <tr>
-                <input data-val="true" name="@(ViewData["attributeName"].ToString())[@i].Id" type="hidden" value="@(Model[i].Id)">
-
+                <input data-val="true" name="@(ViewData["attributeName"].ToString())[@i].Id" type="hidden" value="@(Model[i].Id)" />
+                 
                 <td>
                     @Html.DisplayFor(modelItem => modelItem[i].DisplayValue)
                 </td>

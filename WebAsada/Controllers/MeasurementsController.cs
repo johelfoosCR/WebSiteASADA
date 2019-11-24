@@ -21,9 +21,7 @@ namespace WebAsada.Controllers
         }
 
         public async Task<IActionResult> Index() => await GetIndexViewWhitAllData<MeasurementVM>();
-
-        public async Task<IActionResult> Details(int? id) => await GetViewByObjectId<MeasurementVM>(id);
-
+         
         public IActionResult Create() => GetView(RefreshCollections);
 
         [HttpPost]
@@ -35,12 +33,6 @@ namespace WebAsada.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind(ATTRIBUTES_TO_BIND)] MeasurementVM measurementVM) => await ConfirmEdit(id, measurementVM, RefreshCollections);
-
-        public async Task<IActionResult> Delete(int? id) => await GetViewByObjectId<MeasurementVM>(id);
-
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id) => await ConfirmDelete(id);
          
         private void RefreshCollections()
         { 

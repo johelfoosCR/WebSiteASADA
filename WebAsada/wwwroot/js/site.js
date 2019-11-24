@@ -48,6 +48,24 @@
         })
     };  
 
+    //doPost = function (route, datatosend, callback) {
+    //    $.ajax({
+    //        type: "POST", // perform POST request
+    //        url: route, 
+    //        data: JSON.stringify(datatosend), // serialize your data into JSON
+    //        contentType: 'application/json; charset=utf-8',
+    //        dataType: 'json',
+    //        success: function (dataas) {
+    //            callback(dataas);
+    //        },
+    //        error: function () {
+    //            alert("failure");
+    //        }
+    //    });
+    // };   
+   
+
+
 });
 
 

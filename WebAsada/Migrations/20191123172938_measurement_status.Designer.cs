@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebAsada.Data;
 
 namespace WebAsada.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20191123172938_measurement_status")]
+    partial class measurement_status
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -751,7 +753,7 @@ namespace WebAsada.Migrations
 
                     b.Property<int?>("MeasurementId");
 
-                    b.Property<int>("NewRead");
+                    b.Property<double>("NewRead");
 
                     b.Property<DateTime>("RegisterDatime");
 
@@ -829,8 +831,6 @@ namespace WebAsada.Migrations
                     b.Property<DateTime>("BougthDate");
 
                     b.Property<string>("Comments");
-
-                    b.Property<int>("CurrentRead");
 
                     b.Property<bool>("IsActive");
 
