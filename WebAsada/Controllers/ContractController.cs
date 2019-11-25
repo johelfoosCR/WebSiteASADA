@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using WebAsada.Common; 
 using WebAsada.Models;
@@ -86,16 +88,18 @@ namespace WebAsada.Controllers
 
 
         [HttpGet]
-        public ActionResult GetEstatesByPerson(int id)
+        public async Task<IActionResult> GetEstatesByPerson(int id)
         { 
-            return Json(new SelectList(_personsByEstateRepository.GetValidEstatesByPersonId(id).Result, "Value", "Text"));
+            if (id > 0)  return Json(new SelectList(await _personsByEstateRepository.GetValidEstatesByPersonId(id), "Value", "Text"));
+
+            return Json(new EmptyResult()); 
         }
 
-        private void RefreshCollections()
+        private async void RefreshCollections()
         {
-            ViewData["PersonCollection"] = new SelectList(_personRepository.GetValidPersonToView().Result, "Id", "DisplayValue");
-            ViewData["MeterCollection"] = new SelectList(_waterMeterRepository.GetValidWaterMeterToView().Result, "Value", "Text");
-            ViewData["ContractTypeCollection"] = new SelectList(_contractTypeRepository.GetGeneralEntityValidData().Result, "Value", "Text"); 
+            ViewData["PersonCollection"] = new SelectList(await _personRepository.GetValidPersonToView(), "Id", "DisplayValue", selectedValue:null);
+            ViewData["MeterCollection"] = new SelectList(await _waterMeterRepository.GetValidWaterMeterToView(), "Value", "Text");
+            ViewData["ContractTypeCollection"] = new SelectList(await _contractTypeRepository.GetGeneralEntityValidData(), "Value", "Text"); 
         } 
     }
 }

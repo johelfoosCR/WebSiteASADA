@@ -67,6 +67,7 @@ namespace WebAsada.Data
         }
 
         public DbSet<Charge> Charge { get; set; }
+        public DbSet<ChargeType> ChargeType { get; set; }
         public DbSet<Entity> Entity { get; set; }
         public DbSet<PersonType> CustomerType { get; set; }
         public DbSet<Month> Month { get; set; }

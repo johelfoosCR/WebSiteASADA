@@ -30,11 +30,19 @@ namespace WebAsada.Repository
 
         public async Task<IEnumerable<PersonItemVM>> GetValidPersonToView()
         {
-            return await _dbContext.Person.Where(x => x.IsActive.Equals(true))
+            var personItems = await _dbContext.Person.Where(x => x.IsActive.Equals(true))
                                           .Select(x => new { x.Id, DisplayValue = x.ToString()})
                                           .Select(x => new PersonItemVM { Id =x.Id,
                                                                           DisplayValue = x.DisplayValue})
                                           .ToListAsync();
+
+            personItems.Add(new PersonItemVM
+            {
+                Id = 0,
+                DisplayValue = "Seleccione una opción"
+            });
+
+            return personItems;
          }
 
         public async override Task<Person> GetById(int id)

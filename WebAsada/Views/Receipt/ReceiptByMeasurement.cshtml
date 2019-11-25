@@ -51,13 +51,13 @@
             <div class="col-md-3">
                 <div class="form-group">
                     <label asp-for="CurrentRead" class="control-label"></label>
-                    <input asp-for="CurrentRead" readonly class="form-control" />
+                    <input id="currentReadInput"  asp-for="CurrentRead" readonly class="form-control" />
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="form-group">
                     <label class="control-label">Consumo m3</label>
-                    <input value="@(Model.NewRead - Model.CurrentRead)" readonly class="form-control" />
+                    <input id="totalConsumeInput" value="0" readonly class="form-control" />
                 </div>
             </div>  
             <div class="col-md-3 vertical-align">
@@ -67,7 +67,6 @@
                 </div>
             </div>
         </div>
-         
         <br />
         <div class="row">
             <div class="col-md-12">
@@ -79,8 +78,7 @@
                             columns.Add(model => model.MeterSerialNumber).Titled("Medidor");
                             columns.Add(model => model.CurrentRead).Titled("Lectura Actual");
                             columns.Add(model => model.NewRead).Titled("Nueva Actual");
-                            columns.Add(model => model.CubicMetersConsume).Titled("Consumo m3");
-                            columns.Add(model => model.TotalAmount).Titled("Monto Total");
+                            columns.Add(model => model.CubicMetersConsume).Titled("Consumo m3"); 
                             columns.Add().Titled("Editar").Encoded(false).RenderedAs(model => $"<a class='deleteFunction' value='{model.ReceiptId}' href='#'>Eliminar</a>");
                         })
                         .Id("receiptGrid")
@@ -103,6 +101,10 @@
 
 <script>
     $(document).ready(function () {
+        $('#newReadInput').keyup(function (e) {
+            $('#totalConsumeInput').val(parseInt($('#currentReadInput').val()) + parseInt($('#newReadInput').val()));
+        });
+
         $('#addReceipt').click(function (e) {
             e.preventDefault();
             executeWhitConfirmation("/Receipt/Add", "question", "Desea Registrar el Recibo seleccionado de la lectura actual?", {

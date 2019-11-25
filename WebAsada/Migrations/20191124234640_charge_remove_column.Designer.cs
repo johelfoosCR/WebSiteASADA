@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebAsada.Data;
 
 namespace WebAsada.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20191124234640_charge_remove_column")]
+    partial class charge_remove_column
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -192,8 +194,6 @@ namespace WebAsada.Migrations
 
                     b.Property<string>("ChargeCode");
 
-                    b.Property<int>("ChargeTypeId");
-
                     b.Property<double>("CubicMeterFrom");
 
                     b.Property<double>("CubicMeterTo");
@@ -220,8 +220,6 @@ namespace WebAsada.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ChargeTypeId");
-
                     b.HasIndex("RegisterUserId");
 
                     b.HasIndex("UpdateUserId");
@@ -239,8 +237,6 @@ namespace WebAsada.Migrations
 
                     b.Property<bool>("IsActive");
 
-                    b.Property<bool>("IsVATCharge");
-
                     b.Property<string>("LongDesc");
 
                     b.Property<string>("Nemotecnico");
@@ -256,8 +252,6 @@ namespace WebAsada.Migrations
                     b.Property<DateTime>("UpdateDateTime");
 
                     b.Property<string>("UpdateUserId");
-
-                    b.Property<double>("VatRate");
 
                     b.HasKey("Id");
 
@@ -954,11 +948,6 @@ namespace WebAsada.Migrations
 
             modelBuilder.Entity("WebAsada.Models.Charge", b =>
                 {
-                    b.HasOne("WebAsada.Models.ChargeType", "ChargeType")
-                        .WithMany()
-                        .HasForeignKey("ChargeTypeId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "RegisterUser")
                         .WithMany()
                         .HasForeignKey("RegisterUserId");

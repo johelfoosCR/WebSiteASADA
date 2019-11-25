@@ -53,13 +53,13 @@
     <div class="col-md-2 vertical-align">
         <div class="form-group">
             <label asp-for="DoubleBasicCharge" class="control-label"></label>
-            <select data-live-search="true" asp-for="DoubleBasicCharge" asp-items="yesNoCollection.GetOptions()" class="form-control"></select>
+            <select data-live-search="true" asp-for="DoubleBasicCharge" asp-items="yesNoCollection.GetOptions(addDefaultOption:false)" class="form-control"></select>
             <span asp-validation-for="DoubleBasicCharge" class="text-danger"></span>
         </div>
     </div><div class="col-md-2 vertical-align">
         <div class="form-group">
             <label asp-for="IsActive" class="control-label"></label>
-            <select data-live-search="true" asp-for="IsActive" asp-items="yesNoCollection.GetOptions()" class="form-control"></select>
+            <select data-live-search="true" asp-for="IsActive" asp-items="yesNoCollection.GetOptions(addDefaultOption:false)" class="form-control"></select>
             <span asp-validation-for="IsActive" class="text-danger"></span>
         </div>
     </div>

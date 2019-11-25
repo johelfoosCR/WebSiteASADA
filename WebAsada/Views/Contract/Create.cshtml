@@ -20,17 +20,18 @@
                 if (selectedPersonId != null && selectedPersonId != '') {
 
                     $.getJSON('@Url.Action("GetEstatesByPerson")', { id: selectedPersonId }, function (estates) {
+                        var estatesSelect = $('#EstatesSelect');
+                        estatesSelect.empty();
+                         
                         if (estates != null && !jQuery.isEmptyObject(estates))
-                        {
-                            var estatesSelect = $('#EstatesSelect');
-                            estatesSelect.empty();
+                        { 
                             $.each(estates, function (index, item) {
                                 estatesSelect.append(
                                     $("<option></option>").attr("value", item.value).text(item.text)
                                 );
                             });
-                            $('#EstatesSelect').selectpicker('refresh');
                         };
+                         $('#EstatesSelect').selectpicker('refresh');
                     });
                 }
             });

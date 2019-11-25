@@ -1,0 +1,44 @@
+﻿@model WebAsada.ViewModels.DetailsChargeTypeVM
+@inject WebAsada.Services.IYesNoOptions yesNoCollection
+
+<partial name="_PageTitle" model="@("Modificar Tipo Persona")" />
+<div class="row">
+    <div class="col-md-11">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label asp-for="ChargeTypeCode" class="control-label"></label>
+                        <input asp-for="ChargeTypeCode" class="form-control" />
+                        <span asp-validation-for="ChargeTypeCode" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label asp-for="IsVATCharge" class="control-label"></label>
+                        <select id="VatCategoryOption" asp-for="IsVATCharge" asp-items="yesNoCollection.GetOptions(addDefaultOption:false)" class="form-control"></select>
+                        <span asp-validation-for="IsVATCharge" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label asp-for="VatRate" class="control-label"></label>
+                        <input id="VatRateInput" disabled asp-for="VatRate" class="form-control" />
+                        <span asp-validation-for="VatRate" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+            <partial name="_GeneralEntityLayout" model="Model" />
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>  
+        $("#VatCategoryOption").change(function () {
+            $('#VatRateInput').prop('disabled', !($('#VatCategoryOption').val() === "True"));
+        });
+    </script>
+}

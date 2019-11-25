@@ -1,0 +1,42 @@
+﻿@model WebAsada.ViewModels.IChargeVM
+@inject WebAsada.Services.IYesNoOptions yesNoCollection
+
+<div class="row">
+    <div class="col-md-3">
+        <div class="form-group">
+            <label asp-for="ChargeCode" class="control-label"></label>
+            <input asp-for="ChargeCode" class="form-control" />
+            <span asp-validation-for="ChargeCode" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="form-group">
+            <label asp-for="Price" class="control-label"></label>
+            <input asp-for="Price" class="form-control" />
+            <span asp-validation-for="Price" class="text-danger"></span>
+        </div>
+    </div> 
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="form-group">
+            <label asp-for="ChargeTypeId" class="control-label"></label>
+            <select id="chargeTypeSelect" asp-for="ChargeTypeId" class="form-control" asp-items="ViewBag.ChargeTypeCollection"></select>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="form-group">
+            <label asp-for="CubicMeterFrom" class="control-label"></label>
+            <input id="cubicMeterFromInput" asp-for="CubicMeterFrom" class="form-control" />
+            <span asp-validation-for="CubicMeterFrom" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="form-group">
+            <label asp-for="CubicMeterTo" class="control-label"></label>
+            <input id="cubicMeterToInput" asp-for="CubicMeterTo" class="form-control" />
+            <span asp-validation-for="CubicMeterTo" class="text-danger"></span>
+        </div>
+    </div>
+</div>

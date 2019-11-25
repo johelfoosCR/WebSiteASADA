@@ -21,7 +21,7 @@ namespace WebAsada.Controllers
             _measurementRepository = measurementRepository;
         }
 
-        public async Task<IActionResult> Edit(int? id)
+        public async Task<IActionResult> ReceiptByMeasurement(int? id)
         {
             var measurement = await _measurementRepository.GetById(id.Value);
             var receipts = await _receiptRepository.GetByMeasurement(measurement);

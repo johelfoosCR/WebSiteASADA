@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebAsada.Data;
 
 namespace WebAsada.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20191125002011_charge_add_column_charge_type")]
+    partial class charge_add_column_charge_type
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -200,6 +202,8 @@ namespace WebAsada.Migrations
 
                     b.Property<bool>("IsActive");
 
+                    b.Property<bool>("IsVATCharge");
+
                     b.Property<string>("LongDesc");
 
                     b.Property<string>("Nemotecnico");
@@ -217,6 +221,8 @@ namespace WebAsada.Migrations
                     b.Property<DateTime>("UpdateDateTime");
 
                     b.Property<string>("UpdateUserId");
+
+                    b.Property<double>("VatRate");
 
                     b.HasKey("Id");
 
@@ -239,8 +245,6 @@ namespace WebAsada.Migrations
 
                     b.Property<bool>("IsActive");
 
-                    b.Property<bool>("IsVATCharge");
-
                     b.Property<string>("LongDesc");
 
                     b.Property<string>("Nemotecnico");
@@ -256,8 +260,6 @@ namespace WebAsada.Migrations
                     b.Property<DateTime>("UpdateDateTime");
 
                     b.Property<string>("UpdateUserId");
-
-                    b.Property<double>("VatRate");
 
                     b.HasKey("Id");
 

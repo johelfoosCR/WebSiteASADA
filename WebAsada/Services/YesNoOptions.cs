@@ -5,12 +5,14 @@ namespace WebAsada.Services
 {
     public class YesNoOptions : IYesNoOptions
     {
-        public SelectList GetOptions()
+        public SelectList GetOptions(bool addDefaultOption)
         {
-            return new SelectList(new List<SelectListItem>() {
-                new SelectListItem { Text = "Sí", Value = "True"},
-                new SelectListItem { Text = "No", Value = "False"}
-            }, "Value", "Text");
+            var listElements = new List<SelectListItem>();
+            if (addDefaultOption) listElements.Add(new SelectListItem { Text = "Seleccione una opción", Value = "", Selected = true });
+            listElements.Add(new SelectListItem { Text = "Sí", Value = "True", Selected = false });
+            listElements.Add(new SelectListItem { Text = "No", Value = "False", Selected = false }); 
+
+            return new SelectList(listElements, "Value", "Text");
         }
     }
 
@@ -21,6 +23,6 @@ namespace WebAsada.Services
 
     public interface IOptions
     {
-        SelectList GetOptions();
+        SelectList GetOptions(bool addDefaultOption);
     }
 }
