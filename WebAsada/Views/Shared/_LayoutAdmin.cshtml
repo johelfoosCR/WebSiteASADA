@@ -34,17 +34,15 @@
 
                 <ul class="nav">
                     <li class="nav-item active">
-                        <a class="nav-link" href="dashboard.html">
-                            <i class="nc-icon nc-chart-pie-35"></i>
-                            <p>Dashboard</p>
+                        <a class="nav-link" href="@Url.Action("Index", "Dashboard")">
+                            <i class="fas fa-2x fa-chart-line"></i><span style="margin-left:10px">Dashboard</span>
                         </a>
                     </li>
                     <li class="nav-item">
                         <div class="nav-link accordions">
                             <div>
-                                <a data-target="#collapseOne" href="#" data-toggle="collapse">
-                                    <i class="nc-icon nc-chart-pie-35"></i>
-                                    <p>Catalogos</p>
+                                <a data-target="#collapseOne" href="#" data-toggle="collapse"> 
+                                    <i class="fas fa-2x fa-clipboard"></i><span style="margin-left:10px">Catalogos</span> 
                                 </a>
                             </div>
                             <div id="collapseOne" class="card-collapse collapse">
@@ -71,9 +69,8 @@
                     <li class="nav-item">
                         <div class="nav-link accordions">
                             <div>
-                                <a data-target="#collapseRegister" href="#" data-toggle="collapse">
-                                    <i class="nc-icon nc-chart-pie-35"></i>
-                                    <p>Registro</p>
+                                <a data-target="#collapseRegister" href="#" data-toggle="collapse"> 
+                                    <i class="fas fa-2x fa-address-book"></i><span style="margin-left:10px">Registro</span>
                                 </a>
                             </div>
                             <div id="collapseRegister" class="card-collapse collapse">
@@ -94,18 +91,17 @@
                     <li class="nav-item">
                         <div class="nav-link accordions">
                             <div>
-                                <a data-target="#collapseMeasurements" href="#" data-toggle="collapse">
-                                    <i class="nc-icon nc-chart-pie-35"></i>
-                                    <p>Lecturas</p>
+                                <a data-target="#collapseMeasurements" href="#" data-toggle="collapse">     
+                                    <i class="fas fa-2x fa-tachometer-alt"></i><span style="margin-left:10px">Lecturas</span> 
                                 </a>
                             </div>
                             <div id="collapseMeasurements" class="card-collapse collapse">
                                 <div class="card-body">
-                                    @Html.ActionLink("Lectura", "Index", "Measurements") 
+                                    @Html.ActionLink("Lectura", "Index", "Measurements")
                                 </div>
                             </div>
                         </div>
-                    </li> 
+                    </li>
                 </ul>
             </div>
         </div>
@@ -113,22 +109,24 @@
             <!-- Navbar -->
             <nav class="navbar navbar-expand-lg " color-on-scroll="500">
                 <div class="container-fluid">
-                    <a class="navbar-brand" href="#pablo"> Dashboard </a> 
+                    <a class="navbar-brand">Hola @User.Identity.Name!!</a>
                     <div class="collapse navbar-collapse justify-content-end" id="navigation">
-                        <ul class="nav navbar-nav mr-auto"> 
+                        <ul class="nav navbar-nav">
                             <li class="nav-item">
-                                <a class="nav-link" href="#pablo">
-                                    <span class="no-icon">Log out</span>
-                                </a>
+                                <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                                    <button type="submit" class="nav-link btn btn-link">Cerrar Sesión</button>
+                                </form>
                             </li>
                         </ul>
                     </div>
                 </div>
             </nav>
             <!-- End Navbar -->
-            <div> 
-                 @RenderBody() 
-            </div> 
+            <div class="container">
+                <main role="main" class="pb-3">
+                    @RenderBody()
+                </main>
+            </div>
         </div>
     </div>
 
