@@ -1,4 +1,6 @@
-﻿<div class="row">
+﻿@model WebAsada.ViewModels.DashboardVM 
+
+<div class="row">
     <div class="col-md-4">
         <div class="card ">
             <div class="card-header ">
@@ -205,23 +207,22 @@
 
 
 <script>
-window.onload = function() {
 
-var chart = new CanvasJS.Chart("chartContainer", {
-	animationEnabled: true,
-	title: "",
-	data: [{
-		type: "pie",
-		startAngle: 240,
-		yValueFormatString: "##0.00\"%\"",
-		indexLabel: "{label} {y}",
-		dataPoints: [
-			{y: 79.45, label: "Pendiente"},
-			{y: 7.31, label: "Pago"}
-		]
-	}]
-});
-chart.render();
-    
-}
+    window.onload = function () { 
+        var chart = new CanvasJS.Chart("chartContainer", {
+            animationEnabled: true,
+            title: "",
+            data: [{
+                type: "pie",
+                startAngle: 240,
+                yValueFormatString: "##0.00\"%\"",
+                indexLabel: "{label} {y}",
+                dataPoints: [
+                    { y: 45, label: "Pendiente" },
+                    { y: 55, label: "Pago" }
+                ]
+            }]
+        });
+        chart.render();
+    }
 </script>
