@@ -6,15 +6,14 @@
                 <p class="card-category">Last Campaign Performance</p>
             </div>
             <div class="card-body ">
-                <div id="chartPreferences" class="ct-chart ct-perfect-fourth"></div>
+                <div id="chartContainer" style="height: 370px; max-width: 920px; margin: 0px auto;"></div>
                 <div class="legend">
-                    <i class="fa fa-circle text-info"></i> Open
-                    <i class="fa fa-circle text-danger"></i> Bounce
-                    <i class="fa fa-circle text-warning"></i> Unsubscribe
+                    <i class="fa fa-circle text-info"></i> Pendiente
+                    <i class="fa fa-circle text-danger"></i> Pago 
                 </div>
                 <hr>
                 <div class="stats">
-                    <i class="fa fa-clock-o"></i> Campaign sent 2 days ago
+                    <i class="fa fa-clock-o"></i> Total de Recibos por cobrar
                 </div>
             </div>
         </div>
@@ -203,3 +202,26 @@
         </div>
     </div>
 </div>
+
+
+<script>
+window.onload = function() {
+
+var chart = new CanvasJS.Chart("chartContainer", {
+	animationEnabled: true,
+	title: "",
+	data: [{
+		type: "pie",
+		startAngle: 240,
+		yValueFormatString: "##0.00\"%\"",
+		indexLabel: "{label} {y}",
+		dataPoints: [
+			{y: 79.45, label: "Pendiente"},
+			{y: 7.31, label: "Pago"}
+		]
+	}]
+});
+chart.render();
+    
+}
+</script>
