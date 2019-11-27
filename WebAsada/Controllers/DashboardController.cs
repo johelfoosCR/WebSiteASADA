@@ -12,8 +12,13 @@ namespace WebAsada.Controllers
 
         public IActionResult Index()
         {
+            
+            var dashboardVM = new DashboardVM() { 
+                DashboardReceiptsVM = new DashboardReceiptsVM() { TotalReceipts = 120, TotalReceiptsPaid = 50 },
+                ReceiptItemVM = new List<ReceiptItemVM>() { new ReceiptItemVM() {  CurrentRead = 10, FullName = "JOhel", MeterSerialNumber = "wewqeq", NewRead = 30, ReceiptId = 1}   }
+            };
+             
 
-            var dashboardVM = new DashboardVM() { DashboardReceiptsVM = new DashboardReceiptsVM() { TotalReceipts= 120, TotalReceiptsPaid =50 } };
             var a = dashboardVM.DashboardReceiptsVM.TotalReceiptsPaidPercentage;
             var b = dashboardVM.DashboardReceiptsVM.TotalReceiptsPendingPercentage;
 
