@@ -9,7 +9,7 @@ namespace WebAsada.ViewModels
 
         }
 
-        public int MonthId { get; set; } 
+        public string MonthNemotecnico { get; set; } 
 
         public int Year { get; set; }
 

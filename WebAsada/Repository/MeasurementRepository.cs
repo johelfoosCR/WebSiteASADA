@@ -38,6 +38,14 @@ namespace WebAsada.Repository
         }
 
 
+        public async Task<Measurement> GetByMonthAndYear(string monthMnemonic, int year)
+        {
+            return await _dbContext.Measurement.Include(x => x.Month).FirstOrDefaultAsync(m => m.Year == year && 
+                                                                    m.Month.Nemotecnico.Equals(monthMnemonic) &&
+                                                                    m.IsActive == true);
+        }
+
+
         public DbSet<IdentityUser> GetUsers()
         {
             return users;

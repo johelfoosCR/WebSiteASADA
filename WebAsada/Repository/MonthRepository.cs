@@ -9,5 +9,6 @@ namespace WebAsada.Repository
         public MonthRepository(ApplicationDbContext applicationDbContext) : base(applicationDbContext)
         {
         } 
+
     } 
 }
