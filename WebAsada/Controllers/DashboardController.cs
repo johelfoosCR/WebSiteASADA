@@ -24,5 +24,9 @@ namespace WebAsada.Controllers
 
             return View(dashboardVM);
         }
+        public IActionResult Search()
+        {
+
+        }
     }
 }

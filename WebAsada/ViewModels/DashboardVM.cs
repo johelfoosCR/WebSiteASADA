@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace WebAsada.ViewModels
 {
@@ -11,6 +8,10 @@ namespace WebAsada.ViewModels
         {
 
         }
+
+        public int MonthId { get; set; } 
+
+        public int Year { get; set; }
 
         public DashboardReceiptsVM DashboardReceiptsVM { get; set; }
 

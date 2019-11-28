@@ -1,6 +1,24 @@
 ﻿@model WebAsada.ViewModels.DashboardVM
 
 <div class="container">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group">
+                <label asp-for="MonthId" class="control-label"></label>
+                <select asp-for="MonthId" class="form-control" asp-items="ViewBag.MonthId"></select>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <label asp-for="Year" class="control-label"></label>
+                <input asp-for="Year" class="form-control" />
+                <span asp-validation-for="Year" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <input type="submit" value="Buscar" class="btn btn-success" /> 
+        </div>
+    </div>
     <br />
     <div class="row">
         <div class="col-md-12">
@@ -8,9 +26,9 @@
                 .Grid(Model.ReceiptItemVM)
                 .Build(columns =>
                 {
-                    columns.Add(model => model.FullName).Titled("Nombre");
-                    columns.Add(model => model.ReceiptId).Titled("Identificación");
-                    columns.Add(model => model.NewRead).Titled("Telefono");
+                    columns.Add(model => model.FullName).Titled("Clienet");
+                    columns.Add(model => model.ReceiptId).Titled("Recibo");
+                    columns.Add(model => model.NewRead).Titled("Nueva Lectura");
                     columns.Add().Titled("Pagar").Encoded(false).RenderedAs(o => Html.ActionLink("Eliminar", "Delete", new { id = 20 }));
                 })
                 .Empty("No se encontraron datos")
@@ -100,4 +118,4 @@
         });
         chart.render();
     }
-</script>
+</script> 
