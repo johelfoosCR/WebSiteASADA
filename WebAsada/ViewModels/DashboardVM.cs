@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace WebAsada.ViewModels
 {
@@ -6,11 +7,13 @@ namespace WebAsada.ViewModels
     {
         public DashboardVM()
         {
-
+            ReceiptItemVM = new List<ReceiptItemVM>();
         }
 
-        public string MonthNemotecnico { get; set; } 
+        [DisplayName("Mes")]
+        public string MonthNemotecnico { get; set; }
 
+        [DisplayName("Año")]
         public int Year { get; set; }
 
         public DashboardReceiptsVM DashboardReceiptsVM { get; set; }
@@ -20,8 +23,14 @@ namespace WebAsada.ViewModels
 
     public class DashboardReceiptsVM
     {
-        public int TotalReceiptsPaid { get; set; }
-        public int TotalReceipts { get; set; }
+        public DashboardReceiptsVM(int totalReceipts, int totalReceiptsPaid )
+        {
+            TotalReceipts = totalReceipts;
+            TotalReceiptsPaid = totalReceiptsPaid; 
+        }
+
+        public int TotalReceiptsPaid { get; }
+        public int TotalReceipts { get; }
         public int TotalReceiptsPending => TotalReceipts - TotalReceiptsPaid;
         public double TotalReceiptsPaidPercentage => (TotalReceiptsPaid * 100) / TotalReceipts;
         public double TotalReceiptsPendingPercentage => (TotalReceiptsPending * 100) / TotalReceipts;

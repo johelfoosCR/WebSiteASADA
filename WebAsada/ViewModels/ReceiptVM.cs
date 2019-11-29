@@ -39,6 +39,10 @@ namespace WebAsada.ViewModels
         [DisplayName("Nombre Completo")]
         public string FullName { get;  set; }
 
+        [DisplayName("Monto")]
+        public Double Amount { get; set; }
+
+
         [DisplayName("Medidor")]
         public string MeterSerialNumber { get;  set; }
 

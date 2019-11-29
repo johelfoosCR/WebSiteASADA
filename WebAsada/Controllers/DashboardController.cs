@@ -22,28 +22,33 @@ namespace WebAsada.Controllers
             _monthRepository = monthRepository;
         }
 
-        public async Task<IActionResult> Index(DashboardVM dashboardVM = null)
-        {
-            if (!dashboardVM.HasValue())
-            {
-                dashboardVM = new DashboardVM()
-                {
-                    DashboardReceiptsVM = new DashboardReceiptsVM() { TotalReceipts = 120, TotalReceiptsPaid = 50 },
-                    ReceiptItemVM = new List<ReceiptItemVM>() { new ReceiptItemVM() { CurrentRead = 10, FullName = "JOhel", MeterSerialNumber = "wewqeq", NewRead = 30, ReceiptId = 1 } }
-                };
-            }
+        public async Task<IActionResult> Index()
+        { 
             await RefreshCollections();
-
-            return View(dashboardVM);
+            return View(new DashboardVM());
         }
 
         [HttpGet]
         public async Task<IActionResult> Search(DashboardVM dashboardVM)
-        {
+        {   
             var measurement = await _measurementRepository.GetByMonthAndYear(dashboardVM.MonthNemotecnico, dashboardVM.Year);
-            dashboardVM.ReceiptItemVM = await _receiptRepository.GetByMeasurement(measurement);
+            if (measurement.HasValue())
+            {
+                dashboardVM.ReceiptItemVM = await _receiptRepository.GetByMeasurement(measurement);
+                dashboardVM.DashboardReceiptsVM = new DashboardReceiptsVM(totalReceipts:140, totalReceiptsPaid: 45);
+                await RefreshCollections();
+                return View("Index", dashboardVM);
+            }
 
-            return RedirectToAction("Index", dashboardVM);
+            return RedirectToAction("Index");
+        }
+
+
+        [HttpGet]
+        public async Task<IActionResult> Pay(int receiptId, int year, string monthNemotecnico)
+        {
+            await RefreshCollections();
+            return RedirectToAction("Search", new DashboardVM() { MonthNemotecnico = monthNemotecnico, Year = year });
         }
 
         private async Task RefreshCollections()

@@ -1,103 +1,109 @@
 ﻿@model WebAsada.ViewModels.DashboardVM
+<br />
 
 <form asp-action="Search" method="get">
     <div class="container">
         <div class="row">
-            <div class="col-md-4">
-                <div class="form-group">
-                    <label asp-for="MonthNemotecnico" class="control-label"></label>
-                    <select asp-for="MonthNemotecnico" class="form-control" asp-items="ViewBag.MonthCollection"></select>
+            <div class="col">
+                <div class="row">
+                    <div class="col-md-5">
+                        <div class="form-group">
+                            <label asp-for="MonthNemotecnico" class="control-label"></label>
+                            <select asp-for="MonthNemotecnico" class="form-control" asp-items="ViewBag.MonthCollection"></select>
+                        </div>
+                    </div>
+                    <div class="col-md-5">
+                        <div class="form-group">
+                            <label asp-for="Year" class="control-label"></label>
+                            <input asp-for="Year" class="form-control" />
+                            <span asp-validation-for="Year" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-2 vertical-align">
+                        <div class="form-group">
+                            <input type="submit" value="Buscar" class="btn btn-primary" />
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    @(Html
+                          .Grid(Model.ReceiptItemVM)
+                          .Build(columns =>
+                          {
+                              columns.Add(model => model.FullName).Titled("Abonado");
+                              columns.Add(model => model.MeterSerialNumber).Titled("Medidor");
+                              columns.Add(model => model.Amount).Titled("Monto");
+                              columns.Add().Titled("Pagar").Encoded(false).RenderedAs(o => Html.ActionLink("Pagar", "Pay", new { receiptId = o.ReceiptId, 
+                                                                                                                                 year = Model.Year, 
+                                                                                                                                 monthNemotecnico = Model.MonthNemotecnico 
+                              }));
+                          })
+                          .Empty("No se encontraron datos")
+                          .Filterable()
+                          .Sortable()
+                          .Pageable()
+                    )
                 </div>
             </div>
-            <div class="col-md-4">
-                <div class="form-group">
-                    <label asp-for="Year" class="control-label"></label>
-                    <input asp-for="Year" class="form-control" />
-                    <span asp-validation-for="Year" class="text-danger"></span>
+            <div class="col">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card ">
+                            <div class="card-header ">
+                                <h4 class="card-title">Total de Efectivo</h4>  
+                            </div>
+                            <hr />
+                            <div class="card-body" style="font-size: 20px; text-align:center">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        Monto Cobrado
+                                    </div>
+                                    <div class="col-md-6">
+                                        Monto Pendiente
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6" style="color:#2ee82e;">
+                                        65,000.00
+                                    </div>
+                                    <div class="col-md-6" style="color:orangered;">
+                                        500,000.00
+                                    </div>
+                                </div>
+                            </div>
+                            <hr />
+                            <div class="card-footer">
+                                <div class="legend">
+                                    Total a recaudar 565,000.00
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </div>
-            <div class="col-md-2"> 
-                <input type="submit" value="Buscar" class="btn btn-success" />
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card ">
+                            <div class="card-header ">
+                                <h4 class="card-title">Recibos</h4> 
+                            </div>
+                            <hr />
+                            <div class="card-body ">
+                                <div id="chartContainer" style="height: 370px; max-width: 920px; margin-top: -30px;"></div>
+                                <hr />
+                                <div class="legend">
+                                    <i class="fa fa-circle text-info"></i> Pendiente
+                                    <i class="fa fa-circle text-danger"></i> Pago
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-        <br />
-        <div class="row">
-            <div class="col-md-12">
-                @(Html
-                    .Grid(Model.ReceiptItemVM)
-                    .Build(columns =>
-                    {
-                        columns.Add(model => model.FullName).Titled("Clienet");
-                        columns.Add(model => model.ReceiptId).Titled("Recibo");
-                        columns.Add(model => model.NewRead).Titled("Nueva Lectura");
-                        columns.Add().Titled("Pagar").Encoded(false).RenderedAs(o => Html.ActionLink("Eliminar", "Delete", new { id = 20 }));
-                    })
-                    .Empty("No se encontraron datos")
-                    .Filterable()
-                    .Sortable()
-                    .Pageable()
-                )
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-6">
-                <div class="card ">
-                    <div class="card-header ">
-                        <h4 class="card-title">Total de Efectivo</h4>
-                        <p class="card-category">Monto total de recaudación</p>
-                    </div>
-                    <hr />
-                    <div class="card-body" style="font-size: 20px; text-align:center">
-                        <div class="row">
-                            <div class="col-md-6">
-                                Monto Cobrado
-                            </div>
-                            <div class="col-md-6">
-                                Monto Pendiente
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6" style="color:#2ee82e;">
-                                65,000.00
-                            </div>
-                            <div class="col-md-6" style="color:orangered;">
-                                500,000.00
-                            </div>
-                        </div>
-                    </div>
-                    <hr />
-                    <div class="card-footer">
-                        <div class="legend">
-                            Total a recaudar 565,000.00
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-            <div class="col-md-6">
-                <div class="card ">
-                    <div class="card-header ">
-                        <h4 class="card-title">Recibos</h4>
-                        <p class="card-category">Estado de Pago</p>
-                    </div>
-                    <hr />
-                    <div class="card-body ">
-                        <div id="chartContainer" style="height: 370px; max-width: 920px; margin-top: -30px;"></div>
-                        <hr />
-                        <div class="legend">
-                            <i class="fa fa-circle text-info"></i> Pendiente
-                            <i class="fa fa-circle text-danger"></i> Pago
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+    </div> 
 </form>
 
-
 <script>
-
     window.onload = function () {
         var chart = new CanvasJS.Chart("chartContainer", {
             animationEnabled: true,
@@ -114,11 +120,11 @@
                 indexLabel: "{label} {y}",
 		        indexLabelFontSize: 11,
                 dataPoints: [
-                    { y: @(Model.DashboardReceiptsVM.TotalReceiptsPendingPercentage), label: "Pendiente" },
-                    { y: @(Model.DashboardReceiptsVM.TotalReceiptsPaidPercentage), label: "Pago" }
+                    { y: @(Model.DashboardReceiptsVM?.TotalReceiptsPendingPercentage), label: "Pendiente" },
+                    { y: @(Model.DashboardReceiptsVM?.TotalReceiptsPaidPercentage), label: "Pago" }
                 ]
             }]
         });
         chart.render();
     }
-</script> 
+</script>
