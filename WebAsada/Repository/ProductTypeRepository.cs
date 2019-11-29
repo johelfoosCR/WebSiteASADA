@@ -8,7 +8,7 @@ using WebAsada.Models;
 
 namespace WebAsada.Repository
 {
-    public class ProductTypeRepository : GeneralEntityCommonRepositoryActions<ProductType>
+    public class ProductTypeRepository : GeneralEntityCommonRepositoryActions<ProductType>, IUpdatebleEntity<ProductType>
     {
         private readonly ApplicationDbContext _dbContext;
 
@@ -17,7 +17,7 @@ namespace WebAsada.Repository
             _dbContext = applicationDbContext;
         }
          
-        public override async Task Update(int id, ProductType productType)
+        public async Task Update(int id, ProductType productType)
         {
             MarkAsUpdated(ProductType.SincronizeObject(currentObject: await GetById(id), newObject:productType));
             await SaveChanges();

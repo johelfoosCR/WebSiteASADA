@@ -1,16 +1,14 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using WebAsada.Common;
 using WebAsada.Data;
 using WebAsada.Models;
-using WebAsada.ViewModels;
 
 namespace WebAsada.Repository
 {
-    public class MeasurementRepository : CommonRepositoryActions<Measurement>
+    public class MeasurementRepository : CommonRepositoryActions<Measurement>, IUpdatebleEntity<Measurement>
     {
         private readonly ApplicationDbContext _dbContext;
         private readonly DbSet<IdentityUser> users;
@@ -51,7 +49,7 @@ namespace WebAsada.Repository
             return users;
         }
 
-        public override async Task Update(int id, Measurement entity)
+        public async Task Update(int id, Measurement entity)
         {
             MarkAsUpdated(Measurement.SincronizeObject(currentMeasurement: await GetById(id), entity));
             await SaveChanges();

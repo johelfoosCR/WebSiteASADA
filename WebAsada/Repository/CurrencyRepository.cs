@@ -5,16 +5,17 @@ using WebAsada.Models;
 
 namespace WebAsada.Repository
 {
-    public class CurrencyRepository : GeneralEntityCommonRepositoryActions<Currency>
+    public class CurrencyRepository : GeneralEntityCommonRepositoryActions<Currency>, IUpdatebleEntity<Currency>
     {
         public CurrencyRepository(ApplicationDbContext applicationDbContext) : base(applicationDbContext)
         {
         }  
 
-        public override async Task Update(int id, Currency newCharge)
+        public async Task Update(int id, Currency newCharge)
         { 
             MarkAsUpdated(Currency.SincronizeObject(currentObject: await GetById(id), newCharge));
             await SaveChanges();
         }
+         
     }
 }

@@ -47,6 +47,7 @@ namespace WebAsada.Controllers
         [HttpGet]
         public async Task<IActionResult> Pay(int receiptId, int year, string monthNemotecnico)
         {
+            await _receiptRepository.Update(receiptId);
             await RefreshCollections();
             return RedirectToAction("Search", new DashboardVM() { MonthNemotecnico = monthNemotecnico, Year = year });
         }

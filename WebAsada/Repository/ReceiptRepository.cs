@@ -49,10 +49,13 @@ namespace WebAsada.Repository
         {
             return users;
         }
-
-        public override Task Update(int id, Receipt entity)
+          
+        public async Task Update(int id)
         {
-            throw new System.NotImplementedException();
+            var receipt = await GetById(id);
+            receipt.markAsPaid();
+            MarkAsUpdated(receipt); 
+            await SaveChanges(); 
         }
     }
 

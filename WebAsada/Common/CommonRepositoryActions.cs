@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic; 
 using System.Threading.Tasks;
 using WebAsada.BaseObjects;
 using WebAsada.Data;
@@ -8,13 +7,17 @@ using WebAsada.ViewModels;
 
 namespace WebAsada.Common
 {
-    public abstract class CommonRepositoryActions<T> : BaseRepository<T>
+    public interface IUpdatebleEntity<T>
+    {
+        Task Update(int id, T entity);
+    }
+
+    public abstract class CommonRepositoryActions<T> : BaseRepository<T>, IUpdatebleEntity<T>
         where T : BaseEntity
     {
         public CommonRepositoryActions(ApplicationDbContext applicationDbContext) : base(applicationDbContext)
         {
-        }
-        public abstract Task Update(int id, T entity);
+        } 
 
         public virtual async Task<T> GetById(int id) => await FindById(id);
 
@@ -24,8 +27,15 @@ namespace WebAsada.Common
 
         public virtual async Task Save(T entity) => await SaveNewEntity(entity);
 
-        public virtual async Task<bool> VerifyIfEntityExistById(int id) => await EntityExist(id); 
+        public virtual async Task<bool> VerifyIfEntityExistById(int id) => await EntityExist(id);
+
+        public Task Update(int id, T entity)
+        {
+            MarkAsUpdated();
+        }
     }
+
+
 
     public abstract class GeneralEntityCommonRepositoryActions<T> : CommonRepositoryActions<T>
       where T : GeneralEntity

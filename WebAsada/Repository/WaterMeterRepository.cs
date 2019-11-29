@@ -9,7 +9,7 @@ using WebAsada.ViewModels;
 
 namespace WebAsada.Repository
 {
-    public class WaterMeterRepository : CommonRepositoryActions<WaterMeter>
+    public class WaterMeterRepository : CommonRepositoryActions<WaterMeter>, IUpdatebleEntity<WaterMeter>
     {
         private readonly ApplicationDbContext _dbContext; 
 
@@ -32,7 +32,7 @@ namespace WebAsada.Repository
             return data;
         }  
          
-        public override async Task Update(int id, WaterMeter entity)
+        public async Task Update(int id, WaterMeter entity)
         {
             WaterMeter.SincronizeObject(currentObject: await GetById(id), newObject: entity);
             await SaveChanges();

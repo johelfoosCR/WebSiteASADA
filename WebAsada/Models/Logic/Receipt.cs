@@ -12,7 +12,8 @@ namespace WebAsada.Models
         {
         }
 
-        public static Receipt Create(Measurement measurement, Contract contract, int newRead) {
+        public static Receipt Create(Measurement measurement, Contract contract, int newRead)
+        {
             return new Receipt()
             {
                 Measurement = measurement,
@@ -25,11 +26,16 @@ namespace WebAsada.Models
 
         public Contract Contract { get; private set; }
 
-        public int NewRead { get; private set; }  
+        public int NewRead { get; private set; }
+
+        public bool IsPaid { get; private set; }
+
+        public DateTime PaidDate { get; private set; }
 
         public double TotalAmount { get; private set; }
 
-        internal double CalculateTotalAmount(Measurement measurement, WaterMeter waterMeter, IEnumerable<Charge> charges) {
+        internal double CalculateTotalAmount(Measurement measurement, WaterMeter waterMeter, IEnumerable<Charge> charges)
+        {
 
             int meterDiff = 0;
             double ceroToTen = 231.0;
@@ -38,7 +44,7 @@ namespace WebAsada.Models
             double sixtyOneAndMore = 498;
             double hydrantFare = 24;
             double baseFare = 2650;
-             
+
             meterDiff = waterMeter.CurrentRead - NewRead;
 
             //receipt.Items.Add(new Item("S005", "Tarifa Base", (receipt.DoubleBasicCharge.Equals("S") ? baseFare * 2 : baseFare), (receipt.DoubleBasicCharge.Equals("S") ? 2 : 1), false));
@@ -83,6 +89,12 @@ namespace WebAsada.Models
 
             return 0;
 
+        }
+
+        internal void markAsPaid()
+        {
+            IsPaid = true;
+            PaidDate = DateTime.Now;
         }
     }
 }

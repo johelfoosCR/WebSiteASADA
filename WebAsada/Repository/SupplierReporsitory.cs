@@ -9,7 +9,7 @@ using WebAsada.ViewModels;
 
 namespace WebAsada.Repository
 {
-    public class SupplierReporsitory : CommonRepositoryActions<Supplier>
+    public class SupplierReporsitory : CommonRepositoryActions<Supplier>, IUpdatebleEntity<Supplier>
     {
         private readonly ApplicationDbContext _dbContext; 
 
@@ -41,7 +41,7 @@ namespace WebAsada.Repository
                                             .SingleAsync(x => x.Id.Equals(id));
         }
          
-        public override async Task Update(int id, Supplier entity)
+        public async Task Update(int id, Supplier entity)
         {
             Supplier.SincronizeObject(currentObject: await GetById(id), newObject: entity);
             await SaveChanges();

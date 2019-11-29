@@ -9,7 +9,7 @@ using WebAsada.ViewModels;
 
 namespace WebAsada.Repository
 {
-    public class ContractRepository : CommonRepositoryActions<Contract>
+    public class ContractRepository : CommonRepositoryActions<Contract>, IUpdatebleEntity<Contract>
     {
         private readonly ApplicationDbContext _dbContext; 
 
@@ -45,8 +45,8 @@ namespace WebAsada.Repository
             return await _dbContext.WaterMeter.Where(x => x.IsActive.Equals(true)) 
                                              .ToListAsync();
         }
-          
-        public override async Task Update(int id, Contract entity)
+           
+        public async Task Update(int id, Contract entity)
         { 
             MarkAsUpdated(Contract.SincronizeObject(currentObject: await GetById(id), newObject: entity));
             await SaveChanges(); 
