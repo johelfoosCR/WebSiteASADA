@@ -11,7 +11,7 @@ namespace WebAsada.Repository
         {
         }  
           
-        public async Task Update(int id, ContractType contractType) 
+        public override async Task Update(int id, ContractType contractType) 
         { 
             MarkAsUpdated(ContractType.SincronizeObject(currentObject: await GetById(id), contractType));
             await SaveChanges();

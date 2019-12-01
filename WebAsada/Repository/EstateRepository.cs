@@ -7,7 +7,7 @@ using WebAsada.Models;
 
 namespace WebAsada.Repository
 {
-    public class EstateRepository : CommonRepositoryActions<Estate>, IUpdatebleEntity<Estate>
+    public class EstateRepository : CommonRepositoryEditorActions<Estate>, IUpdatebleEntity<Estate>
     {
         private readonly ApplicationDbContext _applicationDbContext;
 
@@ -25,7 +25,7 @@ namespace WebAsada.Repository
                                               .FirstOrDefaultAsync(); 
         }
            
-        public async Task Update(int id, Estate newCharge)
+        public override async Task Update(int id, Estate newCharge)
         {
             MarkAsUpdated(Estate.SincronizeObject(currentState: await GetById(id), newCharge));
             await SaveChanges();

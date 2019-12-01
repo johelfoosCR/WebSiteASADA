@@ -16,6 +16,12 @@ namespace WebAsada.ViewModels
         [DisplayName("Año")]
         public int Year { get; set; }
 
+        [DisplayName("Monto Cobrado")]
+        public double ChargedAmount { get; set; }
+
+        [DisplayName("Monto Pendiente")]
+        public double PendingAmount { get; set; }
+
         public DashboardReceiptsVM DashboardReceiptsVM { get; set; }
 
         public List<ReceiptItemVM> ReceiptItemVM { get; set; }

@@ -8,13 +8,13 @@ using WebAsada.ViewModels;
 
 namespace WebAsada.Controllers
 {
-    public class ReceiptController : BasicViewControllerActions<Receipt>
+    public class ReceiptController : Controller
     {
         private readonly ReceiptRepository _receiptRepository;
         private readonly ContractRepository _contractRepository;
         private readonly MeasurementRepository _measurementRepository;
 
-        public ReceiptController(ReceiptRepository receiptRepository, ContractRepository contractRepository, MeasurementRepository measurementRepository) : base(receiptRepository)
+        public ReceiptController(ReceiptRepository receiptRepository, ContractRepository contractRepository, MeasurementRepository measurementRepository)
         {
             _receiptRepository = receiptRepository;
             _contractRepository = contractRepository;

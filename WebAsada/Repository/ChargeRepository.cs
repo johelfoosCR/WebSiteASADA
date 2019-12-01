@@ -6,16 +6,17 @@ using WebAsada.Models;
 
 namespace WebAsada.Repository
 {
-    public class ChargeRepository : GeneralEntityCommonRepositoryActions<Charge>, IUpdatebleEntity<Charge>
+    public class ChargeRepository : GeneralEntityCommonRepositoryActions<Charge>
     {
         public ChargeRepository(ApplicationDbContext applicationDbContext) : base(applicationDbContext)
         {
         }
 
-        public async Task Update(int id, Charge newCharge)
+        public override async Task Update(int id, Charge newCharge)
         {
             MarkAsUpdated(Charge.SincronizeObject(currentCharge: await GetById(id), newCharge));
             await SaveChanges();
-        } 
+        }
+         
     }
 }

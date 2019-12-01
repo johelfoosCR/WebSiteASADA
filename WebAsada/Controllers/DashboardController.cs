@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Threading.Tasks;
 using WebAsada.Repository;
 using WebAsada.ViewModels;
 
@@ -35,7 +32,28 @@ namespace WebAsada.Controllers
             if (measurement.HasValue())
             {
                 dashboardVM.ReceiptItemVM = await _receiptRepository.GetByMeasurement(measurement);
-                dashboardVM.DashboardReceiptsVM = new DashboardReceiptsVM(totalReceipts:140, totalReceiptsPaid: 45);
+
+                var totalReceiptsPaid = 0;
+                var totalPaidAmount = 0d;
+                var totalPendingAmount = 0d;
+
+                foreach (var receipt in dashboardVM.ReceiptItemVM)
+                {
+                    if (receipt.IsPaid)
+                    {
+                        totalPaidAmount += receipt.Amount;
+                        totalReceiptsPaid++;
+                    }
+                    else {
+                        totalPendingAmount += receipt.Amount;
+                    }
+                }
+
+                dashboardVM.ChargedAmount = totalPaidAmount;
+                dashboardVM.PendingAmount = totalPendingAmount;
+
+                dashboardVM.DashboardReceiptsVM = new DashboardReceiptsVM(totalReceipts:dashboardVM.ReceiptItemVM.Count, totalReceiptsPaid: totalReceiptsPaid);
+                
                 await RefreshCollections();
                 return View("Index", dashboardVM);
             }
@@ -44,10 +62,13 @@ namespace WebAsada.Controllers
         }
 
 
-        [HttpGet]
         public async Task<IActionResult> Pay(int receiptId, int year, string monthNemotecnico)
         {
-            await _receiptRepository.Update(receiptId);
+
+            var receipt = await _receiptRepository.GetById(receiptId);
+            receipt.markAsPaid();
+            await _receiptRepository.Update(receipt);
+
             await RefreshCollections();
             return RedirectToAction("Search", new DashboardVM() { MonthNemotecnico = monthNemotecnico, Year = year });
         }

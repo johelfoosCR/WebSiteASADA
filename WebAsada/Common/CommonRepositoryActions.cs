@@ -12,7 +12,7 @@ namespace WebAsada.Common
         Task Update(int id, T entity);
     }
 
-    public abstract class CommonRepositoryActions<T> : BaseRepository<T>, IUpdatebleEntity<T>
+    public abstract class CommonRepositoryActions<T> : BaseRepository<T>
         where T : BaseEntity
     {
         public CommonRepositoryActions(ApplicationDbContext applicationDbContext) : base(applicationDbContext)
@@ -28,16 +28,20 @@ namespace WebAsada.Common
         public virtual async Task Save(T entity) => await SaveNewEntity(entity);
 
         public virtual async Task<bool> VerifyIfEntityExistById(int id) => await EntityExist(id);
-
-        public Task Update(int id, T entity)
-        {
-            MarkAsUpdated();
-        }
+         
     }
 
+    public abstract class CommonRepositoryEditorActions<T> : CommonRepositoryActions<T>, IUpdatebleEntity<T>
+        where T : BaseEntity
+    {
+        public CommonRepositoryEditorActions(ApplicationDbContext applicationDbContext) : base(applicationDbContext)
+        {
+        }
 
+        public abstract Task Update(int id, T entity);
+    }
 
-    public abstract class GeneralEntityCommonRepositoryActions<T> : CommonRepositoryActions<T>
+    public abstract class GeneralEntityCommonRepositoryActions<T> : CommonRepositoryEditorActions<T>
       where T : GeneralEntity
     { 
         public GeneralEntityCommonRepositoryActions(ApplicationDbContext applicationDbContext) : base(applicationDbContext)

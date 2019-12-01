@@ -11,7 +11,7 @@ namespace WebAsada.Repository
         { 
         }   
          
-        public async Task Update(int id, PersonType newCustomerType)
+        public override async Task Update(int id, PersonType newCustomerType)
         {
             MarkAsUpdated(PersonType.SincronizeObject(currentCustomerType: await GetById(id), newCustomerType));
             await SaveChanges();

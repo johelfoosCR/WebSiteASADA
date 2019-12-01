@@ -11,7 +11,7 @@ namespace WebAsada.Repository
         { 
         }
          
-        public async Task Update(int id, IdentificationType identificationType)
+        public override async Task Update(int id, IdentificationType identificationType)
         {
             MarkAsUpdated(IdentificationType.SincronizeObject(currentIdentificationType: await GetById(id), newIdentificationType: identificationType));
             await SaveChanges();

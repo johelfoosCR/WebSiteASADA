@@ -56,25 +56,25 @@
                             <div class="card-body" style="font-size: 20px; text-align:center">
                                 <div class="row">
                                     <div class="col-md-6">
-                                        Monto Cobrado
+                                        <label asp-for="ChargedAmount" class="control-label"></label>
                                     </div>
                                     <div class="col-md-6">
-                                        Monto Pendiente
+                                        <label asp-for="PendingAmount" class="control-label"></label>
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-md-6" style="color:#2ee82e;">
-                                        65,000.00
+                                    <div class="col-md-6" style="color:#2ee82e;"> 
+                                        @(Model.ChargedAmount)
                                     </div>
                                     <div class="col-md-6" style="color:orangered;">
-                                        500,000.00
+                                        @(Model.PendingAmount)
                                     </div>
                                 </div>
                             </div>
                             <hr />
                             <div class="card-footer">
                                 <div class="legend">
-                                    Total a recaudar 565,000.00
+                                    Total a recaudar  @(Model.ChargedAmount + Model.PendingAmount)
                                 </div>
                             </div>
                         </div>

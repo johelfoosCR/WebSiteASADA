@@ -8,7 +8,7 @@ using WebAsada.Models;
 
 namespace WebAsada.Repository
 {
-    public class MeasurementRepository : CommonRepositoryActions<Measurement>, IUpdatebleEntity<Measurement>
+    public class MeasurementRepository : CommonRepositoryEditorActions<Measurement>, IUpdatebleEntity<Measurement>
     {
         private readonly ApplicationDbContext _dbContext;
         private readonly DbSet<IdentityUser> users;
@@ -49,7 +49,7 @@ namespace WebAsada.Repository
             return users;
         }
 
-        public async Task Update(int id, Measurement entity)
+        public override async Task Update(int id, Measurement entity)
         {
             MarkAsUpdated(Measurement.SincronizeObject(currentMeasurement: await GetById(id), entity));
             await SaveChanges();

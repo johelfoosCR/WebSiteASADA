@@ -11,7 +11,7 @@ namespace WebAsada.Repository
         {
         }  
 
-        public async Task Update(int id, Currency newCharge)
+        public override async Task Update(int id, Currency newCharge)
         { 
             MarkAsUpdated(Currency.SincronizeObject(currentObject: await GetById(id), newCharge));
             await SaveChanges();

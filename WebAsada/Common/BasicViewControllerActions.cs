@@ -10,9 +10,9 @@ namespace WebAsada.Common
 {
     public class BasicViewControllerActions<T> : Controller where T : BaseEntity
     {
-        private readonly CommonRepositoryActions<T> _repository; 
+        private readonly CommonRepositoryEditorActions<T> _repository; 
 
-        public BasicViewControllerActions(CommonRepositoryActions<T> repository)
+        public BasicViewControllerActions(CommonRepositoryEditorActions<T> repository)
         {
             _repository = repository; 
         }

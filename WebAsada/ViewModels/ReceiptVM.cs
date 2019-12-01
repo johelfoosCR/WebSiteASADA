@@ -40,14 +40,16 @@ namespace WebAsada.ViewModels
         public string FullName { get;  set; }
 
         [DisplayName("Monto")]
-        public Double Amount { get; set; }
-
+        public Double Amount { get; set; } 
 
         [DisplayName("Medidor")]
         public string MeterSerialNumber { get;  set; }
 
         [DisplayName("Nueva Lectura")]
         public int NewRead { get; set; }
+
+        [DisplayName("Pagado")]
+        public bool IsPaid { get; set; }
 
         [DisplayName("Consumo Total")]
         public int CubicMetersConsume => NewRead - CurrentRead; 

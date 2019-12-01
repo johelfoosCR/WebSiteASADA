@@ -38,6 +38,7 @@ namespace WebAsada.Repository
                                            {
                                                ReceiptId = m.Id,
                                                NewRead = m.NewRead,
+                                               IsPaid = m.IsPaid,
                                                CurrentRead = m.Contract.Meter.CurrentRead,
                                                FullName = m.Contract.PersonsByEstate.Person.FullName, 
                                                MeterSerialNumber = m.Contract.Meter.SerialNumber
@@ -49,13 +50,12 @@ namespace WebAsada.Repository
         {
             return users;
         }
-          
-        public async Task Update(int id)
-        {
-            var receipt = await GetById(id);
-            receipt.markAsPaid();
-            MarkAsUpdated(receipt); 
-            await SaveChanges(); 
+           
+
+        public async Task Update(Receipt receipt)
+        { 
+            MarkAsUpdated(receipt);
+            await SaveChanges();
         }
     }
 
