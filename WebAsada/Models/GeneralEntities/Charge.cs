@@ -31,8 +31,7 @@ namespace WebAsada.Models
 
         [DefaultValue(0)]
         public double CubicMeterTo { get; private set; }
-         
-
+          
         public static Charge SincronizeObject(Charge currentCharge, Charge newCharge)
         {
             currentCharge.ChargeCode = newCharge.ChargeCode;
@@ -44,5 +43,6 @@ namespace WebAsada.Models
             return currentCharge;
         }
 
+         
     }
 }

@@ -36,16 +36,13 @@ namespace WebAsada.Models
 
         internal void CalculateTotalAmount(Contract contract, IEnumerable<Charge> charges)
         { 
-            int currentRead = NewRead - contract.Meter.CurrentRead;
-                
+            int currentRead = NewRead - contract.Meter.CurrentRead;  
+
             foreach (var charge in charges)
             {
                 if (charge.ChargeType.IsWaterConsume)
                 {
-                    if (charge.CubicMeterFrom >= currentRead && currentRead <= charge.CubicMeterTo)
-                    {
-                        TotalAmount += charge.Price * currentRead;
-                    }
+                    
                 }
                 else if (charge.ChargeType.IsBaseFare) { 
                     TotalAmount += contract.DoubleBasicCharge ? charge.Price * 2 : charge.Price;
