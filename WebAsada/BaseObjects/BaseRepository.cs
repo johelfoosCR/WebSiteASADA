@@ -1,9 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore; 
+﻿using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using WebAsada.BaseObjects;
-using WebAsada.ViewModels;
 
 namespace WebAsada.Data.Repository
 {
@@ -31,11 +29,6 @@ namespace WebAsada.Data.Repository
 
         protected async Task<int> SaveChanges() => await _applicationDbContext.SaveChangesAsync();
          
-        protected async Task<IEnumerable<SelectItemVM<int>>> GetValidData<T>() where T : GeneralEntity =>
-             await _applicationDbContext.Set<T>()
-                                        .Where(x => x.IsActive.Equals(true))
-                                        .Select(x => SelectItemVM<int>.Create(x.Id, x.ShortDesc))
-                                        .ToListAsync();
         protected async Task<int> SaveNewEntity(EntityType entity)
         {
             Add(entity);

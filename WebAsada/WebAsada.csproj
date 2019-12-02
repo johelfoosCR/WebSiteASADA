@@ -15,6 +15,8 @@
     <Compile Remove="Migrations\20191123172859_Contract_status.Designer.cs" />
     <Compile Remove="Migrations\20191124044125_receipts.cs" />
     <Compile Remove="Migrations\20191124044125_receipts.Designer.cs" />
+    <Compile Remove="Migrations\20191202023816_cahrgeDetail-BaseFare.cs" />
+    <Compile Remove="Migrations\20191202023816_cahrgeDetail-BaseFare.Designer.cs" />
   </ItemGroup>
 
 

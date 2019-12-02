@@ -40,7 +40,7 @@ namespace WebAsada.ViewModels
         public string FullName { get;  set; }
 
         [DisplayName("Monto")]
-        public Double Amount { get; set; } 
+        public Double TotalAmount { get; set; } 
 
         [DisplayName("Medidor")]
         public string MeterSerialNumber { get;  set; }

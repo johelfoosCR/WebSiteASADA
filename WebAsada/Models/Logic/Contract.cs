@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations.Schema;
 using WebAsada.BaseObjects;
 
 namespace WebAsada.Models
@@ -6,16 +7,16 @@ namespace WebAsada.Models
     public class Contract : BaseEntity
     {
         public static Contract Create(PersonsByEstate personsByEstate,
-                                      ContractType contractType, 
-                                      WaterMeter meter, 
-                                      int initialMeterRead = 0, 
-                                      bool doubleBasicCharge = false, 
+                                      ContractType contractType,
+                                      WaterMeter waterMeter,
+                                      int initialMeterRead = 0,
+                                      bool doubleBasicCharge = false,
                                       bool isActive = true) {
             return new Contract()
             {
                 PersonsByEstate = personsByEstate,
                 ContractTypeId = contractType.Id,
-                MeterId = meter.Id,
+                MeterId = waterMeter.Id,
                 InitialMeterRead = initialMeterRead,
                 DoubleBasicCharge = doubleBasicCharge,
                 IsActive = isActive,
@@ -34,7 +35,7 @@ namespace WebAsada.Models
         public int ContractTypeId { get; private set; }
 
         public WaterMeter Meter { get; private set; }
-
+         
         public int MeterId { get; private set; }
 
         public DateTime EmissionDate  { get; private set; }

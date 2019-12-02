@@ -77,8 +77,8 @@
                             columns.Add(model => model.FullName).Titled("Nombre");
                             columns.Add(model => model.MeterSerialNumber).Titled("Medidor");
                             columns.Add(model => model.CurrentRead).Titled("Lectura Actual");
-                            columns.Add(model => model.NewRead).Titled("Nueva Actual");
-                            columns.Add(model => model.CubicMetersConsume).Titled("Consumo m3"); 
+                            columns.Add(model => model.NewRead).Titled("Nueva Actual"); 
+                            columns.Add(model => model.TotalAmount).Titled("Monto"); 
                             columns.Add().Titled("Editar").Encoded(false).RenderedAs(model => $"<a class='deleteFunction' value='{model.ReceiptId}' href='#'>Eliminar</a>");
                         })
                         .Id("receiptGrid")

@@ -41,11 +41,11 @@ namespace WebAsada.Controllers
                 {
                     if (receipt.IsPaid)
                     {
-                        totalPaidAmount += receipt.Amount;
+                        totalPaidAmount += receipt.TotalAmount;
                         totalReceiptsPaid++;
                     }
                     else {
-                        totalPendingAmount += receipt.Amount;
+                        totalPendingAmount += receipt.TotalAmount;
                     }
                 }
 
@@ -66,7 +66,7 @@ namespace WebAsada.Controllers
         {
 
             var receipt = await _receiptRepository.GetById(receiptId);
-            receipt.markAsPaid();
+            receipt.MarkAsPaid();
             await _receiptRepository.Update(receipt);
 
             await RefreshCollections();

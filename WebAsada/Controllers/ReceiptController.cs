@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using System.Threading.Tasks;
-using WebAsada.Common;
+using System.Threading.Tasks; 
 using WebAsada.Models;
 using WebAsada.Repository;
 using WebAsada.ViewModels;
@@ -13,12 +12,17 @@ namespace WebAsada.Controllers
         private readonly ReceiptRepository _receiptRepository;
         private readonly ContractRepository _contractRepository;
         private readonly MeasurementRepository _measurementRepository;
+        private readonly ChargeRepository _chargeRepository;
 
-        public ReceiptController(ReceiptRepository receiptRepository, ContractRepository contractRepository, MeasurementRepository measurementRepository)
+        public ReceiptController(ReceiptRepository receiptRepository, 
+                                 ContractRepository contractRepository, 
+                                 MeasurementRepository measurementRepository,
+                                 ChargeRepository chargeRepository)
         {
             _receiptRepository = receiptRepository;
             _contractRepository = contractRepository;
             _measurementRepository = measurementRepository;
+            _chargeRepository = chargeRepository;
         }
 
         public async Task<IActionResult> ReceiptByMeasurement(int? id)
@@ -42,8 +46,13 @@ namespace WebAsada.Controllers
         public async Task<IActionResult> Add(ReceiptVM receiptVM)
         {
             var measurement = await _measurementRepository.GetById(receiptVM.Measurement.Id);
-            var contract = await _contractRepository.GetById(receiptVM.Contract.Id);  
-            await _receiptRepository.Save(Receipt.Create(measurement, contract, receiptVM.NewRead)); 
+            var contract = await _contractRepository.GetById(receiptVM.Contract.Id);
+            var receipt = Receipt.Create(measurement, contract, receiptVM.NewRead); 
+            var chargeList = await _chargeRepository.GetValidChargeActive();
+
+            receipt.CalculateTotalAmount(contract, chargeList);
+
+            await _receiptRepository.Save(receipt);
             return Ok();
         }
          

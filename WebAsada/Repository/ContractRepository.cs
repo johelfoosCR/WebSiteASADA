@@ -27,6 +27,11 @@ namespace WebAsada.Repository
                                              .Include(x => x.Meter) 
                                              .ToListAsync(); 
         }
+        public async override Task<Contract> GetById(int id)
+        {
+            return await _dbContext.Contract.Include(x => x.Meter)
+                                            .SingleAsync(x => x.Id == id);
+        }
 
         public List<SelectItemVM<int>> GetValidData()
         {

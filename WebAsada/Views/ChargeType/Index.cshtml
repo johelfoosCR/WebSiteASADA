@@ -8,8 +8,8 @@
     {
         columns.Add(model => model.ChargeTypeCode).Titled("Código");
         columns.Add(model => model.ShortDesc).Titled("Nombre"); 
-        columns.Add(model => model.IsVATCharge ? "Sí": "No").Titled("Cobra IVA");
-        columns.Add(model => model.VatRate).Titled("Porcentaje IVA");
+        columns.Add(model => model.IsVATCharge ? "Sí": "No").Titled("Cobra IVA"); 
+        columns.Add(model => model.IsWaterConsume ? "Sí": "No").Titled("Consumo Agua");
         columns.Add(model => model.IsActive ? "Sí": "No").Titled("Activo");
         columns.Add().Titled("Editar").Encoded(false).RenderedAs(o => Html.ActionLink("Editar", "Edit", new { id = o.Id }));
         columns.Add().Titled("Eliminar").Encoded(false).RenderedAs(o => Html.ActionLink("Eliminar", "Delete", new { id = o.Id }));

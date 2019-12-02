@@ -32,7 +32,7 @@
                           {
                               columns.Add(model => model.FullName).Titled("Abonado");
                               columns.Add(model => model.MeterSerialNumber).Titled("Medidor");
-                              columns.Add(model => model.Amount).Titled("Monto");
+                              columns.Add(model => model.TotalAmount).Titled("Monto");
                               columns.Add().Titled("Pagar").Encoded(false).RenderedAs(o => Html.ActionLink("Pagar", "Pay", new { receiptId = o.ReceiptId, 
                                                                                                                                  year = Model.Year, 
                                                                                                                                  monthNemotecnico = Model.MonthNemotecnico 

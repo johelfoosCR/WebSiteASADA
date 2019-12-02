@@ -10,9 +10,14 @@ namespace WebAsada.Models
 
         }
 
-        public ChargeType(string shortDesc, string longDesc, string officialId, string nemotecnico, string chargeTypeCode, bool isActive)
+        public ChargeType(string shortDesc, string longDesc, string officialId, string nemotecnico, string chargeTypeCode, bool isActive, 
+                          double vatRate, bool isVATCharge, bool isWaterConsume, bool isBaseFare)
             : base(shortDesc, longDesc, officialId, nemotecnico, isActive)
         {
+            VatRate = vatRate;
+            IsVATCharge = isVATCharge;
+            IsBaseFare = isBaseFare;
+            IsWaterConsume = isWaterConsume;
             ChargeTypeCode = chargeTypeCode;
         }
 
@@ -24,11 +29,18 @@ namespace WebAsada.Models
         [DefaultValue(false)]
         public bool IsVATCharge { get; private set; }
 
+        [DefaultValue(false)]
+        public bool IsBaseFare { get; private set; }
+
+        [DefaultValue(false)]
+        public bool IsWaterConsume { get; private set; }
+
         internal static ChargeType SincronizeObject(ChargeType currentObject, ChargeType newObject)
         {
             currentObject.ChargeTypeCode = newObject.ChargeTypeCode;
             currentObject.VatRate = newObject.VatRate;
             currentObject.IsVATCharge = newObject.IsVATCharge;
+            currentObject.IsWaterConsume = newObject.IsWaterConsume;
             currentObject.Clone(currentObject);
             return currentObject;
         } 

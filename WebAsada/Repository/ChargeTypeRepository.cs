@@ -17,5 +17,7 @@ namespace WebAsada.Repository
             MarkAsUpdated(ChargeType.SincronizeObject(currentObject: await GetById(id), newCharge));
             await SaveChanges();
         }
+
+         
     }
 }

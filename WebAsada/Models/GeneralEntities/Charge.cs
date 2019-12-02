@@ -13,8 +13,8 @@ namespace WebAsada.Models
         public Charge(string shortDesc, string longDesc, string officialId, string nemotecnico, string chargeCode, bool isActive, double price, ChargeType chargeType)
             : base(shortDesc, longDesc, officialId, nemotecnico, isActive)
         {
-            ChargeCode = chargeCode;
             Price = price;
+            ChargeCode = chargeCode;
             ChargeType = chargeType;
         }
 

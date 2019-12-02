@@ -59,7 +59,7 @@ namespace WebAsada.Controllers
 
             Contract localContract = Contract.Create(contractType: contractType, 
                                                      personsByEstate: PersonsByEstate.Create(person,estate),
-                                                     meter: meter,
+                                                     waterMeter: meter,
                                                      initialMeterRead: UpdateVm.InitialMeterRead,
                                                      doubleBasicCharge: UpdateVm.DoubleBasicCharge,
                                                      isActive: UpdateVm.IsActive);
@@ -78,7 +78,7 @@ namespace WebAsada.Controllers
               
             Contract localContract = Contract.Create(contractType: contractType,
                                                  personsByEstate: personByEstate,
-                                                 meter: meter,
+                                                 waterMeter: meter,
                                                  initialMeterRead: UpdateVm.InitialMeterRead,
                                                  doubleBasicCharge: UpdateVm.DoubleBasicCharge,
                                                  isActive: UpdateVm.IsActive);

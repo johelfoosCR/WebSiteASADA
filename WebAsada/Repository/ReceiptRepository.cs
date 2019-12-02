@@ -39,6 +39,7 @@ namespace WebAsada.Repository
                                                ReceiptId = m.Id,
                                                NewRead = m.NewRead,
                                                IsPaid = m.IsPaid,
+                                               TotalAmount = m.TotalAmount,
                                                CurrentRead = m.Contract.Meter.CurrentRead,
                                                FullName = m.Contract.PersonsByEstate.Person.FullName, 
                                                MeterSerialNumber = m.Contract.Meter.SerialNumber

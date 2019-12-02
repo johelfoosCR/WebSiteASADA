@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic; 
+﻿using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using WebAsada.BaseObjects;
 using WebAsada.Data;
@@ -43,12 +45,28 @@ namespace WebAsada.Common
 
     public abstract class GeneralEntityCommonRepositoryActions<T> : CommonRepositoryEditorActions<T>
       where T : GeneralEntity
-    { 
+    {
+        private readonly ApplicationDbContext _applicationDbContext;
+
         public GeneralEntityCommonRepositoryActions(ApplicationDbContext applicationDbContext) : base(applicationDbContext)
-        { 
+        {
+            _applicationDbContext = applicationDbContext;
+        }
+          
+        public async Task<IEnumerable<SelectItemVM<int>>> GetGeneralEntityValidData()
+        {
+           return  await _applicationDbContext.Set<T>()
+                                              .Where(x => x.IsActive.Equals(true))
+                                              .Select(x => SelectItemVM<int>.Create(x.Id, x.ShortDesc))
+                                              .ToListAsync();
         }
 
-        public virtual async Task<IEnumerable<SelectItemVM<int>>> GetGeneralEntityValidData() => await GetValidData<T>();
+        public async Task<IEnumerable<SelectItemVM<int>>> GetValueByNemotecnic(string nemotecnico)
+        {
+            return await _applicationDbContext.Set<T>()
+                                               .Where(x => x.Nemotecnico.Equals(nemotecnico))
+                                               .Select(x => SelectItemVM<int>.Create(x.Id, x.ShortDesc))
+                                               .ToListAsync();
+        }
     }
-     
 }
