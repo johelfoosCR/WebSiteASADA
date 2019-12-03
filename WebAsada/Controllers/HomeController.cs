@@ -15,7 +15,7 @@ namespace WebAsada.Controllers
             return View();
         }
 
-        public IActionResult Privacy()
+        public IActionResult WaterConsumeAdvices()
         {
             return View();
         }

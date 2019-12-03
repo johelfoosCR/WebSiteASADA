@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System;
 using System.Threading.Tasks;
 using WebAsada.Repository;
 using WebAsada.ViewModels;
@@ -22,7 +23,7 @@ namespace WebAsada.Controllers
         public async Task<IActionResult> Index()
         { 
             await RefreshCollections();
-            return View(new DashboardVM());
+            return View(new DashboardVM() { Year  = DateTime.Now.Year});
         }
 
         [HttpGet]

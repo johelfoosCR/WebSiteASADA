@@ -42,7 +42,19 @@ namespace WebAsada.Models
             {
                 if (charge.ChargeType.IsWaterConsume)
                 {
-                    
+                    if (currentRead < charge.CubicMeterFrom)
+                    {
+                        continue;
+                    }
+
+                    if (currentRead > charge.CubicMeterTo)
+                    {
+                        TotalAmount += (charge.Price * (charge.CubicMeterTo - charge.CubicMeterFrom));
+                    }
+                    else
+                    {
+                        TotalAmount += (charge.Price * (currentRead - charge.CubicMeterTo));
+                    }
                 }
                 else if (charge.ChargeType.IsBaseFare) { 
                     TotalAmount += contract.DoubleBasicCharge ? charge.Price * 2 : charge.Price;
