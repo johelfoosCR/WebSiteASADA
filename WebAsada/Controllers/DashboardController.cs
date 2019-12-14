@@ -54,7 +54,7 @@ namespace WebAsada.Controllers
                 dashboardVM.PendingAmount = totalPendingAmount;
 
                 dashboardVM.DashboardReceiptsVM = new DashboardReceiptsVM(totalReceipts:dashboardVM.ReceiptItemVM.Count, totalReceiptsPaid: totalReceiptsPaid);
-                
+
                 await RefreshCollections();
                 return View("Index", dashboardVM);
             }

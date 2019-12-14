@@ -50,8 +50,7 @@ namespace WebAsada.Data
             {
                 var entityToUpdate = item.Entity as BaseEntity;
                 entityToUpdate.UpdateDateTime = dateTimeNow;
-                entityToUpdate.UpdateUserId = currentUser.GetLoggedUser();
-
+                entityToUpdate.UpdateUserId = currentUser.GetLoggedUser(); 
                 if (item.State == EntityState.Added)
                 {
                     entityToUpdate.RegisterDatime = dateTimeNow;

@@ -29,11 +29,11 @@ namespace WebAsada.Repository
         }
 
         public async Task<List<ReceiptItemVM>> GetByMeasurement(Measurement measurement)
-        { 
-                return await _dbContext.Receipt.Include(m => m.Contract).ThenInclude(m => m.Meter)
-                                           .Include(m => m.Contract).ThenInclude(m => m.PersonsByEstate).ThenInclude(m => m.Person)
-                                           .Include(m => m.Measurement).ThenInclude(m => m.Month)
-                                           .Where(m => m.Measurement.Id == measurement.Id)
+        {
+            return await _dbContext.Receipt.Include(m => m.Contract).ThenInclude(m => m.Meter)
+                                       .Include(m => m.Contract).ThenInclude(m => m.PersonsByEstate).ThenInclude(m => m.Person)
+                                       .Include(m => m.Measurement).ThenInclude(m => m.Month)
+                                       .Where(m => m.Measurement.Id == measurement.Id)
                                            .Select(m => new ReceiptItemVM()
                                            {
                                                ReceiptId = m.Id,
