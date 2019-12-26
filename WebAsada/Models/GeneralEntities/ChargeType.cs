@@ -41,6 +41,7 @@ namespace WebAsada.Models
             currentObject.VatRate = newObject.VatRate;
             currentObject.IsVATCharge = newObject.IsVATCharge;
             currentObject.IsWaterConsume = newObject.IsWaterConsume;
+            currentObject.IsBaseFare = newObject.IsBaseFare;
             currentObject.Clone(currentObject);
             return currentObject;
         } 

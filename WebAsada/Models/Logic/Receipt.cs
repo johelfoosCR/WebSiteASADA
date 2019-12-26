@@ -53,14 +53,14 @@ namespace WebAsada.Models
                     }
                     else
                     {
-                        TotalAmount += (charge.Price * (currentRead - charge.CubicMeterTo));
+                        TotalAmount += (charge.Price * currentRead);
                     }
                 }
                 else if (charge.ChargeType.IsBaseFare) { 
                     TotalAmount += contract.DoubleBasicCharge ? charge.Price * 2 : charge.Price;
                 }
                 else {
-                    TotalAmount += charge.Price;
+                    TotalAmount += charge.Price * currentRead;
                 }
             }
 

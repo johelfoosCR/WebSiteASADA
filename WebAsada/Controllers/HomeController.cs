@@ -19,9 +19,8 @@ namespace WebAsada.Controllers
         }
 
         public IActionResult Index()
-        {
-            var model = configuration["Greeting"];
-            return View("Index",model);
+        { 
+            return View();
         }
 
         public IActionResult WaterConsumeAdvices()
