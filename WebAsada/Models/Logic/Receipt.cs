@@ -12,19 +12,22 @@ namespace WebAsada.Models
         {
         }
 
-        public static Receipt Create(Measurement measurement, Contract contract, int newRead)
+        public static Receipt Create(int measurementId, int contractId, int newRead)
         {
             return new Receipt()
             {
-                Measurement = measurement,
-                Contract = contract,
+                MeasurementId = measurementId,
+                ContractId = contractId,
                 NewRead = newRead
             };
         }
 
         public Measurement Measurement { get; private set; }
+        public int MeasurementId { get; private set; }
 
         public Contract Contract { get; private set; }
+
+        public int ContractId { get; private set; }
 
         public int NewRead { get; private set; }
 
@@ -37,24 +40,15 @@ namespace WebAsada.Models
         internal void CalculateTotalAmount(Contract contract, IEnumerable<Charge> charges)
         { 
             int currentRead = NewRead - contract.Meter.CurrentRead;  
-
             foreach (var charge in charges)
             {
                 if (charge.ChargeType.IsWaterConsume)
                 {
                     if (currentRead < charge.CubicMeterFrom)
-                    {
-                        continue;
-                    }
+                        continue; 
 
-                    if (currentRead > charge.CubicMeterTo)
-                    {
-                        TotalAmount += (charge.Price * (charge.CubicMeterTo - charge.CubicMeterFrom));
-                    }
-                    else
-                    {
-                        TotalAmount += (charge.Price * currentRead);
-                    }
+                    var valueToSubstract = (currentRead > charge.CubicMeterTo) ? charge.CubicMeterTo : currentRead; 
+                    TotalAmount += (charge.Price * (valueToSubstract - (charge.CubicMeterFrom - 1))); 
                 }
                 else if (charge.ChargeType.IsBaseFare) { 
                     TotalAmount += contract.DoubleBasicCharge ? charge.Price * 2 : charge.Price;

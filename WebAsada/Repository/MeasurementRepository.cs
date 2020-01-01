@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using CSharpFunctionalExtensions;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using WebAsada.Common;
 using WebAsada.Data;
@@ -31,10 +33,18 @@ namespace WebAsada.Repository
         {
            return await _dbContext.Measurement.Include(m => m.ReadUser)
                                               .Include(m => m.RegisterUser)
-                                              .Include(m => m.Month)
+                                              .Include(m => m.Month) 
                                               .FirstOrDefaultAsync(m => m.Id == id);
         }
 
+
+        public async Task<Maybe<Measurement>> TryGetById(int id)
+        {
+            return await _dbContext.Measurement.Include(m => m.ReadUser)
+                                               .Include(m => m.RegisterUser)
+                                               .Include(m => m.Month)
+                                               .FirstOrDefaultAsync(m => m.Id == id);
+        }
 
         public async Task<Measurement> GetByMonthAndYear(string monthMnemonic, int year)
         {

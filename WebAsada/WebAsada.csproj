@@ -25,6 +25,7 @@
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="9.0.0" />
     <PackageReference Include="bootstrap-select" Version="1.13.12" />
+    <PackageReference Include="CSharpFunctionalExtensions" Version="2.2.2" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
     <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="3.3.1" />
@@ -55,6 +56,11 @@
     <None Include="wwwroot\lib\font-awsome\webfonts\fa-regular-400.woff2" />
     <None Include="wwwroot\lib\font-awsome\webfonts\fa-solid-900.svg" />
     <None Include="wwwroot\lib\font-awsome\webfonts\fa-solid-900.woff2" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <ProjectReference Include="..\Infraestructure\Infraestructure.csproj" />
   </ItemGroup>
 
 

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using CSharpFunctionalExtensions; 
+using Microsoft.AspNetCore.Identity;
 using System;
 using WebAsada.BaseObjects;
 
@@ -8,6 +9,7 @@ namespace WebAsada.Models
     { 
         public Month Month { get; private set; }
         public int MonthId { get; private set; }
+        public int MeasurementId { get; private set; }
         public int Year { get; private set; } 
         public IdentityUser ReadUser { get; private set; }
         public string ReadUserId { get; private set; }
@@ -31,5 +33,6 @@ namespace WebAsada.Models
             currentMeasurement.MonthId = newMeasurement.MonthId;
             return currentMeasurement;
         }
+         
     }
 }

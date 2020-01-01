@@ -27,29 +27,31 @@ namespace WebAsada.Controllers
 
         public async Task<IActionResult> ReceiptByMeasurement(int? id)
         {
-            var measurement = await _measurementRepository.GetById(id.Value);
-            var receipts = await _receiptRepository.GetByMeasurement(measurement);
-
-            var receipt = new ReceiptVM() { Measurement = new MeasurementDetailVM() { Id = measurement.Id,
-                                                                                      DateFrom =  measurement.DateFrom,
-                                                                                      DateTo = measurement.DateTo,
-                                                                                      MaxPaymentDate = measurement.MaxPaymentDate,
-                                                                                      Month = measurement.Month,
-                                                                                      Year = measurement.Year}, 
-                                            Receipts = receipts };
+            var measurement = await _measurementRepository.GetById(id.Value); 
+            var receipt = new ReceiptVM()
+            {
+                Measurement = new MeasurementDetailVM()
+                {
+                    Id = measurement.Id,
+                    DateFrom = measurement.DateFrom,
+                    DateTo = measurement.DateTo,
+                    MaxPaymentDate = measurement.MaxPaymentDate,
+                    Month = measurement.Month,
+                    Year = measurement.Year
+                },
+                Receipts = await _receiptRepository.GetByMeasurement(measurement)
+            };
 
             ViewData["ContractCollection"] = new SelectList(_contractRepository.GetValidData(), "Value", "Text");
-            return View(receipt);
+            return View(receipt); 
         }
 
         [HttpPost]
         public async Task<IActionResult> Add(ReceiptVM receiptVM)
-        {
-            var measurement = await _measurementRepository.GetById(receiptVM.Measurement.Id);
-            var contract = await _contractRepository.GetById(receiptVM.Contract.Id);
-            var receipt = Receipt.Create(measurement, contract, receiptVM.NewRead); 
-            var chargeList = await _chargeRepository.GetValidChargeActive();
-
+        { 
+            var contract = await _contractRepository.GetById(receiptVM.Contract.Id); 
+            var receipt = Receipt.Create(receiptVM.Measurement.Id, receiptVM.Contract.Id, receiptVM.NewRead);   
+            var chargeList = await _chargeRepository.GetValidChargeActive();  
             receipt.CalculateTotalAmount(contract, chargeList);
 
             await _receiptRepository.Save(receipt);
