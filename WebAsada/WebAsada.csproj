@@ -32,6 +32,7 @@
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.7.12" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.4" />
     <PackageReference Include="NonFactors.Grid.Mvc6" Version="5.1.1" />
+    <PackageReference Include="StringTokenFormatter" Version="4.0.0" />
   </ItemGroup>
 
 

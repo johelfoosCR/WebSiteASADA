@@ -1,0 +1,143 @@
+﻿<div class='invoice-box'>
+    <table cellpadding='0' cellspacing='0'>
+        <tr class='top'>
+            <td colspan='5'>
+                <table style='border-bottom: 1px solid #D6D6D6'>
+                    <tr>
+                        <td class='title'>
+                            <img src='data:image/gif;base64,{base64ImageLogo}' style='width:100%; max-width:175px;margin-top: -25px'>
+                        </td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>
+                            <b>Asada Calle Valverde</b><br>
+                            Corralillo, San Juan Sur<br>
+                            WhatsApp: 8589-0202<br>
+                            Cedula Jurídica: 3-102-204325<br>
+                            asadacallevalverdesjs@gmail.com<br>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr class='information'>
+            <td colspan='5'>
+                <table>
+                    <tr>
+                        <td>
+                            <b>Medidor:</b> {MeterNumber}<br>
+                            <b>Número Recibo:</b> {ReceiptNumber}<br>
+                            <b>Abonado:</b> {CustomerName}<br>
+                            <b>Cédula:</b> {IdentificationNumber}<br>
+                            <b>Fecha de pago:</b> {MaxPaymentDate}<br>
+                        </td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>
+                            <img src='data:image/gif;base64,{base64QrCode}' style='width:100%; max-width:150px;'>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr class='heading'>
+            <td>
+                Información de Consumo
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr class='item'>
+            <td>
+                Lectura Anterior
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                {LastRead} m3
+            </td>
+        </tr>
+        <tr class='item'>
+            <td>
+                Lectura Actual
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                {CurrentRead} m3
+            </td>
+        </tr>
+        <tr class='item'>
+            <td>
+                Total Consumo m3
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                {TotalCubicMeterConsume} m3
+            </td>
+        </tr>
+        <tr class='item'>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr class='heading'>
+            <td>
+                Detalle
+            </td>
+            <td>
+                Cantidad
+            </td>
+            <td>
+                Precio
+            </td>
+            <td>
+                IVA
+            </td>
+            <td>
+                Total
+            </td>
+        </tr>
+
+        {DetailReceipt}
+         
+        <tr class='total'>
+            <td>
+                Total General:
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                &#8353; {TotalAmount}
+            </td>
+        </tr>
+        <tr class='information_bottom'>
+            <td colspan='5'>
+                <table>
+                    <tr>
+                        <td>
+                            <b>Lugar de Pago: </b>{PaymentPlace}<br>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <b>Importante: </b>{MessageOfTheMonth}<br>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</div>
+<p><!-- pagebreak --></p>

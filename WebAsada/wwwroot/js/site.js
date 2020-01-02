@@ -24,7 +24,7 @@
         return o;
     };  
 
-    executeWhitConfirmation = function (route, icon,message,data, callback) {
+    executeWhitConfirmation = function (route, icon,message,data, callback, callbackError) {
         Swal.fire({
             title: "Confirmación",
             text: message,
@@ -35,16 +35,25 @@
             confirmButtonText: 'Sí!'
         }).then((result) => {
             if (result.value) {
-                doPost(route, data, callback);
+                doPost(route, data, callback, callbackError);
             }
         });
     };   
 
-     doPost = function (route, data, callback) {
+    doPost = function (route, data, callback, callbackError) {
         $.post(route, data).done(function (result) {
-            callback(result);
-        }).fail(function () {
-            alert("error");
+            if (result.hasError) {
+                Swal.fire({
+                    title: "Error",
+                    text: result.message,
+                    icon: "error"
+                })
+            }
+            else {
+                callback(result);
+            }
+        }).fail(function (result) { 
+            callbackError(result);
         })
     };  
 

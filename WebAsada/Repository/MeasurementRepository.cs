@@ -46,7 +46,7 @@ namespace WebAsada.Repository
                                                .FirstOrDefaultAsync(m => m.Id == id);
         }
 
-        public async Task<Measurement> GetByMonthAndYear(string monthMnemonic, int year)
+        public async Task<Maybe<Measurement>> GetByMonthAndYear(string monthMnemonic, int year)
         {
             return await _dbContext.Measurement.Include(x => x.Month).FirstOrDefaultAsync(m => m.Year == year && 
                                                                     m.Month.Nemotecnico.Equals(monthMnemonic) &&

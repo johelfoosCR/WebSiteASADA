@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CSharpFunctionalExtensions;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -12,22 +13,27 @@ namespace WebAsada.Models
         {
         }
 
-        public static Receipt Create(int measurementId, int contractId, int newRead)
+        public static Receipt Create(int measurementId, int contractId,int lastRead, int newRead)
         {
             return new Receipt()
             {
                 MeasurementId = measurementId,
                 ContractId = contractId,
-                NewRead = newRead
+                LastRead = lastRead,
+                NewRead = newRead,
+                Items = new List<ReceiptItem>()
             };
         }
 
         public Measurement Measurement { get; private set; }
+
         public int MeasurementId { get; private set; }
 
         public Contract Contract { get; private set; }
 
         public int ContractId { get; private set; }
+
+        public int LastRead { get; private set; }
 
         public int NewRead { get; private set; }
 
@@ -37,80 +43,48 @@ namespace WebAsada.Models
 
         public double TotalAmount { get; private set; }
 
+        public List<ReceiptItem> Items { get; private set; }
+
         internal void CalculateTotalAmount(Contract contract, IEnumerable<Charge> charges)
-        { 
-            int currentRead = NewRead - contract.Meter.CurrentRead;  
+        {
+            int currentRead = NewRead - contract.Meter.CurrentRead; 
+            Maybe<ChargeType> chargeType = charges.Select(x => x.ChargeType).FirstOrDefault(x => x.IsVATCharge && x.IsWaterConsume);
+            var shouldChargeVAT = chargeType.HasValue && (currentRead > 30);
+            var vatRate = shouldChargeVAT ? chargeType.Value.VatRate : 0D;
+            double waterConsumeAmount = 0D;
+            var lineAmount = 0D;
+
             foreach (var charge in charges)
             {
                 if (charge.ChargeType.IsWaterConsume)
                 {
                     if (currentRead < charge.CubicMeterFrom)
-                        continue; 
+                        continue;
 
-                    var valueToSubstract = (currentRead > charge.CubicMeterTo) ? charge.CubicMeterTo : currentRead; 
-                    TotalAmount += (charge.Price * (valueToSubstract - (charge.CubicMeterFrom - 1))); 
+                    var valueToSubstract = (currentRead > charge.CubicMeterTo) ? charge.CubicMeterTo : currentRead;
+                    var quantity = (int)(valueToSubstract - (charge.CubicMeterFrom - 1));
+                    lineAmount = (charge.Price * quantity);
+                    Items.Add(ReceiptItem.Create(this, charge, quantity, lineAmount, vatRate));
+                    waterConsumeAmount += lineAmount;
                 }
-                else if (charge.ChargeType.IsBaseFare) { 
-                    TotalAmount += contract.DoubleBasicCharge ? charge.Price * 2 : charge.Price;
+                else if (charge.ChargeType.IsBaseFare)
+                {
+                    lineAmount = contract.DoubleBasicCharge ? charge.Price * 2 : charge.Price;
+                    Items.Add(ReceiptItem.Create(this, charge, contract.DoubleBasicCharge ? 2 : 1, lineAmount, 0));
+                    TotalAmount += lineAmount;
                 }
-                else {
-                    TotalAmount += charge.Price * currentRead;
+                else
+                {
+                    lineAmount = charge.Price * currentRead;
+                    Items.Add(ReceiptItem.Create(this, charge, currentRead, lineAmount, 0));
+                    TotalAmount += lineAmount;
                 }
             }
 
-
-            //int meterDiff = 0;
-            //double ceroToTen = 231.0;
-            //double elevenTothirty = 266.0;
-            //double thirtyOneToSixty = 332.0;
-            //double sixtyOneAndMore = 498;
-            //double hydrantFare = 24;
-            //double baseFare = 2650;
-
-            //meterDiff = waterMeter.CurrentRead - NewRead;
-
-            ////receipt.Items.Add(new Item("S005", "Tarifa Base", (receipt.DoubleBasicCharge.Equals("S") ? baseFare * 2 : baseFare), (receipt.DoubleBasicCharge.Equals("S") ? 2 : 1), false));
-            ////receipt.Items.Add(new Item("S002", "Consumo Hidrantes", hydrantFare * meterDiff, meterDiff, false));
-            //double amount = 0;
-
-
-            //if (meterDiff <= 10)
-            //{
-            //    amount = meterDiff * ceroToTen;
-            //    //receipt.Items.Add(new Item("S001", "Servicio Consumo de Agua de 0 a 10", ceroToTen, meterDiff, true));
-            //}
-
-            //if (meterDiff >= 11 && meterDiff <= 30)
-            //{
-            //    amount += 10 * ceroToTen;
-            //    amount += (meterDiff - 10) * elevenTothirty;
-
-            //    //receipt.Items.Add(new Item("S001", "Servicio consumo de agua de 0 a 10", ceroToTen, 10, true)); 
-            //    //receipt.Items.Add(ne0w Item("S006", "Servicio consumo de agua de 11 a 30", elevenTothirty, (meterDiff - 10), true)); 
-            //}
-
-            //if (meterDiff >= 31 && meterDiff <= 60)
-            //{
-            //    amount += 10 * ceroToTen;
-            //    amount += 20 * elevenTothirty;
-            //    amount += (meterDiff - 30) * thirtyOneToSixty;
-
-            //    //receipt.Items.Add(new Item("S001", "Servicio consumo de agua de 0 a 10", ceroToTen, 10, true));
-            //    //receipt.Items.Add(new Item("S006", "Servicio consumo de agua de 11 a 30", elevenTothirty, 20, true));
-            //    //receipt.Items.Add(new Item("S007", "Servicio consumo de agua de 31 a 60", thirtyOneToSixty, (meterDiff - 30), true)); 
-
-            //}
-
-            //if (meterDiff >= 61)
-            //{
-            //    amount += 10 * ceroToTen;
-            //    amount += 20 * elevenTothirty;
-            //    amount += 30 * thirtyOneToSixty;
-            //    amount += (meterDiff - 60) * sixtyOneAndMore;
-            //}
-
-            //return 0;
-
+            if (currentRead > 0)
+            {
+                TotalAmount += (shouldChargeVAT) ? waterConsumeAmount + (waterConsumeAmount * (vatRate/100)) : waterConsumeAmount;
+            }
         }
 
         internal void MarkAsPaid()

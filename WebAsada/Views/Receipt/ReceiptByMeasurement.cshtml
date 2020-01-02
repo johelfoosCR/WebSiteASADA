@@ -1,4 +1,4 @@
-﻿@model WebAsada.ViewModels.ReceiptVM
+﻿@model WebAsada.ViewModels.NewReceiptVM
 <partial name="_PageTitle" model="@("Registro de Recibos")" />
 
 <div class="row">
@@ -75,11 +75,12 @@
                         .Build(columns =>
                         {
                             columns.Add(model => model.FullName).Titled("Nombre");
-                            columns.Add(model => model.MeterSerialNumber).Titled("Medidor");
+                            columns.Add(model => model.MeterSerialNumber).Titled("Medidor"); 
                             columns.Add(model => model.CurrentRead).Titled("Lectura Actual");
-                            columns.Add(model => model.NewRead).Titled("Nueva Actual"); 
+                            columns.Add(model => model.NewRead).Titled("Nueva Lectura"); 
+                            columns.Add(model => model.DoubleBasicCharge ? "Sí": "No").Titled("Tarifa Doble"); 
                             columns.Add(model => model.TotalAmount).Titled("Monto"); 
-                            columns.Add().Titled("Editar").Encoded(false).RenderedAs(model => $"<a class='deleteFunction' value='{model.ReceiptId}' href='#'>Eliminar</a>");
+                            columns.Add().Titled("Eliminar").Encoded(false).RenderedAs(model => $"<a class='deleteFunction' value='{model.ReceiptId}' href='#'>Eliminar</a>");
                         })
                         .Id("receiptGrid")
                         .Empty("No se encontraron datos")
@@ -120,10 +121,7 @@
             });
         });
 
-        $("body").on("click", "#receiptGrid .deleteFunction", function () {
-            console.log("click");
-            console.log(parseInt($(this).attr("value")));
-
+        $("body").on("click", "#receiptGrid .deleteFunction", function () { 
             executeWhitConfirmation("/Receipt/Delete", "question", "Desea Eliminar el Recibo seleccionado de la lectura actual?", { 
                 id : parseInt($(this).attr("value"))
             }, function () {

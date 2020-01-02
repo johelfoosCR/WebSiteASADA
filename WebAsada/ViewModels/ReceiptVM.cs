@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using WebAsada.Models;
 
 namespace WebAsada.ViewModels
 {
-    public class ReceiptVM
+    public class NewReceiptVM
     {
-        public ReceiptVM()
+        public NewReceiptVM()
         { 
         }
 
@@ -25,11 +22,12 @@ namespace WebAsada.ViewModels
         [DisplayName("Nueva Lectura")]
         public int NewRead { get; set; } 
 
-        public List<ReceiptItemVM> Receipts { get; set; }
+        public List<ReceiptVM> Receipts { get; set; }
     }
 
-    public class ReceiptItemVM
-    {
+    public class ReceiptVM
+    { 
+
         [DisplayName("Código Recibo")]
         public int ReceiptId { get; set; }
 
@@ -40,10 +38,16 @@ namespace WebAsada.ViewModels
         public string FullName { get;  set; }
 
         [DisplayName("Monto")]
-        public Double TotalAmount { get; set; } 
+        public double TotalAmount { get; set; }
 
+        [DisplayName("Tarifa Basica Doble")]
+        public bool DoubleBasicCharge { get; set; }
+          
         [DisplayName("Medidor")]
-        public string MeterSerialNumber { get;  set; }
+        public string MeterSerialNumber { get;  set; } 
+
+        [DisplayName("Codigo Recibo")]
+        public string ReceiptCode { get; set; }
 
         [DisplayName("Nueva Lectura")]
         public int NewRead { get; set; }
@@ -52,7 +56,25 @@ namespace WebAsada.ViewModels
         public bool IsPaid { get; set; }
 
         [DisplayName("Consumo Total")]
-        public int CubicMetersConsume => NewRead - CurrentRead; 
+        public int CubicMetersConsume => NewRead - CurrentRead;
+         
+        public List<ReceiptItemVM> Items { get; set; }
+
+        public string IdentificatioNumber { get; set; }
+        public object LastRead { get; internal set; }
+    }
+
+    public class ReceiptItemVM
+    {
+        public string Name { get; set; }
+
+        public int Quantity { get; set; }
+
+        public double Amount { get; set; }
+
+        public double VatAmount { get; set; }
+
+        public double TotalAmount { get; set; }
     } 
 
 }

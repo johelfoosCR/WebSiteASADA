@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebAsada.Data;
 
 namespace WebAsada.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200102013619_receiptItemsDetail")]
+    partial class receiptItemsDetail
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -804,8 +806,6 @@ namespace WebAsada.Migrations
 
                     b.Property<bool>("IsPaid");
 
-                    b.Property<int>("LastRead");
-
                     b.Property<int>("MeasurementId");
 
                     b.Property<int>("NewRead");
@@ -841,9 +841,7 @@ namespace WebAsada.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<double>("Amount");
-
-                    b.Property<string>("Description");
+                    b.Property<int?>("ChargeId");
 
                     b.Property<int>("Quantity");
 
@@ -857,9 +855,9 @@ namespace WebAsada.Migrations
 
                     b.Property<string>("UpdateUserId");
 
-                    b.Property<double>("VatAmount");
-
                     b.HasKey("Id");
+
+                    b.HasIndex("ChargeId");
 
                     b.HasIndex("ReceiptId");
 
@@ -1216,6 +1214,10 @@ namespace WebAsada.Migrations
 
             modelBuilder.Entity("WebAsada.Models.ReceiptItem", b =>
                 {
+                    b.HasOne("WebAsada.Models.Charge", "Charge")
+                        .WithMany()
+                        .HasForeignKey("ChargeId");
+
                     b.HasOne("WebAsada.Models.Receipt", "Receipt")
                         .WithMany("Items")
                         .HasForeignKey("ReceiptId")

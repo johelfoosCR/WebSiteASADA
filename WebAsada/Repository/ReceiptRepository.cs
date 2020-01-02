@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using CSharpFunctionalExtensions;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,30 +29,60 @@ namespace WebAsada.Repository
                                             .FirstOrDefaultAsync(m => m.Id == id);
         }
 
-        public async Task<List<ReceiptItemVM>> GetByMeasurement(Measurement measurement)
+        public async Task<Result> VerifyExistingReceiptInMeasurement(int MeasurementId, int ContractId)
         {
-            return await _dbContext.Receipt.Include(m => m.Contract).ThenInclude(m => m.Meter)
-                                       .Include(m => m.Contract).ThenInclude(m => m.PersonsByEstate).ThenInclude(m => m.Person)
-                                       .Include(m => m.Measurement).ThenInclude(m => m.Month)
-                                       .Where(m => m.Measurement.Id == measurement.Id)
-                                           .Select(m => new ReceiptItemVM()
-                                           {
-                                               ReceiptId = m.Id,
-                                               NewRead = m.NewRead,
-                                               IsPaid = m.IsPaid,
-                                               TotalAmount = m.TotalAmount,
-                                               CurrentRead = m.Contract.Meter.CurrentRead,
-                                               FullName = m.Contract.PersonsByEstate.Person.FullName, 
-                                               MeterSerialNumber = m.Contract.Meter.SerialNumber
-                                           })
-                                           .ToListAsync();
+            if (await _dbContext.Receipt.Where(x => x.ContractId == ContractId && x.MeasurementId == MeasurementId)
+                                        .AsNoTracking()
+                                        .ToAsyncEnumerable()
+                                        .Count() > 0)
+            {
+                return Result.Failure("Ya se encuentra un recibo registrado para este contrato");
+            }
+
+            return Result.Ok(true);
         }
+
+        public async Task<List<ReceiptVM>> GetReceiptDetailsByMeasurement(int measurementId)
+        {
+            return await _dbContext.Receipt
+                                    .Include(m => m.Contract)
+                                        .ThenInclude(m => m.Meter)
+                                    .Include(m => m.Contract)
+                                        .ThenInclude(m => m.PersonsByEstate)
+                                        .ThenInclude(m => m.Person)
+                                    .Include(m => m.Measurement)
+                                        .ThenInclude(m => m.Month) 
+                                    .Include(m => m.Items)
+                                    .Where(m => m.Measurement.Id == measurementId)
+                                        .Select(ReceiptInfo => new ReceiptVM()
+                                        {
+                                            ReceiptId = ReceiptInfo.Id,
+                                            NewRead = ReceiptInfo.NewRead,
+                                            IsPaid = ReceiptInfo.IsPaid,
+                                            LastRead = ReceiptInfo.LastRead,
+                                            ReceiptCode = $"{ReceiptInfo.Contract.Meter.SerialNumber}|{ReceiptInfo.Measurement.Month.Nemotecnico}{ReceiptInfo.Measurement.Year}",
+                                            TotalAmount = ReceiptInfo.TotalAmount,  
+                                            CurrentRead = ReceiptInfo.Contract.Meter.CurrentRead,
+                                            FullName = ReceiptInfo.Contract.PersonsByEstate.Person.FullName,
+                                            IdentificatioNumber = ReceiptInfo.Contract.PersonsByEstate.Person.IdentificationNumber,
+                                            MeterSerialNumber = ReceiptInfo.Contract.Meter.SerialNumber,
+                                            DoubleBasicCharge = ReceiptInfo.Contract.DoubleBasicCharge,
+                                            Items = ReceiptInfo.Items.Select(item => new ReceiptItemVM()
+                                            {
+                                                 Amount = item.Amount,
+                                                 Name = item.Description,
+                                                 Quantity = item.Quantity,
+                                                 TotalAmount = item.TotalAmount,
+                                                 VatAmount = item.VatAmount
+                                            }).ToList()
+                                        })
+                                        .ToListAsync();
+        } 
 
         public DbSet<IdentityUser> GetUsers()
         {
             return users;
-        }
-           
+        } 
 
         public async Task Update(Receipt receipt)
         { 

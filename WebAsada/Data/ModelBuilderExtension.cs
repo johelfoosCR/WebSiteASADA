@@ -27,6 +27,7 @@ namespace WebAsada.Data
         public static void ManyToManyRelations(this ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<PersonsByEstate>().HasKey(sc => new { sc.EstateId, sc.PersonId });
+            modelBuilder.Entity<ReceiptItem>().HasOne(i => i.Receipt).WithMany(c => c.Items).OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

@@ -25,6 +25,9 @@ namespace WebAsada.Data
         {
             builder.SeedData();
             builder.ManyToManyRelations();
+
+
+
             base.OnModelCreating(builder); 
         }
 
@@ -71,7 +74,8 @@ namespace WebAsada.Data
         public DbSet<PersonType> CustomerType { get; set; }
         public DbSet<Month> Month { get; set; }
         public DbSet<Measurement> Measurement { get; set; } 
-        public DbSet<Receipt> Receipt { get; set; } 
+        public DbSet<Receipt> Receipt { get; set; }
+        public DbSet<ReceiptItem> ReceiptItem { get; set; }
         public DbSet<Estate> Estate { get; set; } 
         public DbSet<IdentificationType> IdentificationType { get; set; } 
         public DbSet<Person> Person { get; set; }

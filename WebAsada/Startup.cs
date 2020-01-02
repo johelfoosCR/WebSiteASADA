@@ -8,21 +8,18 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using WebAsada.Data;
-using WebAsada.Helpers;
-using WebAsada.Interfaces;
-using WebAsada.Repository;
-using WebAsada.Services;
 
 namespace WebAsada
 {
     public class Startup
     {
+        private readonly IConfiguration _configuration;
+
         public Startup(IConfiguration configuration)
         {
-            Configuration = configuration;
+            _configuration = configuration;
         }
 
-        public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -36,34 +33,12 @@ namespace WebAsada
 
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
-                    Configuration.GetConnectionString("DefaultConnection")));
+                    _configuration.GetConnectionString("DefaultConnection")));
             services.AddDefaultIdentity<IdentityUser>()
                 .AddDefaultUI(UIFramework.Bootstrap4)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
-
-
-            services.AddTransient<ChargeRepository>();
-            services.AddTransient<PersonTypeRepository>();
-            services.AddTransient<EntityRepository>();
-            services.AddTransient<MonthRepository>();
-            services.AddTransient<MeasurementRepository>();
-            services.AddTransient<EstateRepository>();
-            services.AddTransient<IdentificationTypeRepository>();
-            services.AddTransient<ReceiptRepository>();
-            services.AddTransient<PersonRepository>();
-            services.AddTransient<PersonsByEstateRepository>();
-            services.AddTransient<CurrencyRepository>();
-            services.AddTransient<ContractTypeRepository>();
-            services.AddTransient<SupplierReporsitory>();
-            services.AddTransient<ProductTypeRepository>();
-            services.AddTransient<WaterMeterRepository>();
-            services.AddTransient<ContractRepository>();
-            services.AddTransient<ChargeTypeRepository>(); 
-            
-
-            services.AddTransient<ILoggedUserReader, LoggedUser>();
-            services.AddTransient<IYesNoOptions, YesNoOptions>(); 
-
+            services.ConfigureHttpClients(_configuration);
+            services.ConfigureService(); 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 

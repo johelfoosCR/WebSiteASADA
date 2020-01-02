@@ -30,9 +30,9 @@ namespace WebAsada.Controllers
         public async Task<IActionResult> Search(DashboardVM dashboardVM)
         {   
             var measurement = await _measurementRepository.GetByMonthAndYear(dashboardVM.MonthNemotecnico, dashboardVM.Year);
-            if (measurement.HasValue())
+            if (measurement.HasValue)
             {
-                dashboardVM.ReceiptItemVM = await _receiptRepository.GetByMeasurement(measurement);
+                dashboardVM.ReceiptItemVM = await _receiptRepository.GetReceiptDetailsByMeasurement(measurement.Value.Id);
 
                 var totalReceiptsPaid = 0;
                 var totalPaidAmount = 0d;

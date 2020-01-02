@@ -12,8 +12,8 @@ namespace WebAsada.Components
         {
         }
 
-        public async Task<IViewComponentResult> InvokeAsync(SelectItemVM<int>[] listPerson, SelectItemVM<int> personItemVM)
-        { 
+        public IViewComponentResult Invoke(SelectItemVM<int>[] listPerson, SelectItemVM<int> personItemVM)
+        {
             if (!listPerson.HasValue())
             {
                 listPerson = Array.Empty<SelectItemVM<int>>();
@@ -23,7 +23,7 @@ namespace WebAsada.Components
             Array.Resize(ref listPerson, listPerson.Length + 1);
             if (personItemVM.HasValue())
             {
-                listPerson.SetValue(personItemVM,0);
+                listPerson.SetValue(personItemVM, 0);
             }
             return View(listPerson);
         }

@@ -7,7 +7,7 @@ namespace WebAsada.ViewModels
     {
         public DashboardVM()
         {
-            ReceiptItemVM = new List<ReceiptItemVM>();
+            ReceiptItemVM = new List<ReceiptVM>();
         }
 
         [DisplayName("Mes")]
@@ -24,7 +24,7 @@ namespace WebAsada.ViewModels
 
         public DashboardReceiptsVM DashboardReceiptsVM { get; set; }
 
-        public List<ReceiptItemVM> ReceiptItemVM { get; set; }
+        public List<ReceiptVM> ReceiptItemVM { get; set; }
     }
 
     public class DashboardReceiptsVM
