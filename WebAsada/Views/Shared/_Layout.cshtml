@@ -8,6 +8,7 @@
     <environment include="Development">
         <link rel="stylesheet" asp-href-include="~/lib/bootstrap/dist/css/bootstrap.css" />
         <link rel="stylesheet" asp-href-include="~/lib/font-awsome/css/all.min.css">
+        <link rel="stylesheet" asp-href-include="~/lib/mvc-grid/css/*.css" />
         <link href="https://raw.githubusercontent.com/daneden/animate.css/master/animate.css" rel="stylesheet">
     </environment> 
     <environment exclude="Development">
@@ -31,10 +32,13 @@
 
                 <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
                     <partial name="_LoginPartial" />
-                    <ul class="navbar-nav">
+                    <ul class="navbar-nav"> 
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="ReceiptsInquiry" asp-action="Index">Consulta Recibos</a>
+                        </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="WaterConsumeAdvices">Consejos Ahorro</a>
-                        </li> 
+                        </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="AboutUs">Acerca de Nosotros</a>
                         </li>

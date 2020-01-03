@@ -1,0 +1,35 @@
+﻿@model WebAsada.ViewModels.ReceiptInquiryVM
+
+<partial name="_PageTitle" model="@("Consulta de Recibos")" />
+
+@using (Html.BeginForm("GetPendingReciptsByContract", "ReceiptsInquiry"))
+{
+    <div class="row">
+        <div class="col-md-3">
+            <div class="form-group">
+                <label class="control-label">Contrato</label>
+                @Html.TextBoxFor(model => model.ContractId, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="col-md-3 vertical-align">
+            <div class="form-group">
+                <form asp-action="GetPendingReciptsByContract">
+                    <input type="submit" class="btn btn-primary" value="Consultar" />
+                </form>
+            </div>
+        </div>
+    </div>
+}
+ 
+@(Html
+        .Grid(Model.Receipts.Where(x => !x.IsPaid).ToList())
+        .Build(columns =>
+        {
+            columns.Add(model => model.FullName).Titled("Abonado");
+            columns.Add(model => model.MeterSerialNumber).Titled("Medidor");
+            columns.Add(model => model.ReceiptCode).Titled("Recibo");
+            columns.Add(model => model.CubicMetersConsume).Titled("Consumo m3");
+            columns.Add(model => model.TotalAmount).Titled("Monto").Formatted("{0:N}");
+        })
+        .Empty("No se encontraron datos") 
+) 

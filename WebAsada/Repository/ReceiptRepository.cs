@@ -42,6 +42,34 @@ namespace WebAsada.Repository
             return Result.Ok(true);
         }
 
+
+        public async Task<IEnumerable<ReceiptVM>> GetReceiptsInformationByContract(int contractId)
+        {
+            return await _dbContext.Receipt.Include(m => m.Contract)
+                                               .ThenInclude(m => m.Meter)
+                                           .Include(m => m.Contract)
+                                               .ThenInclude(m => m.PersonsByEstate)
+                                                    .ThenInclude(m => m.Person)
+                                           .Include(m => m.Measurement)
+                                               .ThenInclude(m => m.Month)
+                                           .Where(x => x.ContractId == contractId)
+                                           .Take(7)
+                                           .Select(ReceiptInfo => new ReceiptVM() { 
+                                               NewRead = ReceiptInfo.NewRead, 
+                                               LastRead = ReceiptInfo.LastRead,
+                                               IsPaid = ReceiptInfo.IsPaid,
+                                               ReceiptCode = $"{ReceiptInfo.Contract.Meter.SerialNumber}|{ReceiptInfo.Measurement.Month.Nemotecnico}{ReceiptInfo.Measurement.Year}",
+                                               TotalAmount = ReceiptInfo.TotalAmount, 
+                                               FullName = ReceiptInfo.Contract.PersonsByEstate.Person.FullName,
+                                               IdentificatioNumber = ReceiptInfo.Contract.PersonsByEstate.Person.IdentificationNumber,
+                                               MeterSerialNumber = ReceiptInfo.Contract.Meter.SerialNumber 
+                                           })
+                                           .OrderByDescending(x => x.ReceiptId)
+                                           .AsNoTracking()
+                                           .ToListAsync();
+        }
+
+
         public async Task<List<ReceiptVM>> GetReceiptDetailsByMeasurement(int measurementId)
         {
             return await _dbContext.Receipt
@@ -57,6 +85,7 @@ namespace WebAsada.Repository
                                         .Select(ReceiptInfo => new ReceiptVM()
                                         {
                                             ReceiptId = ReceiptInfo.Id,
+                                            ContractId = ReceiptInfo.Contract.Id,
                                             NewRead = ReceiptInfo.NewRead,
                                             IsPaid = ReceiptInfo.IsPaid,
                                             LastRead = ReceiptInfo.LastRead,
@@ -74,8 +103,9 @@ namespace WebAsada.Repository
                                                  Quantity = item.Quantity,
                                                  TotalAmount = item.TotalAmount,
                                                  VatAmount = item.VatAmount
-                                            }).ToList()
+                                            }).OrderByDescending(x => x.Name).ToList()
                                         })
+                                        .AsNoTracking()
                                         .ToListAsync();
         } 
 

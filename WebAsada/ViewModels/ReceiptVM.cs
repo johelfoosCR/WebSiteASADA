@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 
 namespace WebAsada.ViewModels
 {
@@ -61,7 +62,8 @@ namespace WebAsada.ViewModels
         public List<ReceiptItemVM> Items { get; set; }
 
         public string IdentificatioNumber { get; set; }
-        public object LastRead { get; internal set; }
+        public int LastRead { get; internal set; }
+        public int ContractId { get; internal set; }
     }
 
     public class ReceiptItemVM
@@ -75,6 +77,19 @@ namespace WebAsada.ViewModels
         public double VatAmount { get; set; }
 
         public double TotalAmount { get; set; }
-    } 
+    }
 
+
+    public class ReceiptInquiryVM
+    {
+        public ReceiptInquiryVM()
+        {
+            Receipts = Enumerable.Empty<ReceiptVM>();
+        }
+
+        [DisplayName("Número de Conctrato")]
+        public int? ContractId { get; set; }
+
+        public IEnumerable<ReceiptVM> Receipts { get; set; }
+    }
 }

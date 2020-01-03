@@ -39,7 +39,6 @@ namespace WebAsada.Controllers
             var measurement = await _measurementRepository.GetByMonthAndYear(measurementReport.MonthNemotecnico, measurementReport.Year);
             if (measurement.HasNoValue)
             {
-                //TempData["javascriptMessage"] = string.Format(Constants.JAVASCRIPT_WHIT_MESSAGE_FUNCTION, "'No se encontró una lectura para el mes y año indicados'");
                 TempData["InfomationMessage"] = "No se encontró una lectura para el mes y año indicados";
                 return RedirectToAction("Index");
             }
@@ -60,13 +59,13 @@ namespace WebAsada.Controllers
                 foreach (var item in receipt.Items) {
                    builderDetail.Append(htmlDetailTemplate.FormatToken(item));
                 }
-
-                HttpRequestMessage requestQr = new HttpRequestMessage(HttpMethod.Post, clientQr.BaseAddress);
+                 
                 var qrCode = await (await clientQr.PostAsJsonAsync(clientQr.BaseAddress, receipt.ReceiptCode)).Content.ReadAsByteArrayAsync();
                  
                 StringBuilder builderMeasurement = new StringBuilder(); 
                 builderMeasurement.Append(htmlTemplate.FormatToken(new {
                     MeterNumber =  receipt.MeterSerialNumber,
+                    ContractNumber = receipt.ContractId,
                     ReceiptNumber = receipt.ReceiptCode,
                     CustomerName = receipt.FullName.ToUpper(),
                     IdentificationNumber = receipt.IdentificatioNumber,
