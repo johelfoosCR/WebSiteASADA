@@ -101,6 +101,13 @@ function showSuccessMessage() {
         'success'
     );
 }
+function showInformationMessage(message) {
+    Swal.fire(
+        'Información',
+         message,
+        'info'
+    );
+}
 
 function showDeleteMessage() {
     Swal.fire(

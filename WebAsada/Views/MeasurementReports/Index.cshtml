@@ -1,8 +1,8 @@
 ﻿@model WebAsada.ViewModels.MeasurementReportVM
 
 <partial name="_PageTitle" model="@("Generar Facturación")" />
- 
-<form asp-action="GenerateReceipts"> 
+
+<form asp-action="GenerateReceipts">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
     <div class="row">
         <div class="col-md-5">
@@ -26,3 +26,12 @@
     </div>
 </form>
 
+
+@section Scripts { 
+    @if (TempData["InfomationMessage"] != null)
+    {
+        <script>
+            showInformationMessage('@TempData["InfomationMessage"]'); 
+        </script>
+    } 
+}
