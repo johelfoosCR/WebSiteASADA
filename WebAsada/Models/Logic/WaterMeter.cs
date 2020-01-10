@@ -29,6 +29,11 @@ namespace WebAsada.Models
 
         public string Comments { get; private set; }
 
+        internal void SetCurrentRead(int newRead)
+        {
+            CurrentRead = newRead;
+        }
+
         internal static WaterMeter SincronizeObject(WaterMeter currentObject, WaterMeter newObject)
         {
             currentObject.BougthDate = newObject.BougthDate;

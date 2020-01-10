@@ -33,16 +33,16 @@ namespace WebAsada.Repository
                                             .SingleAsync(x => x.Id == id);
         }
 
-        public List<SelectItemVM<int>> GetValidData()
+        public async Task<List<SelectItemVM<int>>> GetValidData()
         {
-            return _dbContext.Contract.Include(x => x.PersonsByEstate)
+            return await _dbContext.Contract.Include(x => x.PersonsByEstate)
                                                 .ThenInclude(x => x.Estate)
                                             .Include(x => x.PersonsByEstate)
                                                 .ThenInclude(x => x.Person)
                                             .Include(x => x.Meter)
                                             .Where(x => x.IsActive.Equals(true))
                                             .Select(x => SelectItemVM<int>.Create(x.Id, $"{x.PersonsByEstate.Person.FullName} / {x.PersonsByEstate.Estate.Alias} / {x.Meter.SerialNumber}" ))
-                                            .ToList();
+                                            .ToListAsync();
         }
 
         public async Task<IEnumerable<WaterMeter>> GetValidWaterMeterToView()

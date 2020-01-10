@@ -61,9 +61,14 @@ namespace WebAsada.ViewModels
          
         public List<ReceiptItemVM> Items { get; set; }
 
+        [DisplayName("Numero de Identificación")]
         public string IdentificatioNumber { get; set; }
-        public int LastRead { get; internal set; }
-        public int ContractId { get; internal set; }
+
+        [DisplayName("Última Lectura")]
+        public int LastRead { get; internal set; } 
+
+        [DisplayName("Id Contrato")]
+        public string ContractIdentifier { get; internal set; }
     }
 
     public class ReceiptItemVM

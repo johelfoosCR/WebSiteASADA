@@ -65,9 +65,8 @@ namespace WebAsada.Controllers
 
         public async Task<IActionResult> Pay(int receiptId, int year, string monthNemotecnico)
         {
-
             var receipt = await _receiptRepository.GetById(receiptId);
-            receipt.MarkAsPaid();
+            receipt.MarkAsPaid(); 
             await _receiptRepository.Update(receipt);
 
             await RefreshCollections();

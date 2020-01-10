@@ -25,7 +25,9 @@ namespace WebAsada.Repository
         public async override Task<Receipt> GetById(int id)
         {
             return await _dbContext.Receipt.Include(m => m.Contract)
-                                            .Include(m => m.RegisterUser) 
+                                            .Include(m => m.RegisterUser)
+                                            .Include(m => m.Contract)
+                                            .ThenInclude(m => m.Meter)
                                             .FirstOrDefaultAsync(m => m.Id == id);
         }
 
@@ -85,7 +87,7 @@ namespace WebAsada.Repository
                                         .Select(ReceiptInfo => new ReceiptVM()
                                         {
                                             ReceiptId = ReceiptInfo.Id,
-                                            ContractId = ReceiptInfo.Contract.Id,
+                                            ContractIdentifier = ReceiptInfo.Contract.Identifier,
                                             NewRead = ReceiptInfo.NewRead,
                                             IsPaid = ReceiptInfo.IsPaid,
                                             LastRead = ReceiptInfo.LastRead,
@@ -103,7 +105,7 @@ namespace WebAsada.Repository
                                                  Quantity = item.Quantity,
                                                  TotalAmount = item.TotalAmount,
                                                  VatAmount = item.VatAmount
-                                            }).OrderByDescending(x => x.Name).ToList()
+                                            }).OrderBy(x => x.Name).ToList()
                                         })
                                         .AsNoTracking()
                                         .ToListAsync();
@@ -118,6 +120,21 @@ namespace WebAsada.Repository
         { 
             MarkAsUpdated(receipt);
             await SaveChanges();
+        }
+
+        public async Task<Result> DeleteWhitVerification(int id)
+        {  
+            if (await _dbContext.Receipt.Where(x => x.Id == id && x.IsPaid == true)
+                               .AsNoTracking()
+                               .ToAsyncEnumerable()
+                               .Count() > 0)
+            {
+                return Result.Failure("No es posible eliminar un recibo que ya fué marcado como pagado");
+            }
+
+            await base.Delete(id); 
+
+            return Result.Ok(); 
         }
     }
 

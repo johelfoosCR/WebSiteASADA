@@ -1,22 +1,22 @@
-﻿@model WebAsada.ViewModels.MeasurementVM 
+﻿@model WebAsada.ViewModels.MeasurementVM
 <div class="row">
     <div class="col-md-4">
         <div class="form-group">
             <label asp-for="Year" class="control-label"></label>
-            <input asp-for="Year" class="form-control" />
+            <input asp-for="Year" readonly="@(Model.HasPaymentReceipts)" class="form-control" />
             <span asp-validation-for="Year" class="text-danger"></span>
         </div>
     </div>
     <div class="col-md-4">
         <div class="form-group">
             <label asp-for="MonthId" class="control-label"></label>
-            <select asp-for="MonthId" class="form-control" asp-items="ViewBag.MonthId"></select>
+            <select asp-for="MonthId" class="form-control" disabled="@(Model.HasPaymentReceipts)" asp-items="ViewBag.MonthId"></select>
         </div>
     </div>
     <div class="col-md-4">
         <div class="form-group">
             <label asp-for="ReadUserId" class="control-label"></label>
-            <select asp-for="ReadUserId" class="form-control" asp-items="ViewBag.ReadUserId"></select>
+            <select asp-for="ReadUserId" class="form-control" disabled="@(Model.HasPaymentReceipts)" asp-items="ViewBag.ReadUserId"></select>
         </div>
     </div>
 </div>
@@ -24,29 +24,29 @@
 <div class="row">
     <div class="col-md-3">
         <div class="form-group">
-            <label asp-for="ReadDate" class="control-label"></label> 
-            <input asp-for="ReadDate" asp-format="{0:yyyy-MM-dd}" class="form-control" />
+            <label asp-for="ReadDate" class="control-label"></label>
+            <input asp-for="ReadDate" asp-format="{0:yyyy-MM-dd}" readonly="@(Model.HasPaymentReceipts)" class="form-control" />
             <span asp-validation-for="ReadDate" class="text-danger"></span>
         </div>
     </div>
     <div class="col-md-3">
         <div class="form-group">
-            <label asp-for="DateFrom" class="control-label"></label> 
-            <input asp-for="DateFrom" asp-format="{0:yyyy-MM-dd}" class="form-control" />
+            <label asp-for="DateFrom" class="control-label"></label>
+            <input asp-for="DateFrom" asp-format="{0:yyyy-MM-dd}" readonly="@(Model.HasPaymentReceipts)" class="form-control" />
             <span asp-validation-for="DateFrom" class="text-danger"></span>
         </div>
     </div>
     <div class="col-md-3">
         <div class="form-group">
-            <label asp-for="DateTo" class="control-label"></label> 
-            <input asp-for="DateTo" asp-format="{0:yyyy-MM-dd}" class="form-control" />
+            <label asp-for="DateTo" class="control-label"></label>
+            <input asp-for="DateTo" asp-format="{0:yyyy-MM-dd}" readonly="@(Model.HasPaymentReceipts)" class="form-control" />
             <span asp-validation-for="DateTo" class="text-danger"></span>
         </div>
     </div>
     <div class="col-md-3">
         <div class="form-group">
-            <label asp-for="MaxPaymentDate" class="control-label"></label> 
-            <input asp-for="MaxPaymentDate" asp-format="{0:yyyy-MM-dd}" class="form-control" />
+            <label asp-for="MaxPaymentDate" class="control-label"></label>
+            <input asp-for="MaxPaymentDate" asp-format="{0:yyyy-MM-dd}" readonly="@(Model.HasPaymentReceipts)" class="form-control" />
             <span asp-validation-for="MaxPaymentDate" class="text-danger"></span>
         </div>
     </div>
@@ -56,16 +56,26 @@
     <div class="col-md-6">
         <div class="form-group">
             <label asp-for="MessageOfTheMonth" class="control-label"></label>
-            <textarea rows="4" asp-for="MessageOfTheMonth" class="form-control"></textarea>
+            <textarea rows="4" asp-for="MessageOfTheMonth" readonly="@(Model.HasPaymentReceipts)" class="form-control"></textarea>
             <span asp-validation-for="MessageOfTheMonth" class="text-danger"></span>
         </div>
     </div>
     <div class="col-md-6">
         <div class="form-group">
             <label asp-for="PaymentPlace" class="control-label"></label>
-            <textarea rows="4" asp-for="PaymentPlace" class="form-control"></textarea>
+            <textarea rows="4" asp-for="PaymentPlace" readonly="@(Model.HasPaymentReceipts)" class="form-control"></textarea>
             <span asp-validation-for="PaymentPlace" class="text-danger"></span>
         </div>
     </div>
 </div>
-<partial name="_UpdateButtons" /> 
+@if (Model.HasPaymentReceipts)
+{
+    <div class="alert alert-warning" role="alert">
+        Esta Lectura no se puede modificar debido a que ya se encuentran recibos marcados como pagados
+    </div>
+    <a asp-action="Index" class="btn btn-primary">Regresar</a>
+}
+else
+{
+    <partial name="_UpdateButtons" />
+} 

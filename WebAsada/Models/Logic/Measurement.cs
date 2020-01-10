@@ -1,16 +1,17 @@
 ﻿using CSharpFunctionalExtensions; 
 using Microsoft.AspNetCore.Identity;
 using System;
+using System.ComponentModel.DataAnnotations.Schema;
 using WebAsada.BaseObjects;
 
 namespace WebAsada.Models
 {
     public class Measurement : BaseEntity
-    { 
+    {
         public Month Month { get; private set; }
         public int MonthId { get; private set; }
         public int MeasurementId { get; private set; }
-        public int Year { get; private set; } 
+        public int Year { get; private set; }
         public IdentityUser ReadUser { get; private set; }
         public string ReadUserId { get; private set; }
         public DateTime ReadDate { get; private set; }
@@ -19,7 +20,13 @@ namespace WebAsada.Models
         public DateTime MaxPaymentDate { get; private set; }
         public string MessageOfTheMonth { get; private set; }
         public string PaymentPlace { get; private set; }
-        public bool IsActive { get; private set; }
+        public bool IsActive { get; private set; }         
+        [NotMapped]
+        public bool HasPaymentReceipts { get; private set; }
+
+        public void SetHasPaymentReceipts() {
+            this.HasPaymentReceipts = true;
+        }
 
         internal static Measurement SincronizeObject(Measurement currentMeasurement, Measurement newMeasurement)
         { 

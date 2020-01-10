@@ -56,6 +56,8 @@ namespace WebAsada.ViewModels
         [MaxLength(500, ErrorMessage = "No puede exceder los 500 caracteres")]
         [DataType(DataType.MultilineText)]
         public string PaymentPlace { get; set; }
+         
+        public bool HasPaymentReceipts { get; set; }
     }
 
 

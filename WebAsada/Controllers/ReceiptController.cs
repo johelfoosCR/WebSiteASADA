@@ -65,7 +65,12 @@ namespace WebAsada.Controllers
         public async Task<IActionResult> Delete(int? id)
         {
             if (!id.HasValue) return NotFound(); 
-            await _receiptRepository.Delete(id.Value); 
+
+            var result = await _receiptRepository.DeleteWhitVerification(id.Value); 
+            
+            if (result.IsFailure)
+                return ErrorContent(result.Error);
+
             return Ok();
         }
 

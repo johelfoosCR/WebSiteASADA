@@ -26,15 +26,32 @@ namespace WebAsada.Repository
 
         public async override Task<IEnumerable<Measurement>> GetAll()
         {
-            return await _dbContext.Measurement.Include(m => m.RegisterUser).Include(m => m.UpdateUser).Include(m => m.Month).ToListAsync();
+            return await _dbContext.Measurement.Include(m => m.RegisterUser)
+                                               .Include(m => m.UpdateUser)
+                                               .Include(m => m.Month)
+                                               .Take(12)
+                                               .OrderByDescending(x => x.MonthId).ThenByDescending(x=> x.Year)
+                                               .ToListAsync();
         }
 
         public async override Task<Measurement> GetById(int id)
         {
-           return await _dbContext.Measurement.Include(m => m.ReadUser)
-                                              .Include(m => m.RegisterUser)
-                                              .Include(m => m.Month) 
-                                              .FirstOrDefaultAsync(m => m.Id == id);
+            Maybe<Measurement> measurement = await _dbContext.Measurement.Include(m => m.ReadUser)
+                                               .Include(m => m.RegisterUser)
+                                               .Include(m => m.Month)
+                                               .FirstOrDefaultAsync(m => m.Id == id);
+
+            if (measurement.HasValue)
+            {
+                if (await _dbContext.Receipt.Include(x => x.Measurement)
+                                           .Where(m => m.Measurement.Id == id)
+                                           .ToAsyncEnumerable().Any())
+                {
+                    measurement.Value.SetHasPaymentReceipts();
+                }
+            }
+
+            return measurement.Value;
         }
 
 
@@ -43,7 +60,7 @@ namespace WebAsada.Repository
             return await _dbContext.Measurement.Include(m => m.ReadUser)
                                                .Include(m => m.RegisterUser)
                                                .Include(m => m.Month)
-                                               .FirstOrDefaultAsync(m => m.Id == id);
+                                              .FirstOrDefaultAsync(m => m.Id == id);
         }
 
         public async Task<Maybe<Measurement>> GetByMonthAndYear(string monthMnemonic, int year)

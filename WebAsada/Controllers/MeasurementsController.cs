@@ -32,7 +32,8 @@ namespace WebAsada.Controllers
               
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind(ATTRIBUTES_TO_BIND)] MeasurementVM measurementVM) => await ConfirmEdit(id, measurementVM, RefreshCollections);
+        public async Task<IActionResult> Edit(int id, [Bind(ATTRIBUTES_TO_BIND)] MeasurementVM measurementVM) 
+            => await ConfirmEdit(id, measurementVM, RefreshCollections);
          
         private void RefreshCollections()
         { 

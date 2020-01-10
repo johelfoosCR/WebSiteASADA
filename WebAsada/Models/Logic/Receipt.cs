@@ -91,6 +91,7 @@ namespace WebAsada.Models
         {
             IsPaid = true;
             PaidDate = DateTime.Now;
+            Contract.Meter.SetCurrentRead(NewRead);
         }
     }
 }

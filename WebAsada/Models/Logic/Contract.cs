@@ -45,7 +45,10 @@ namespace WebAsada.Models
         public bool DoubleBasicCharge { get; private set; }
 
         public bool IsActive { get; private set; }
-         
+
+        [NotMapped]
+        public string Identifier => string.Format("ACV-SJS-{0}", Id.ToString().PadLeft(5,'0'));
+
         internal static Contract SincronizeObject(Contract currentObject, Contract newObject)
         { 
             currentObject.PersonsByEstate = newObject.PersonsByEstate;

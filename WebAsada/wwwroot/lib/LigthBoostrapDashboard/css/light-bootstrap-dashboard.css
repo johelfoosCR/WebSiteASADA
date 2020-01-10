@@ -1127,26 +1127,22 @@ fieldset[disabled] .form-control {
 
 .alert.alert-with-icon {
     padding-left: 65px;
-}
-
-.alert-primary {
-    background-color: #4091e2;
-}
+} 
 
 .alert-info {
-    background-color: #63d8f1;
+    background-color: #c1d4d8;
 }
 
 .alert-success {
-    background-color: #a1e82c;
+    background-color: #afce7e;
 }
 
 .alert-warning {
-    background-color: #ffbc67;
+    background-color: #f5b667;
 }
 
 .alert-danger {
-    background-color: #fc727a;
+    background-color: #ff646d;
 }
 
 .table .radio,

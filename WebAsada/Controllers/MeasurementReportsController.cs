@@ -65,7 +65,7 @@ namespace WebAsada.Controllers
                 StringBuilder builderMeasurement = new StringBuilder(); 
                 builderMeasurement.Append(htmlTemplate.FormatToken(new {
                     MeterNumber =  receipt.MeterSerialNumber,
-                    ContractNumber = receipt.ContractId,
+                    ContractNumber = receipt.ContractIdentifier,
                     ReceiptNumber = receipt.ReceiptCode,
                     CustomerName = receipt.FullName.ToUpper(),
                     IdentificationNumber = receipt.IdentificatioNumber,
