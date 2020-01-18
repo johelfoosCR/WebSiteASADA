@@ -9,16 +9,10 @@
 
   <ItemGroup>
     <Compile Remove="Controllers\EntitiesController.cs" />
-    <Compile Remove="Migrations\20191123172740_datos.cs" />
-    <Compile Remove="Migrations\20191123172740_datos.Designer.cs" />
-    <Compile Remove="Migrations\20191123172859_Contract_status.cs" />
-    <Compile Remove="Migrations\20191123172859_Contract_status.Designer.cs" />
-    <Compile Remove="Migrations\20191124044125_receipts.cs" />
-    <Compile Remove="Migrations\20191124044125_receipts.Designer.cs" />
-    <Compile Remove="Migrations\20191202023816_cahrgeDetail-BaseFare.cs" />
-    <Compile Remove="Migrations\20191202023816_cahrgeDetail-BaseFare.Designer.cs" />
-    <Compile Remove="Migrations\20191204005023_dato2.cs" />
-    <Compile Remove="Migrations\20191204005023_dato2.Designer.cs" />
+    <Compile Remove="Migrations\20200113053219_initial2.cs" />
+    <Compile Remove="Migrations\20200113053219_initial2.Designer.cs" />
+    <Compile Remove="Migrations\20200114013022_initial2.cs" />
+    <Compile Remove="Migrations\20200114013022_initial2.Designer.cs" />
   </ItemGroup>
 
 
@@ -27,6 +21,7 @@
     <PackageReference Include="bootstrap-select" Version="1.13.12" />
     <PackageReference Include="CSharpFunctionalExtensions" Version="2.2.2" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.Cookies" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
     <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="3.3.1" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.7.12" />

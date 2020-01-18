@@ -1,0 +1,31 @@
+﻿@model IEnumerable<WebAsada.ViewModels.SystemUserVM>
+
+<partial name="_PageTitle" model="@("Usuarios")" />
+<partial name="_CreateNewButton" />
+
+@(Html
+    .Grid(Model)
+    .Build(columns =>
+    {
+        columns.Add(model => model.FullName).Titled("Nombre Completo");
+        columns.Add(model => model.UserName).Titled("Nombre de Usuario"); 
+        columns.Add(model => model.IsActive ? "Sí" : "No").Titled("Activo");
+        columns.Add(model => model.IsOperational ? "Sí" : "No").Titled("Es Operacional?");
+        columns.Add(model => model.IsAdministrator ? "Sí" : "No").Titled("Es Administrador?");
+        columns.Add().Titled("Editar").Encoded(false).RenderedAs(o => Html.ActionLink("Editar", "Edit", new { id = o.Id }));
+     })
+    .Empty("No se encontraron datos")
+    .Filterable()
+    .Sortable()
+    .Pageable()
+)
+
+@section Scripts {
+    <script>
+
+        @if (TempData["javascriptMessage"] != null)
+        {
+             @Html.Raw(TempData["javascriptMessage"])
+        }
+    </script>
+} 

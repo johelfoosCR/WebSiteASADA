@@ -1,5 +1,4 @@
 ﻿using CSharpFunctionalExtensions;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,12 +13,12 @@ namespace WebAsada.Repository
     public class ReceiptRepository : CommonRepositoryActions<Receipt>
     {
         private readonly ApplicationDbContext _dbContext;
-        private readonly DbSet<IdentityUser> users; 
+        private readonly DbSet<SystemUser> users; 
 
         public ReceiptRepository(ApplicationDbContext applicationDbContext) : base(applicationDbContext)
         {
             _dbContext = applicationDbContext;
-            users = _dbContext.Users; 
+            users = _dbContext.SystemUser; 
         }
          
         public async override Task<Receipt> GetById(int id)
@@ -111,7 +110,7 @@ namespace WebAsada.Repository
                                         .ToListAsync();
         } 
 
-        public DbSet<IdentityUser> GetUsers()
+        public DbSet<SystemUser> GetUsers()
         {
             return users;
         } 

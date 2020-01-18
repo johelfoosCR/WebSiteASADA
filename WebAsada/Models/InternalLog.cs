@@ -1,8 +1,4 @@
-﻿using Microsoft.AspNetCore.Identity;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System;
 using WebAsada.BaseObjects;
 
 namespace WebAsada.Models
@@ -10,7 +6,7 @@ namespace WebAsada.Models
     public class InternalLog : BaseEntity
     {  
         public string Message { get; set; }
-        public IdentityUser User { get; set; }
+        public SystemUser User { get; set; }
         public DateTime EntryLogDate { get; set; }
     }
 }

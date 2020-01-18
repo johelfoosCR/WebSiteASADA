@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 using System.Threading.Tasks;
 using WebAsada.Repository;
@@ -6,6 +7,7 @@ using WebAsada.ViewModels;
 
 namespace WebAsada.Controllers
 {
+    [AllowAnonymous]
     public class ReceiptsInquiryController : Controller
     {
         private readonly ReceiptRepository _receiptRepository;

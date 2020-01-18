@@ -1,6 +1,4 @@
-﻿using CSharpFunctionalExtensions; 
-using Microsoft.AspNetCore.Identity;
-using System;
+﻿using System;
 using System.ComponentModel.DataAnnotations.Schema;
 using WebAsada.BaseObjects;
 
@@ -12,7 +10,7 @@ namespace WebAsada.Models
         public int MonthId { get; private set; }
         public int MeasurementId { get; private set; }
         public int Year { get; private set; }
-        public IdentityUser ReadUser { get; private set; }
+        public SystemUser ReadUser { get; private set; }
         public string ReadUserId { get; private set; }
         public DateTime ReadDate { get; private set; }
         public DateTime DateFrom { get; private set; }

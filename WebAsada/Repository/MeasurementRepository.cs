@@ -1,5 +1,4 @@
 ﻿using CSharpFunctionalExtensions;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,14 +12,14 @@ namespace WebAsada.Repository
     public class MeasurementRepository : CommonRepositoryEditorActions<Measurement>, IUpdatebleEntity<Measurement>
     {
         private readonly ApplicationDbContext _dbContext;
-        private readonly DbSet<IdentityUser> users;
+        private readonly DbSet<SystemUser> users;
 
         public DbSet<Month> Months { get; }
 
         public MeasurementRepository(ApplicationDbContext applicationDbContext) : base(applicationDbContext)
         {
             _dbContext = applicationDbContext;
-            users = _dbContext.Users;
+            users = _dbContext.SystemUser;
             Months = _dbContext.Month;
         }
 
@@ -71,9 +70,9 @@ namespace WebAsada.Repository
         }
 
 
-        public DbSet<IdentityUser> GetUsers()
+        public DbSet<SystemUser> GetUsers()
         {
-            return users;
+            return _dbContext.SystemUser;
         }
 
         public override async Task Update(int id, Measurement entity)

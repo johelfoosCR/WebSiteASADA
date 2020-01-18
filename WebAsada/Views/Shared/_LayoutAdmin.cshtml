@@ -51,6 +51,20 @@
                     <li class="nav-item">
                         <div class="nav-link accordions">
                             <div>
+                                <a data-target="#collapseSecurity" href="#" data-toggle="collapse">
+                                    <i class="fas fa-2x fa-user"></i><span style="margin-left:10px">Seguridad</span>
+                                </a>
+                            </div>
+                            <div id="collapseSecurity" class="card-collapse collapse">
+                                <div class="card-body">
+                                    @Html.ActionLink("Usuarios", "Index", "SystemUsers") 
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <div class="nav-link accordions">
+                            <div>
                                 <a data-target="#collapseOne" href="#" data-toggle="collapse">
                                     <i class="fas fa-2x fa-clipboard"></i><span style="margin-left:10px">Catalogos</span>
                                 </a>
@@ -129,8 +143,8 @@
                     <a class="navbar-brand">Hola @User.Identity.Name!!</a>
                     <div class="collapse navbar-collapse justify-content-end" id="navigation">
                         <ul class="nav navbar-nav">
-                            <li class="nav-item">
-                                <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                            <li class="nav-item"> 
+                                <form class="form-inline" asp-area="" asp-controller="Login" asp-action="LogOutAsync" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
                                     <button type="submit" class="nav-link btn btn-link">Cerrar Sesión</button>
                                 </form>
                             </li>

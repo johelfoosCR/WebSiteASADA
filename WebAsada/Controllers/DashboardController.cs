@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Threading.Tasks;
@@ -7,6 +8,7 @@ using WebAsada.ViewModels;
 
 namespace WebAsada.Controllers
 {
+    [AllowAnonymous]
     public class DashboardController : Controller
     {
         private readonly ReceiptRepository _receiptRepository;

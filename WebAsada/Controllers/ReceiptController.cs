@@ -43,7 +43,7 @@ namespace WebAsada.Controllers
                 Receipts = await _receiptRepository.GetReceiptDetailsByMeasurement(measurement.Id)
             };
 
-            ViewData["ContractCollection"] = new SelectList(_contractRepository.GetValidData(), "Value", "Text");
+            ViewData["ContractCollection"] = new SelectList(await _contractRepository.GetValidData(), "Value", "Text");
             return View(receipt); 
         }
 

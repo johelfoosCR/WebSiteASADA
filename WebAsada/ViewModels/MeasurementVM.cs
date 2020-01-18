@@ -6,7 +6,7 @@ using WebAsada.Models;
 
 namespace WebAsada.ViewModels
 {
-    public class MeasurementVM: BaseEntity
+    public class MeasurementVM : BaseEntity
     { 
         [Required]
         [DisplayName("Mes")] 

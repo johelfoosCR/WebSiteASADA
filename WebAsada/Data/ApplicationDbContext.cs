@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
 using System.Threading;
@@ -10,7 +9,7 @@ using WebAsada.Models;
 
 namespace WebAsada.Data
 {
-    public class ApplicationDbContext : IdentityDbContext
+    public class ApplicationDbContext : DbContext
     {
         private readonly ILoggedUserReader currentUser;
 
@@ -24,9 +23,7 @@ namespace WebAsada.Data
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.SeedData();
-            builder.ManyToManyRelations();
-
-
+            builder.ManyToManyRelations(); 
 
             base.OnModelCreating(builder); 
         }
@@ -52,12 +49,12 @@ namespace WebAsada.Data
                                                            && x.Entity is BaseEntity))
             {
                 var entityToUpdate = item.Entity as BaseEntity;
-                entityToUpdate.UpdateDateTime = dateTimeNow;
+                entityToUpdate.UpdateDateTime = dateTimeNow; 
                 entityToUpdate.UpdateUserId = currentUser.GetLoggedUser(); 
                 if (item.State == EntityState.Added)
                 {
                     entityToUpdate.RegisterDatime = dateTimeNow;
-                    entityToUpdate.RegisterUserId = currentUser.GetLoggedUser();
+                    entityToUpdate.RegisterUserId =  currentUser.GetLoggedUser();
                 }
                 else
                 {
@@ -86,5 +83,7 @@ namespace WebAsada.Data
         public DbSet<Supplier> Supplier { get; set; }
         public DbSet<WaterMeter> WaterMeter { get; set; }
         public DbSet<Contract> Contract { get; set; } 
+        public DbSet<SystemUser> SystemUser { get; set; }
+        
     }
 }

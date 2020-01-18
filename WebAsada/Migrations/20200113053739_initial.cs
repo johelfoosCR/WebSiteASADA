@@ -4,157 +4,30 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace WebAsada.Migrations
 {
-    public partial class Initial : Migration
+    public partial class initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "AspNetRoles",
+                name: "SystemUser",
                 columns: table => new
                 {
                     Id = table.Column<string>(nullable: false),
-                    Name = table.Column<string>(maxLength: 256, nullable: true),
-                    NormalizedName = table.Column<string>(maxLength: 256, nullable: true),
-                    ConcurrencyStamp = table.Column<string>(nullable: true)
+                    UserName = table.Column<string>(nullable: false),
+                    FullName = table.Column<string>(nullable: false),
+                    Password = table.Column<string>(nullable: false),
+                    RegisterDateTime = table.Column<DateTime>(nullable: false),
+                    IsAdministrator = table.Column<bool>(nullable: false),
+                    IsActive = table.Column<bool>(nullable: false),
+                    IsOperational = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_AspNetRoles", x => x.Id);
+                    table.PrimaryKey("PK_SystemUser", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "AspNetUsers",
-                columns: table => new
-                {
-                    Id = table.Column<string>(nullable: false),
-                    UserName = table.Column<string>(maxLength: 256, nullable: true),
-                    NormalizedUserName = table.Column<string>(maxLength: 256, nullable: true),
-                    Email = table.Column<string>(maxLength: 256, nullable: true),
-                    NormalizedEmail = table.Column<string>(maxLength: 256, nullable: true),
-                    EmailConfirmed = table.Column<bool>(nullable: false),
-                    PasswordHash = table.Column<string>(nullable: true),
-                    SecurityStamp = table.Column<string>(nullable: true),
-                    ConcurrencyStamp = table.Column<string>(nullable: true),
-                    PhoneNumber = table.Column<string>(nullable: true),
-                    PhoneNumberConfirmed = table.Column<bool>(nullable: false),
-                    TwoFactorEnabled = table.Column<bool>(nullable: false),
-                    LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
-                    LockoutEnabled = table.Column<bool>(nullable: false),
-                    AccessFailedCount = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AspNetUsers", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "AspNetRoleClaims",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    RoleId = table.Column<string>(nullable: false),
-                    ClaimType = table.Column<string>(nullable: true),
-                    ClaimValue = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AspNetRoleClaims", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_AspNetRoleClaims_AspNetRoles_RoleId",
-                        column: x => x.RoleId,
-                        principalTable: "AspNetRoles",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "AspNetUserClaims",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    UserId = table.Column<string>(nullable: false),
-                    ClaimType = table.Column<string>(nullable: true),
-                    ClaimValue = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AspNetUserClaims", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_AspNetUserClaims_AspNetUsers_UserId",
-                        column: x => x.UserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "AspNetUserLogins",
-                columns: table => new
-                {
-                    LoginProvider = table.Column<string>(maxLength: 128, nullable: false),
-                    ProviderKey = table.Column<string>(maxLength: 128, nullable: false),
-                    ProviderDisplayName = table.Column<string>(nullable: true),
-                    UserId = table.Column<string>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AspNetUserLogins", x => new { x.LoginProvider, x.ProviderKey });
-                    table.ForeignKey(
-                        name: "FK_AspNetUserLogins_AspNetUsers_UserId",
-                        column: x => x.UserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "AspNetUserRoles",
-                columns: table => new
-                {
-                    UserId = table.Column<string>(nullable: false),
-                    RoleId = table.Column<string>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AspNetUserRoles", x => new { x.UserId, x.RoleId });
-                    table.ForeignKey(
-                        name: "FK_AspNetUserRoles_AspNetRoles_RoleId",
-                        column: x => x.RoleId,
-                        principalTable: "AspNetRoles",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_AspNetUserRoles_AspNetUsers_UserId",
-                        column: x => x.UserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "AspNetUserTokens",
-                columns: table => new
-                {
-                    UserId = table.Column<string>(nullable: false),
-                    LoginProvider = table.Column<string>(maxLength: 128, nullable: false),
-                    Name = table.Column<string>(maxLength: 128, nullable: false),
-                    Value = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AspNetUserTokens", x => new { x.UserId, x.LoginProvider, x.Name });
-                    table.ForeignKey(
-                        name: "FK_AspNetUserTokens_AspNetUsers_UserId",
-                        column: x => x.UserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Charge",
+                name: "ChargeType",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -168,22 +41,25 @@ namespace WebAsada.Migrations
                     Nemotecnico = table.Column<string>(nullable: true),
                     OfficialId = table.Column<string>(nullable: true),
                     IsActive = table.Column<bool>(nullable: false),
-                    ChargeCode = table.Column<string>(nullable: true),
-                    Price = table.Column<double>(nullable: false)
+                    ChargeTypeCode = table.Column<string>(nullable: true),
+                    VatRate = table.Column<double>(nullable: false),
+                    IsVATCharge = table.Column<bool>(nullable: false),
+                    IsBaseFare = table.Column<bool>(nullable: false),
+                    IsWaterConsume = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Charge", x => x.Id);
+                    table.PrimaryKey("PK_ChargeType", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Charge_AspNetUsers_RegisterUserId",
+                        name: "FK_ChargeType_SystemUser_RegisterUserId",
                         column: x => x.RegisterUserId,
-                        principalTable: "AspNetUsers",
+                        principalTable: "SystemUser",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Charge_AspNetUsers_UpdateUserId",
+                        name: "FK_ChargeType_SystemUser_UpdateUserId",
                         column: x => x.UpdateUserId,
-                        principalTable: "AspNetUsers",
+                        principalTable: "SystemUser",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -209,15 +85,15 @@ namespace WebAsada.Migrations
                 {
                     table.PrimaryKey("PK_ContractType", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ContractType_AspNetUsers_RegisterUserId",
+                        name: "FK_ContractType_SystemUser_RegisterUserId",
                         column: x => x.RegisterUserId,
-                        principalTable: "AspNetUsers",
+                        principalTable: "SystemUser",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_ContractType_AspNetUsers_UpdateUserId",
+                        name: "FK_ContractType_SystemUser_UpdateUserId",
                         column: x => x.UpdateUserId,
-                        principalTable: "AspNetUsers",
+                        principalTable: "SystemUser",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -244,15 +120,15 @@ namespace WebAsada.Migrations
                 {
                     table.PrimaryKey("PK_Currency", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Currency_AspNetUsers_RegisterUserId",
+                        name: "FK_Currency_SystemUser_RegisterUserId",
                         column: x => x.RegisterUserId,
-                        principalTable: "AspNetUsers",
+                        principalTable: "SystemUser",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Currency_AspNetUsers_UpdateUserId",
+                        name: "FK_Currency_SystemUser_UpdateUserId",
                         column: x => x.UpdateUserId,
-                        principalTable: "AspNetUsers",
+                        principalTable: "SystemUser",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -278,15 +154,15 @@ namespace WebAsada.Migrations
                 {
                     table.PrimaryKey("PK_CustomerType", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_CustomerType_AspNetUsers_RegisterUserId",
+                        name: "FK_CustomerType_SystemUser_RegisterUserId",
                         column: x => x.RegisterUserId,
-                        principalTable: "AspNetUsers",
+                        principalTable: "SystemUser",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_CustomerType_AspNetUsers_UpdateUserId",
+                        name: "FK_CustomerType_SystemUser_UpdateUserId",
                         column: x => x.UpdateUserId,
-                        principalTable: "AspNetUsers",
+                        principalTable: "SystemUser",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -309,15 +185,15 @@ namespace WebAsada.Migrations
                 {
                     table.PrimaryKey("PK_Entity", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Entity_AspNetUsers_RegisterUserId",
+                        name: "FK_Entity_SystemUser_RegisterUserId",
                         column: x => x.RegisterUserId,
-                        principalTable: "AspNetUsers",
+                        principalTable: "SystemUser",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Entity_AspNetUsers_UpdateUserId",
+                        name: "FK_Entity_SystemUser_UpdateUserId",
                         column: x => x.UpdateUserId,
-                        principalTable: "AspNetUsers",
+                        principalTable: "SystemUser",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -343,15 +219,15 @@ namespace WebAsada.Migrations
                 {
                     table.PrimaryKey("PK_Estate", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Estate_AspNetUsers_RegisterUserId",
+                        name: "FK_Estate_SystemUser_RegisterUserId",
                         column: x => x.RegisterUserId,
-                        principalTable: "AspNetUsers",
+                        principalTable: "SystemUser",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Estate_AspNetUsers_UpdateUserId",
+                        name: "FK_Estate_SystemUser_UpdateUserId",
                         column: x => x.UpdateUserId,
-                        principalTable: "AspNetUsers",
+                        principalTable: "SystemUser",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -377,15 +253,15 @@ namespace WebAsada.Migrations
                 {
                     table.PrimaryKey("PK_IdentificationType", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_IdentificationType_AspNetUsers_RegisterUserId",
+                        name: "FK_IdentificationType_SystemUser_RegisterUserId",
                         column: x => x.RegisterUserId,
-                        principalTable: "AspNetUsers",
+                        principalTable: "SystemUser",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_IdentificationType_AspNetUsers_UpdateUserId",
+                        name: "FK_IdentificationType_SystemUser_UpdateUserId",
                         column: x => x.UpdateUserId,
-                        principalTable: "AspNetUsers",
+                        principalTable: "SystemUser",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -407,15 +283,15 @@ namespace WebAsada.Migrations
                 {
                     table.PrimaryKey("PK_Month", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Month_AspNetUsers_RegisterUserId",
+                        name: "FK_Month_SystemUser_RegisterUserId",
                         column: x => x.RegisterUserId,
-                        principalTable: "AspNetUsers",
+                        principalTable: "SystemUser",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Month_AspNetUsers_UpdateUserId",
+                        name: "FK_Month_SystemUser_UpdateUserId",
                         column: x => x.UpdateUserId,
-                        principalTable: "AspNetUsers",
+                        principalTable: "SystemUser",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -441,15 +317,59 @@ namespace WebAsada.Migrations
                 {
                     table.PrimaryKey("PK_ProductType", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ProductType_AspNetUsers_RegisterUserId",
+                        name: "FK_ProductType_SystemUser_RegisterUserId",
                         column: x => x.RegisterUserId,
-                        principalTable: "AspNetUsers",
+                        principalTable: "SystemUser",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_ProductType_AspNetUsers_UpdateUserId",
+                        name: "FK_ProductType_SystemUser_UpdateUserId",
                         column: x => x.UpdateUserId,
-                        principalTable: "AspNetUsers",
+                        principalTable: "SystemUser",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Charge",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    RegisterUserId = table.Column<string>(nullable: true),
+                    RegisterDatime = table.Column<DateTime>(nullable: false),
+                    UpdateUserId = table.Column<string>(nullable: true),
+                    UpdateDateTime = table.Column<DateTime>(nullable: false),
+                    ShortDesc = table.Column<string>(nullable: true),
+                    LongDesc = table.Column<string>(nullable: true),
+                    Nemotecnico = table.Column<string>(nullable: true),
+                    OfficialId = table.Column<string>(nullable: true),
+                    IsActive = table.Column<bool>(nullable: false),
+                    ChargeCode = table.Column<string>(nullable: true),
+                    Price = table.Column<double>(nullable: false),
+                    ChargeTypeId = table.Column<int>(nullable: false),
+                    CubicMeterFrom = table.Column<double>(nullable: false),
+                    CubicMeterTo = table.Column<double>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Charge", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Charge_ChargeType_ChargeTypeId",
+                        column: x => x.ChargeTypeId,
+                        principalTable: "ChargeType",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Charge_SystemUser_RegisterUserId",
+                        column: x => x.RegisterUserId,
+                        principalTable: "SystemUser",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Charge_SystemUser_UpdateUserId",
+                        column: x => x.UpdateUserId,
+                        principalTable: "SystemUser",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -490,15 +410,15 @@ namespace WebAsada.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Person_AspNetUsers_RegisterUserId",
+                        name: "FK_Person_SystemUser_RegisterUserId",
                         column: x => x.RegisterUserId,
-                        principalTable: "AspNetUsers",
+                        principalTable: "SystemUser",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Person_AspNetUsers_UpdateUserId",
+                        name: "FK_Person_SystemUser_UpdateUserId",
                         column: x => x.UpdateUserId,
-                        principalTable: "AspNetUsers",
+                        principalTable: "SystemUser",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -514,6 +434,7 @@ namespace WebAsada.Migrations
                     UpdateUserId = table.Column<string>(nullable: true),
                     UpdateDateTime = table.Column<DateTime>(nullable: false),
                     MonthId = table.Column<int>(nullable: false),
+                    MeasurementId = table.Column<int>(nullable: false),
                     Year = table.Column<int>(nullable: false),
                     ReadUserId = table.Column<string>(nullable: true),
                     ReadDate = table.Column<DateTime>(nullable: false),
@@ -521,7 +442,8 @@ namespace WebAsada.Migrations
                     DateTo = table.Column<DateTime>(nullable: false),
                     MaxPaymentDate = table.Column<DateTime>(nullable: false),
                     MessageOfTheMonth = table.Column<string>(nullable: true),
-                    PaymentPlace = table.Column<string>(nullable: true)
+                    PaymentPlace = table.Column<string>(nullable: true),
+                    IsActive = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -533,21 +455,21 @@ namespace WebAsada.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Measurement_AspNetUsers_ReadUserId",
+                        name: "FK_Measurement_SystemUser_ReadUserId",
                         column: x => x.ReadUserId,
-                        principalTable: "AspNetUsers",
+                        principalTable: "SystemUser",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Measurement_AspNetUsers_RegisterUserId",
+                        name: "FK_Measurement_SystemUser_RegisterUserId",
                         column: x => x.RegisterUserId,
-                        principalTable: "AspNetUsers",
+                        principalTable: "SystemUser",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Measurement_AspNetUsers_UpdateUserId",
+                        name: "FK_Measurement_SystemUser_UpdateUserId",
                         column: x => x.UpdateUserId,
-                        principalTable: "AspNetUsers",
+                        principalTable: "SystemUser",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -582,15 +504,15 @@ namespace WebAsada.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Supplier_AspNetUsers_RegisterUserId",
+                        name: "FK_Supplier_SystemUser_RegisterUserId",
                         column: x => x.RegisterUserId,
-                        principalTable: "AspNetUsers",
+                        principalTable: "SystemUser",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Supplier_AspNetUsers_UpdateUserId",
+                        name: "FK_Supplier_SystemUser_UpdateUserId",
                         column: x => x.UpdateUserId,
-                        principalTable: "AspNetUsers",
+                        principalTable: "SystemUser",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -631,9 +553,9 @@ namespace WebAsada.Migrations
                     UpdateDateTime = table.Column<DateTime>(nullable: false),
                     Model = table.Column<string>(nullable: true),
                     SerialNumber = table.Column<string>(nullable: false),
-                    CurrentRead = table.Column<int>(nullable: false),
                     BougthDate = table.Column<DateTime>(nullable: false),
                     SupplierId = table.Column<int>(nullable: false),
+                    CurrentRead = table.Column<int>(nullable: false),
                     IsActive = table.Column<bool>(nullable: false),
                     Comments = table.Column<string>(nullable: true)
                 },
@@ -641,9 +563,9 @@ namespace WebAsada.Migrations
                 {
                     table.PrimaryKey("PK_WaterMeter", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_WaterMeter_AspNetUsers_RegisterUserId",
+                        name: "FK_WaterMeter_SystemUser_RegisterUserId",
                         column: x => x.RegisterUserId,
-                        principalTable: "AspNetUsers",
+                        principalTable: "SystemUser",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
@@ -653,9 +575,9 @@ namespace WebAsada.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_WaterMeter_AspNetUsers_UpdateUserId",
+                        name: "FK_WaterMeter_SystemUser_UpdateUserId",
                         column: x => x.UpdateUserId,
-                        principalTable: "AspNetUsers",
+                        principalTable: "SystemUser",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -697,15 +619,15 @@ namespace WebAsada.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Contract_AspNetUsers_RegisterUserId",
+                        name: "FK_Contract_SystemUser_RegisterUserId",
                         column: x => x.RegisterUserId,
-                        principalTable: "AspNetUsers",
+                        principalTable: "SystemUser",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Contract_AspNetUsers_UpdateUserId",
+                        name: "FK_Contract_SystemUser_UpdateUserId",
                         column: x => x.UpdateUserId,
-                        principalTable: "AspNetUsers",
+                        principalTable: "SystemUser",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
@@ -726,9 +648,12 @@ namespace WebAsada.Migrations
                     RegisterDatime = table.Column<DateTime>(nullable: false),
                     UpdateUserId = table.Column<string>(nullable: true),
                     UpdateDateTime = table.Column<DateTime>(nullable: false),
-                    MeasurementId = table.Column<int>(nullable: true),
-                    ContractId = table.Column<int>(nullable: true),
-                    NewRead = table.Column<double>(nullable: false),
+                    MeasurementId = table.Column<int>(nullable: false),
+                    ContractId = table.Column<int>(nullable: false),
+                    LastRead = table.Column<int>(nullable: false),
+                    NewRead = table.Column<int>(nullable: false),
+                    IsPaid = table.Column<bool>(nullable: false),
+                    PaidDate = table.Column<DateTime>(nullable: false),
                     TotalAmount = table.Column<double>(nullable: false)
                 },
                 constraints: table =>
@@ -739,23 +664,62 @@ namespace WebAsada.Migrations
                         column: x => x.ContractId,
                         principalTable: "Contract",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Receipt_Measurement_MeasurementId",
                         column: x => x.MeasurementId,
                         principalTable: "Measurement",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Receipt_AspNetUsers_RegisterUserId",
+                        name: "FK_Receipt_SystemUser_RegisterUserId",
                         column: x => x.RegisterUserId,
-                        principalTable: "AspNetUsers",
+                        principalTable: "SystemUser",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Receipt_AspNetUsers_UpdateUserId",
+                        name: "FK_Receipt_SystemUser_UpdateUserId",
                         column: x => x.UpdateUserId,
-                        principalTable: "AspNetUsers",
+                        principalTable: "SystemUser",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ReceiptItem",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    RegisterUserId = table.Column<string>(nullable: true),
+                    RegisterDatime = table.Column<DateTime>(nullable: false),
+                    UpdateUserId = table.Column<string>(nullable: true),
+                    UpdateDateTime = table.Column<DateTime>(nullable: false),
+                    ReceiptId = table.Column<int>(nullable: true),
+                    Quantity = table.Column<int>(nullable: false),
+                    Description = table.Column<string>(nullable: true),
+                    Amount = table.Column<double>(nullable: false),
+                    VatAmount = table.Column<double>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ReceiptItem", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ReceiptItem_Receipt_ReceiptId",
+                        column: x => x.ReceiptId,
+                        principalTable: "Receipt",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ReceiptItem_SystemUser_RegisterUserId",
+                        column: x => x.RegisterUserId,
+                        principalTable: "SystemUser",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_ReceiptItem_SystemUser_UpdateUserId",
+                        column: x => x.UpdateUserId,
+                        principalTable: "SystemUser",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -780,43 +744,9 @@ namespace WebAsada.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_AspNetRoleClaims_RoleId",
-                table: "AspNetRoleClaims",
-                column: "RoleId");
-
-            migrationBuilder.CreateIndex(
-                name: "RoleNameIndex",
-                table: "AspNetRoles",
-                column: "NormalizedName",
-                unique: true,
-                filter: "[NormalizedName] IS NOT NULL");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_AspNetUserClaims_UserId",
-                table: "AspNetUserClaims",
-                column: "UserId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_AspNetUserLogins_UserId",
-                table: "AspNetUserLogins",
-                column: "UserId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_AspNetUserRoles_RoleId",
-                table: "AspNetUserRoles",
-                column: "RoleId");
-
-            migrationBuilder.CreateIndex(
-                name: "EmailIndex",
-                table: "AspNetUsers",
-                column: "NormalizedEmail");
-
-            migrationBuilder.CreateIndex(
-                name: "UserNameIndex",
-                table: "AspNetUsers",
-                column: "NormalizedUserName",
-                unique: true,
-                filter: "[NormalizedUserName] IS NOT NULL");
+                name: "IX_Charge_ChargeTypeId",
+                table: "Charge",
+                column: "ChargeTypeId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Charge_RegisterUserId",
@@ -826,6 +756,16 @@ namespace WebAsada.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Charge_UpdateUserId",
                 table: "Charge",
+                column: "UpdateUserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ChargeType_RegisterUserId",
+                table: "ChargeType",
+                column: "RegisterUserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ChargeType_UpdateUserId",
+                table: "ChargeType",
                 column: "UpdateUserId");
 
             migrationBuilder.CreateIndex(
@@ -999,6 +939,21 @@ namespace WebAsada.Migrations
                 column: "UpdateUserId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_ReceiptItem_ReceiptId",
+                table: "ReceiptItem",
+                column: "ReceiptId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ReceiptItem_RegisterUserId",
+                table: "ReceiptItem",
+                column: "RegisterUserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ReceiptItem_UpdateUserId",
+                table: "ReceiptItem",
+                column: "UpdateUserId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Supplier_ProductTypeId",
                 table: "Supplier",
                 column: "ProductTypeId");
@@ -1032,21 +987,6 @@ namespace WebAsada.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "AspNetRoleClaims");
-
-            migrationBuilder.DropTable(
-                name: "AspNetUserClaims");
-
-            migrationBuilder.DropTable(
-                name: "AspNetUserLogins");
-
-            migrationBuilder.DropTable(
-                name: "AspNetUserRoles");
-
-            migrationBuilder.DropTable(
-                name: "AspNetUserTokens");
-
-            migrationBuilder.DropTable(
                 name: "Charge");
 
             migrationBuilder.DropTable(
@@ -1056,10 +996,13 @@ namespace WebAsada.Migrations
                 name: "Entity");
 
             migrationBuilder.DropTable(
-                name: "Receipt");
+                name: "ReceiptItem");
 
             migrationBuilder.DropTable(
-                name: "AspNetRoles");
+                name: "ChargeType");
+
+            migrationBuilder.DropTable(
+                name: "Receipt");
 
             migrationBuilder.DropTable(
                 name: "Contract");
@@ -1098,7 +1041,7 @@ namespace WebAsada.Migrations
                 name: "CustomerType");
 
             migrationBuilder.DropTable(
-                name: "AspNetUsers");
+                name: "SystemUser");
         }
     }
 }

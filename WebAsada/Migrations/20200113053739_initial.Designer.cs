@@ -10,8 +10,8 @@ using WebAsada.Data;
 namespace WebAsada.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20200102013619_receiptItemsDetail")]
-    partial class receiptItemsDetail
+    [Migration("20200113053739_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -20,171 +20,6 @@ namespace WebAsada.Migrations
                 .HasAnnotation("ProductVersion", "2.2.6-servicing-10079")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
-                {
-                    b.Property<string>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("ConcurrencyStamp")
-                        .IsConcurrencyToken();
-
-                    b.Property<string>("Name")
-                        .HasMaxLength(256);
-
-                    b.Property<string>("NormalizedName")
-                        .HasMaxLength(256);
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("NormalizedName")
-                        .IsUnique()
-                        .HasName("RoleNameIndex")
-                        .HasFilter("[NormalizedName] IS NOT NULL");
-
-                    b.ToTable("AspNetRoles");
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("ClaimType");
-
-                    b.Property<string>("ClaimValue");
-
-                    b.Property<string>("RoleId")
-                        .IsRequired();
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("RoleId");
-
-                    b.ToTable("AspNetRoleClaims");
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUser", b =>
-                {
-                    b.Property<string>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<int>("AccessFailedCount");
-
-                    b.Property<string>("ConcurrencyStamp")
-                        .IsConcurrencyToken();
-
-                    b.Property<string>("Email")
-                        .HasMaxLength(256);
-
-                    b.Property<bool>("EmailConfirmed");
-
-                    b.Property<bool>("LockoutEnabled");
-
-                    b.Property<DateTimeOffset?>("LockoutEnd");
-
-                    b.Property<string>("NormalizedEmail")
-                        .HasMaxLength(256);
-
-                    b.Property<string>("NormalizedUserName")
-                        .HasMaxLength(256);
-
-                    b.Property<string>("PasswordHash");
-
-                    b.Property<string>("PhoneNumber");
-
-                    b.Property<bool>("PhoneNumberConfirmed");
-
-                    b.Property<string>("SecurityStamp");
-
-                    b.Property<bool>("TwoFactorEnabled");
-
-                    b.Property<string>("UserName")
-                        .HasMaxLength(256);
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("NormalizedEmail")
-                        .HasName("EmailIndex");
-
-                    b.HasIndex("NormalizedUserName")
-                        .IsUnique()
-                        .HasName("UserNameIndex")
-                        .HasFilter("[NormalizedUserName] IS NOT NULL");
-
-                    b.ToTable("AspNetUsers");
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("ClaimType");
-
-                    b.Property<string>("ClaimValue");
-
-                    b.Property<string>("UserId")
-                        .IsRequired();
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("AspNetUserClaims");
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
-                {
-                    b.Property<string>("LoginProvider")
-                        .HasMaxLength(128);
-
-                    b.Property<string>("ProviderKey")
-                        .HasMaxLength(128);
-
-                    b.Property<string>("ProviderDisplayName");
-
-                    b.Property<string>("UserId")
-                        .IsRequired();
-
-                    b.HasKey("LoginProvider", "ProviderKey");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("AspNetUserLogins");
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
-                {
-                    b.Property<string>("UserId");
-
-                    b.Property<string>("RoleId");
-
-                    b.HasKey("UserId", "RoleId");
-
-                    b.HasIndex("RoleId");
-
-                    b.ToTable("AspNetUserRoles");
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
-                {
-                    b.Property<string>("UserId");
-
-                    b.Property<string>("LoginProvider")
-                        .HasMaxLength(128);
-
-                    b.Property<string>("Name")
-                        .HasMaxLength(128);
-
-                    b.Property<string>("Value");
-
-                    b.HasKey("UserId", "LoginProvider", "Name");
-
-                    b.ToTable("AspNetUserTokens");
-                });
 
             modelBuilder.Entity("WebAsada.Models.Charge", b =>
                 {
@@ -806,6 +641,8 @@ namespace WebAsada.Migrations
 
                     b.Property<bool>("IsPaid");
 
+                    b.Property<int>("LastRead");
+
                     b.Property<int>("MeasurementId");
 
                     b.Property<int>("NewRead");
@@ -841,7 +678,9 @@ namespace WebAsada.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("ChargeId");
+                    b.Property<double>("Amount");
+
+                    b.Property<string>("Description");
 
                     b.Property<int>("Quantity");
 
@@ -855,9 +694,9 @@ namespace WebAsada.Migrations
 
                     b.Property<string>("UpdateUserId");
 
-                    b.HasKey("Id");
+                    b.Property<double>("VatAmount");
 
-                    b.HasIndex("ChargeId");
+                    b.HasKey("Id");
 
                     b.HasIndex("ReceiptId");
 
@@ -912,6 +751,27 @@ namespace WebAsada.Migrations
                     b.ToTable("Supplier");
                 });
 
+            modelBuilder.Entity("WebAsada.Models.SystemUser", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("FullName")
+                        .IsRequired();
+
+                    b.Property<bool>("IsActive");
+
+                    b.Property<bool>("IsAdministrator");
+
+                    b.Property<bool>("IsOperational");
+
+                    b.Property<DateTime>("RegisterDateTime");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("SystemUser");
+                });
+
             modelBuilder.Entity("WebAsada.Models.WaterMeter", b =>
                 {
                     b.Property<int>("Id")
@@ -952,51 +812,6 @@ namespace WebAsada.Migrations
                     b.ToTable("WaterMeter");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
-                {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole")
-                        .WithMany()
-                        .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
-                {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
-                {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
-                {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole")
-                        .WithMany()
-                        .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
-                {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
             modelBuilder.Entity("WebAsada.Models.Charge", b =>
                 {
                     b.HasOne("WebAsada.Models.ChargeType", "ChargeType")
@@ -1004,22 +819,22 @@ namespace WebAsada.Migrations
                         .HasForeignKey("ChargeTypeId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "RegisterUser")
+                    b.HasOne("WebAsada.Models.SystemUser", "RegisterUser")
                         .WithMany()
                         .HasForeignKey("RegisterUserId");
 
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "UpdateUser")
+                    b.HasOne("WebAsada.Models.SystemUser", "UpdateUser")
                         .WithMany()
                         .HasForeignKey("UpdateUserId");
                 });
 
             modelBuilder.Entity("WebAsada.Models.ChargeType", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "RegisterUser")
+                    b.HasOne("WebAsada.Models.SystemUser", "RegisterUser")
                         .WithMany()
                         .HasForeignKey("RegisterUserId");
 
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "UpdateUser")
+                    b.HasOne("WebAsada.Models.SystemUser", "UpdateUser")
                         .WithMany()
                         .HasForeignKey("UpdateUserId");
                 });
@@ -1036,11 +851,11 @@ namespace WebAsada.Migrations
                         .HasForeignKey("MeterId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "RegisterUser")
+                    b.HasOne("WebAsada.Models.SystemUser", "RegisterUser")
                         .WithMany()
                         .HasForeignKey("RegisterUserId");
 
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "UpdateUser")
+                    b.HasOne("WebAsada.Models.SystemUser", "UpdateUser")
                         .WithMany()
                         .HasForeignKey("UpdateUserId");
 
@@ -1051,55 +866,55 @@ namespace WebAsada.Migrations
 
             modelBuilder.Entity("WebAsada.Models.ContractType", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "RegisterUser")
+                    b.HasOne("WebAsada.Models.SystemUser", "RegisterUser")
                         .WithMany()
                         .HasForeignKey("RegisterUserId");
 
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "UpdateUser")
+                    b.HasOne("WebAsada.Models.SystemUser", "UpdateUser")
                         .WithMany()
                         .HasForeignKey("UpdateUserId");
                 });
 
             modelBuilder.Entity("WebAsada.Models.Currency", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "RegisterUser")
+                    b.HasOne("WebAsada.Models.SystemUser", "RegisterUser")
                         .WithMany()
                         .HasForeignKey("RegisterUserId");
 
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "UpdateUser")
+                    b.HasOne("WebAsada.Models.SystemUser", "UpdateUser")
                         .WithMany()
                         .HasForeignKey("UpdateUserId");
                 });
 
             modelBuilder.Entity("WebAsada.Models.Entity", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "RegisterUser")
+                    b.HasOne("WebAsada.Models.SystemUser", "RegisterUser")
                         .WithMany()
                         .HasForeignKey("RegisterUserId");
 
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "UpdateUser")
+                    b.HasOne("WebAsada.Models.SystemUser", "UpdateUser")
                         .WithMany()
                         .HasForeignKey("UpdateUserId");
                 });
 
             modelBuilder.Entity("WebAsada.Models.Estate", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "RegisterUser")
+                    b.HasOne("WebAsada.Models.SystemUser", "RegisterUser")
                         .WithMany()
                         .HasForeignKey("RegisterUserId");
 
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "UpdateUser")
+                    b.HasOne("WebAsada.Models.SystemUser", "UpdateUser")
                         .WithMany()
                         .HasForeignKey("UpdateUserId");
                 });
 
             modelBuilder.Entity("WebAsada.Models.IdentificationType", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "RegisterUser")
+                    b.HasOne("WebAsada.Models.SystemUser", "RegisterUser")
                         .WithMany()
                         .HasForeignKey("RegisterUserId");
 
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "UpdateUser")
+                    b.HasOne("WebAsada.Models.SystemUser", "UpdateUser")
                         .WithMany()
                         .HasForeignKey("UpdateUserId");
                 });
@@ -1111,26 +926,26 @@ namespace WebAsada.Migrations
                         .HasForeignKey("MonthId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "ReadUser")
+                    b.HasOne("WebAsada.Models.SystemUser", "ReadUser")
                         .WithMany()
                         .HasForeignKey("ReadUserId");
 
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "RegisterUser")
+                    b.HasOne("WebAsada.Models.SystemUser", "RegisterUser")
                         .WithMany()
                         .HasForeignKey("RegisterUserId");
 
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "UpdateUser")
+                    b.HasOne("WebAsada.Models.SystemUser", "UpdateUser")
                         .WithMany()
                         .HasForeignKey("UpdateUserId");
                 });
 
             modelBuilder.Entity("WebAsada.Models.Month", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "RegisterUser")
+                    b.HasOne("WebAsada.Models.SystemUser", "RegisterUser")
                         .WithMany()
                         .HasForeignKey("RegisterUserId");
 
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "UpdateUser")
+                    b.HasOne("WebAsada.Models.SystemUser", "UpdateUser")
                         .WithMany()
                         .HasForeignKey("UpdateUserId");
                 });
@@ -1147,22 +962,22 @@ namespace WebAsada.Migrations
                         .HasForeignKey("PersonTypeId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "RegisterUser")
+                    b.HasOne("WebAsada.Models.SystemUser", "RegisterUser")
                         .WithMany()
                         .HasForeignKey("RegisterUserId");
 
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "UpdateUser")
+                    b.HasOne("WebAsada.Models.SystemUser", "UpdateUser")
                         .WithMany()
                         .HasForeignKey("UpdateUserId");
                 });
 
             modelBuilder.Entity("WebAsada.Models.PersonType", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "RegisterUser")
+                    b.HasOne("WebAsada.Models.SystemUser", "RegisterUser")
                         .WithMany()
                         .HasForeignKey("RegisterUserId");
 
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "UpdateUser")
+                    b.HasOne("WebAsada.Models.SystemUser", "UpdateUser")
                         .WithMany()
                         .HasForeignKey("UpdateUserId");
                 });
@@ -1182,11 +997,11 @@ namespace WebAsada.Migrations
 
             modelBuilder.Entity("WebAsada.Models.ProductType", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "RegisterUser")
+                    b.HasOne("WebAsada.Models.SystemUser", "RegisterUser")
                         .WithMany()
                         .HasForeignKey("RegisterUserId");
 
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "UpdateUser")
+                    b.HasOne("WebAsada.Models.SystemUser", "UpdateUser")
                         .WithMany()
                         .HasForeignKey("UpdateUserId");
                 });
@@ -1203,31 +1018,27 @@ namespace WebAsada.Migrations
                         .HasForeignKey("MeasurementId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "RegisterUser")
+                    b.HasOne("WebAsada.Models.SystemUser", "RegisterUser")
                         .WithMany()
                         .HasForeignKey("RegisterUserId");
 
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "UpdateUser")
+                    b.HasOne("WebAsada.Models.SystemUser", "UpdateUser")
                         .WithMany()
                         .HasForeignKey("UpdateUserId");
                 });
 
             modelBuilder.Entity("WebAsada.Models.ReceiptItem", b =>
                 {
-                    b.HasOne("WebAsada.Models.Charge", "Charge")
-                        .WithMany()
-                        .HasForeignKey("ChargeId");
-
                     b.HasOne("WebAsada.Models.Receipt", "Receipt")
                         .WithMany("Items")
                         .HasForeignKey("ReceiptId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "RegisterUser")
+                    b.HasOne("WebAsada.Models.SystemUser", "RegisterUser")
                         .WithMany()
                         .HasForeignKey("RegisterUserId");
 
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "UpdateUser")
+                    b.HasOne("WebAsada.Models.SystemUser", "UpdateUser")
                         .WithMany()
                         .HasForeignKey("UpdateUserId");
                 });
@@ -1239,18 +1050,57 @@ namespace WebAsada.Migrations
                         .HasForeignKey("ProductTypeId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "RegisterUser")
+                    b.HasOne("WebAsada.Models.SystemUser", "RegisterUser")
                         .WithMany()
                         .HasForeignKey("RegisterUserId");
 
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "UpdateUser")
+                    b.HasOne("WebAsada.Models.SystemUser", "UpdateUser")
                         .WithMany()
                         .HasForeignKey("UpdateUserId");
                 });
 
+            modelBuilder.Entity("WebAsada.Models.SystemUser", b =>
+                {
+                    b.OwnsOne("WebAsada.Models.Password", "Password", b1 =>
+                        {
+                            b1.Property<string>("SystemUserId");
+
+                            b1.Property<string>("Value")
+                                .IsRequired()
+                                .HasColumnName("Password");
+
+                            b1.HasKey("SystemUserId");
+
+                            b1.ToTable("SystemUser");
+
+                            b1.HasOne("WebAsada.Models.SystemUser")
+                                .WithOne("Password")
+                                .HasForeignKey("WebAsada.Models.Password", "SystemUserId")
+                                .OnDelete(DeleteBehavior.Cascade);
+                        });
+
+                    b.OwnsOne("WebAsada.Models.UserName", "UserName", b1 =>
+                        {
+                            b1.Property<string>("SystemUserId");
+
+                            b1.Property<string>("Value")
+                                .IsRequired()
+                                .HasColumnName("UserName");
+
+                            b1.HasKey("SystemUserId");
+
+                            b1.ToTable("SystemUser");
+
+                            b1.HasOne("WebAsada.Models.SystemUser")
+                                .WithOne("UserName")
+                                .HasForeignKey("WebAsada.Models.UserName", "SystemUserId")
+                                .OnDelete(DeleteBehavior.Cascade);
+                        });
+                });
+
             modelBuilder.Entity("WebAsada.Models.WaterMeter", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "RegisterUser")
+                    b.HasOne("WebAsada.Models.SystemUser", "RegisterUser")
                         .WithMany()
                         .HasForeignKey("RegisterUserId");
 
@@ -1259,7 +1109,7 @@ namespace WebAsada.Migrations
                         .HasForeignKey("SupplierId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "UpdateUser")
+                    b.HasOne("WebAsada.Models.SystemUser", "UpdateUser")
                         .WithMany()
                         .HasForeignKey("UpdateUserId");
                 });
