@@ -67,7 +67,7 @@ namespace WebAsada.Controllers
                 var newPassword = Password.Create(UpdateVm.Password); 
 
                 if (newPassword.IsSuccess)
-                {
+                { 
                     TempData["javascriptMessage"] = string.Format(Constants.JAVASCRIPT_WHIT_MESSAGE_FUNCTION,"Cambio de contraseña Exitoso!!");
                     var result = await _repository.UpdatePassword(UpdateVm.Id, newPassword.Value);
                     return result.IsSuccess ? (IActionResult)RedirectToAction("Index") : NotFound(result.Error);
