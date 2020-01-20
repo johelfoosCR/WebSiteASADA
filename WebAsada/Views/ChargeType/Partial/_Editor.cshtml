@@ -26,14 +26,14 @@
     <div class="col-md-2">
         <div class="form-group">
             <label asp-for="IsWaterConsume" class="control-label"></label>
-            <select data-live-search="true" asp-for="IsWaterConsume" asp-items="yesNoCollection.GetOptions(addDefaultOption:false)" class="form-control"></select>
+            <select data-live-search="true" asp-for="IsWaterConsume" asp-items="yesNoCollection.GetOptions()" class="form-control"></select>
             <span asp-validation-for="IsWaterConsume" class="text-danger"></span>
         </div>
     </div>
     <div class="col-md-2">
         <div class="form-group">
             <label asp-for="IsBaseFare" class="control-label"></label>
-            <select data-live-search="true" asp-for="IsBaseFare" asp-items="yesNoCollection.GetOptions(addDefaultOption:false)" class="form-control"></select>
+            <select data-live-search="true" asp-for="IsBaseFare" asp-items="yesNoCollection.GetOptions()" class="form-control"></select>
             <span asp-validation-for="IsBaseFare" class="text-danger"></span>
         </div>
     </div>

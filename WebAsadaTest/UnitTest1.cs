@@ -14,7 +14,7 @@ namespace WebAsadaTest
         public void Verify_Password_Complexity()
         {
             var p = Password.Create("AsadaCv123+");
-
+            //Clave johelMunoz = Clave1111+
             var u = UserName.Create("Administrator");
 
             Assert.AreEqual(true, p.IsSuccess);

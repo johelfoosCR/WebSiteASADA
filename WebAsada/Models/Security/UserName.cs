@@ -25,8 +25,8 @@ namespace WebAsada.Models
         public static Result<UserName> Create(string value)
         {
             if (string.IsNullOrEmpty(value)) return Result.Failure<UserName>("Debe informar un nombre de usuario");
-            if (value.Length < 8 || value.Length > 15) return Result.Failure<UserName>("El nombre de usuario debe tener en 8 y 15 caracteres");
-            if (!Regex.Match(value.ToLower(),"[a-z]").Success) return Result.Failure<UserName>("El nombre de usuario solo debe poseer letras");
+            if (value.Length < 6 || value.Length > 15) return Result.Failure<UserName>("El nombre de usuario debe tener en 6 y 15 caracteres");
+            if (!Regex.Match(value,"[a-z]").Success) return Result.Failure<UserName>("El nombre de usuario solo debe poseer letras minusculas");
 
             return Result.Ok(new UserName(value.ToLower()));
          }

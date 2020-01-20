@@ -40,7 +40,7 @@ namespace WebAsada.Controllers
                   
                 var claims = new List<Claim>
                  {
-                 new Claim(ClaimTypes.Name, result.Value.UserName.Value), 
+                 new Claim(ClaimTypes.Name, result.Value.FullName), 
                  new Claim(ClaimTypes.NameIdentifier, result.Value.Id)
                  };
 
