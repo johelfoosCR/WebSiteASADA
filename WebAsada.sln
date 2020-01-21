@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infraestructure", "Infraest
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Services", "Services\Services.csproj", "{7B367570-3B8B-4E95-8911-C35756B27895}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebAsadaTest", "WebAsadaTest\WebAsadaTest.csproj", "{59FA939B-74E7-42F4-8E9D-0ABA13B189BC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebAsadaTest", "WebAsadaTest\WebAsadaTest.csproj", "{59FA939B-74E7-42F4-8E9D-0ABA13B189BC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
