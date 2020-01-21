@@ -31,7 +31,7 @@ namespace WebAsada.Controllers
         public string SessionInfo_Age { get; private set; }
 
         [HttpPost] 
-        public async Task<ActionResult> DoLogin(SystemUserVM systemUserView)
+        public async Task<ActionResult> DoLogin(SystemUserLoginVM systemUserView)
         {
             var result = await _systemUserRepository.ValidateUserAndPassword(systemUserView);
 
@@ -58,8 +58,8 @@ namespace WebAsada.Controllers
                 return RedirectToAction("Index", "Dashboard",null);
             }
             else {
-                ModelState.AddModelError("", result.Error);
-                return RedirectToAction("Index");
+                ModelState.AddModelError(string.Empty, result.Error);
+                return View("Index", null);
             }
         }
 

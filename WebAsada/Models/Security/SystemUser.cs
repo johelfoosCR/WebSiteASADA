@@ -64,6 +64,17 @@ namespace WebAsada.Models
             };
         }
 
+        public static SystemUser CreateObjectForSincronize(string fullName, bool isAdministrator, bool isActive, bool isOperational)
+        {
+            return new SystemUser()
+            {
+                FullName = fullName,
+                IsAdministrator = isAdministrator,
+                IsActive = isActive,
+                IsOperational = isOperational
+            };
+        }
+
         public void ChangePassword(Password newPassword)
         {
             Password = newPassword;
@@ -74,8 +85,7 @@ namespace WebAsada.Models
             currentSystem.FullName = newSystem.FullName;
             currentSystem.IsActive = newSystem.IsActive;
             currentSystem.IsAdministrator = newSystem.IsAdministrator;
-            currentSystem.IsOperational = newSystem.IsOperational; 
-            currentSystem.UserName = newSystem.UserName;
+            currentSystem.IsOperational = newSystem.IsOperational;  
             return currentSystem;
         }
     }

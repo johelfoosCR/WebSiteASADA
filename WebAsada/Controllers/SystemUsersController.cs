@@ -60,6 +60,26 @@ namespace WebAsada.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(string Id, [Bind(ATTRIBUTES_TO_BIND)] SystemUserUpdateVM UpdateVm)
+        {
+            if (ModelState.IsValid)
+            {
+                var result = await _repository.Update(Id, SystemUser.CreateObjectForSincronize(UpdateVm.FullName,
+                                                                                  isAdministrator: UpdateVm.IsAdministrator,
+                                                                                  isOperational: UpdateVm.IsOperational,
+                                                                                  isActive: UpdateVm.IsActive));
+                if (result.IsSuccess)
+                {
+                    TempData["javascriptMessage"] = Constants.JAVASCRIPT_SUCCESS_FUNCTION;
+                    return RedirectToAction("Index");
+                }
+            }
+            
+            return View(UpdateVm);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> ChangePassword([Bind(ATTRIBUTES_TO_BIND)] SystemUserVM UpdateVm)
         {
             if (ModelState.IsValid)

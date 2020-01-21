@@ -1,7 +1,7 @@
-﻿@model WebAsada.ViewModels.SystemUserVM
+﻿@model WebAsada.ViewModels.SystemUserLoginVM
 
 @{
-    ViewBag.Title = "Login";
+    ViewBag.Title = "Ingreso al Sistema";
 }
 
 <h2>Ingreso al Sistema</h2>
@@ -9,16 +9,22 @@
 {
     @Html.AntiForgeryToken()
     <div class="wrapper fadeInDown">
-        <div id="formContent"> 
+        <div id="formContent">
             <div class="fadeIn first">
                 <img src="~/img/LOGO.png" width="75" height="150" id="icon" alt="User Icon" />
             </div>
             <form asp-action="DoLogin">
-                @Html.TextBoxFor(model => model.UserName, new { @class = "fadeIn second", placeholder = "Usuario" })
+                @Html.TextBoxFor(model => model.UserName, new { @class = "fadeIn second", placeholder = "Usuario",autocomplete="off" })
                 @Html.PasswordFor(model => model.Password, new { @class = "fadeIn third", placeholder = "Contraseña" })
                 <input type="submit" class="fadeIn fourth" value="Ingresar">
+                 
+                <div asp-validation-summary="ModelOnly" asp-validation- class="text-danger"></div>
             </form>
         </div>
     </div>
 }
 <link rel="stylesheet" href="~/css/login.css" />
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

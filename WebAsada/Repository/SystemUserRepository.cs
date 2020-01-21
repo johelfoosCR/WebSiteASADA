@@ -40,6 +40,21 @@ namespace WebAsada.Repository
             await _applicationDbContext.AddAsync(entity);
             await _applicationDbContext.SaveChangesAsync();
         }
+
+        public async Task<Result> Update(string id, SystemUser newSystemUser)
+        {
+            var entity = await ReadById(id);
+
+            if (entity.HasNoValue) Result.Failure("No se encontró el usuario");
+
+            SystemUser.SincronizeObject(currentSystem: entity.Value, newSystemUser);
+            _applicationDbContext.Entry(entity.Value).State = EntityState.Modified;
+            await _applicationDbContext.SaveChangesAsync();
+
+            return Result.Ok();
+        }
+
+
         public async Task<Result> UpdatePassword(string id, Password newPassword)
         {
             var entity = await ReadById(id);
@@ -58,21 +73,25 @@ namespace WebAsada.Repository
                                              .FirstOrDefaultAsync();
         }
 
-        public async Task<Result<SystemUser>> ValidateUserAndPassword(SystemUserVM systemUserView)
+        public async Task<Result<SystemUser>> ValidateUserAndPassword(SystemUserLoginVM systemUserView)
         {
             Maybe<SystemUser> existingUser = await _applicationDbContext.SystemUser
                                           .Where(x => x.UserName.Value == systemUserView.UserName)
                                          .FirstOrDefaultAsync();
 
             if (existingUser.HasValue) {
+                
+                if (!existingUser.Value.IsActive)
+                {
+                    return Result.Failure<SystemUser>("El usuario se encuentra inactivo");
+                }
 
                 if (existingUser.Value.Password.Value == SecurityHelper.ComputeSha256Hash(systemUserView.Password))
                 {
                     return Result.Ok(existingUser.Value);
                 }
-                else { 
-                    return Result.Failure<SystemUser>("La contraseña es incorrecta");
-                }
+                
+                return Result.Failure<SystemUser>("La contraseña es incorrecta");
             }
             else
             {
