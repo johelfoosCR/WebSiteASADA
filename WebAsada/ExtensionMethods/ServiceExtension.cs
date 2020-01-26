@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
+using System.Net.Http;
 using WebAsada.Helpers;
 using WebAsada.Interfaces;
 using WebAsada.Repository;
@@ -11,12 +12,24 @@ namespace WebAsada
     public static class ServiceExtension
     {
         public static void ConfigureHttpClients(this IServiceCollection services, IConfiguration configuration)
-        { 
+        {
+            //services.AddHttpClient("PdfGeneratorApi", c =>
+            //{
+            //    c.BaseAddress = new Uri(configuration.GetValue<string>("Endpoints:PdfGeneratorApi"));
+            //});
+
             services.AddHttpClient("PdfGeneratorApi", c =>
             {
                 c.BaseAddress = new Uri(configuration.GetValue<string>("Endpoints:PdfGeneratorApi"));
+            }).ConfigurePrimaryHttpMessageHandler(() => new HttpClientHandler
+            {
+                ClientCertificateOptions = ClientCertificateOption.Manual,
+                ServerCertificateCustomValidationCallback =
+                (httpRequestMessage, cert, cetChain, policyErrors) =>
+                {
+                    return true;
+                }
             });
-
 
             services.AddHttpClient("QrGeneratorApi", c =>
             {

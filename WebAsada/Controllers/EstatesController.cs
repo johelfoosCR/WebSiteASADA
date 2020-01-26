@@ -36,7 +36,7 @@ namespace WebAsada.Controllers
         public IActionResult RefreshPersonCollection(List<PersonItemVM> personListItemVM)
         {
             ViewData["attributeName"] = "Owners"; 
-            return PartialView("_PersonList", personListItemVM); 
+            return PartialView("../Person/Partial/_List", personListItemVM); 
         }
 
         public async Task<IActionResult> EditOwners(int? id) => await GetViewMappedForEditor(id); 
@@ -48,16 +48,27 @@ namespace WebAsada.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind(ATTRIBUTES_TO_BIND)] EstateVM insertDTO) {
+            if (ModelState.IsValid)
+            {
+                if (insertDTO.Owners == null || insertDTO.Owners.Count == 0)
+                {
+                    ModelState.AddModelError(string.Empty, "Debe agregar al menos un propietario");
+                }
+                else
+                {
+                    Estate localState = Estate.Create(realFolio: insertDTO.RealFolio,
+                                                      cadastralPlans: insertDTO.CadastralPlans,
+                                                      comments: insertDTO.Comments,
+                                                      alias: insertDTO.Alias,
+                                                      exactAddress: insertDTO.ExactAddress,
+                                                      area: insertDTO.Area,
+                                                      Owners: await _personRepository.GetByIds(insertDTO.Owners.Select(x => x.Id)));
 
-            Estate localState = Estate.Create(realFolio: insertDTO.RealFolio,
-                                              cadastralPlans: insertDTO.CadastralPlans,
-                                              comments: insertDTO.Comments,
-                                              alias: insertDTO.Alias,
-                                              exactAddress:insertDTO.ExactAddress,
-                                              area: insertDTO.Area,
-                                              Owners: await _personRepository.GetByIds(insertDTO.Owners.Select(x => x.Id)));
-
-            return await ConfirmSaveConcrete(insertDTO, localState); 
+                    return await ConfirmSaveConcrete(insertDTO, localState);
+                }
+            }
+            RefreshCollections();
+            return View(insertDTO);
         }
 
         [HttpPost]

@@ -1,10 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using WebAsada.Common; 
+using WebAsada.Common;
 using WebAsada.Models;
 using WebAsada.Repository;
 using WebAsada.ViewModels;
@@ -74,10 +72,15 @@ namespace WebAsada.Controllers
 
             WaterMeter meter = await _waterMeterRepository.GetById(UpdateVm.MeterId);
             ContractType contractType = await _contractTypeRepository.GetById(UpdateVm.ContractTypeId);
-            PersonsByEstate personByEstate = await _personsByEstateRepository.GetDataByIdentifier(UpdateVm.PersonId, UpdateVm.EstateId);
-              
+            var MaybePersonByState = await _personsByEstateRepository.GetDataByIdentifier(UpdateVm.PersonId, UpdateVm.EstateId);
+
+            if (MaybePersonByState.HasNoValue) {
+                ModelState.AddModelError(string.Empty, "No se encontró el contrato");
+                return View(UpdateVm);
+            }
+
             Contract localContract = Contract.Create(contractType: contractType,
-                                                 personsByEstate: personByEstate,
+                                                 personsByEstate: MaybePersonByState.Value,
                                                  waterMeter: meter,
                                                  initialMeterRead: UpdateVm.InitialMeterRead,
                                                  doubleBasicCharge: UpdateVm.DoubleBasicCharge,

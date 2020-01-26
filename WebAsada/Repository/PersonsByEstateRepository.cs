@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using CSharpFunctionalExtensions;
+using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -25,15 +27,26 @@ namespace WebAsada.Repository
                                                    .ToListAsync();
         }
 
-        public async Task<PersonsByEstate> GetDataByIdentifier(int personId, int estateId)
+        public async Task<int> VerifyIfContainPersonRelated(int id)
         {
-            return await _dbContext.PersonsByEstate.SingleAsync(x => x.PersonId.Equals(personId) && x.EstateId.Equals(estateId));
+            return (await _dbContext.PersonsByEstate.Where(x => x.EstateId.Equals(id)) 
+                                                   .Select(x => new {x.PersonId })
+                                                   .ToListAsync()).Count();
         }
 
-        public async Task Save(Person person, Estate estate)
-        {  
+        public async Task<Maybe<PersonsByEstate>> GetDataByIdentifier(int personId, int estateId)
+        {
+            return await _dbContext.PersonsByEstate.SingleOrDefaultAsync(x => x.PersonId.Equals(personId) && x.EstateId.Equals(estateId));
+        }
+
+        public async Task<Result> Save(Person person, Estate estate)
+        {
+            if ((await GetDataByIdentifier(person.Id, estate.Id)).HasValue) return Result.Failure($"{person.FullName} ya se encuentra registrado en esta propieda");
+
             _dbContext.Add(PersonsByEstate.Create(person, estate));
             await _dbContext.SaveChangesAsync();
+         
+            return Result.Ok();
         }
 
         public async Task Delete(Person person, Estate estate)

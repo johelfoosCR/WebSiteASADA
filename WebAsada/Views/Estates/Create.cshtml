@@ -12,7 +12,8 @@
 <div class="row">
     <div class="col-md-12">
         <form asp-action="Create" id="IdForm">
-            <partial name="../Estates/Partial/_Editor" model="Model" view-data="ViewData" /> 
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <partial name="../Estates/Partial/_Editor" model="Model" view-data="ViewData" />
         </form>
     </div>
 </div>
@@ -34,13 +35,22 @@
 
             $('#addPerson').click(function (e) {
                 e.preventDefault();
-                localPersonList.push({ Id: $("#PersonId option:selected").val(), DisplayValue: $("#PersonId option:selected").text() });
-                RefreshList(localPersonList);
+
+                if ($.grep(localPersonList, function (ele) {
+                    return $("#PersonId option:selected").val() === ele.Id;
+                }).length > 0) {
+                    showInformationMessage($("#PersonId option:selected").text() + " ya fué agregado");
+                } else {
+                    localPersonList.push({ Id: $("#PersonId option:selected").val(), DisplayValue: $("#PersonId option:selected").text() });
+                    RefreshList(localPersonList);
+                }
             });
 
             $("body").on("click", "#pesonListGrid .deleteFunction", function () { 
-                showVerificationMessage("question", "Desea Eliminar la persona seleccionada como dueño de la propiedad?", function () {
-                        var selectedId = parseInt($(this).attr("value"));
+                
+                var selectedId = parseInt($(this).attr("value")); 
+
+                showVerificationMessage("question", "Desea Eliminar la persona seleccionada como dueño de la propiedad?", function () {                    
                         localPersonList = $.grep(localPersonList, function (e) {
                             return parseInt(e.Id) !== selectedId;
                         });

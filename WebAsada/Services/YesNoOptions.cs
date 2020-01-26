@@ -8,7 +8,7 @@ namespace WebAsada.Services
         public SelectList GetOptions(bool addDefaultOption = false)
         {
             var listElements = new List<SelectListItem>();
-            if (addDefaultOption) listElements.Add(new SelectListItem { Text = "Seleccione una opción", Value = "", Selected = true });
+            if (addDefaultOption) listElements.Add(new SelectListItem { Text = "Seleccione una opción", Value = "", Selected = false });
             listElements.Add(new SelectListItem { Text = "Sí", Value = "True", Selected = false });
             listElements.Add(new SelectListItem { Text = "No", Value = "False", Selected = false }); 
 

@@ -19,7 +19,7 @@
     <div class="col-md-2">
         <div class="form-group">
             <label asp-for="VatRate" class="control-label"></label>
-            <input id="VatRateInput" disabled asp-for="VatRate" class="form-control" />
+            <input id="VatRateInput" disabled="@(!Model?.IsVATCharge)"asp-for="VatRate" class="form-control" />
             <span asp-validation-for="VatRate" class="text-danger"></span>
         </div>
     </div>

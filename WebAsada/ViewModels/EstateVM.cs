@@ -9,6 +9,7 @@ namespace WebAsada.ViewModels
     {
         public EstateVM()
         {
+
         }
 
         public int Id { get; set; }
