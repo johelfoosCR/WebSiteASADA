@@ -1,6 +1,7 @@
 ﻿@model WebAsada.ViewModels.DashboardVM
 <br />
 
+<partial name="_PageTitle" model="@("DashBoard")" />
 <form asp-action="Search" method="get">
     <div class="container">
         <div class="row">
@@ -25,23 +26,50 @@
                         </div>
                     </div>
                 </div>
+                <hr />
+                <h4 class="card-title">Recibos Pendientes</h4>
                 <div class="row">
                     @(Html
-                          .Grid(Model.ReceiptItemVM)
+                          .Grid(Model.ReceiptItemVM.Where(x => x.IsPaid == false))
                           .Build(columns =>
                           {
                               columns.Add(model => model.FullName).Titled("Abonado");
                               columns.Add(model => model.MeterSerialNumber).Titled("Medidor");
                               columns.Add(model => model.TotalAmount).Titled("Monto");
-                              columns.Add().Titled("Pagar").Encoded(false).RenderedAs(o => Html.ActionLink("Pagar", "Pay", new { receiptId = o.ReceiptId, 
-                                                                                                                                 year = Model.Year, 
-                                                                                                                                 monthNemotecnico = Model.MonthNemotecnico 
+                              columns.Add().Titled("Pagar").Encoded(false).RenderedAs(o => Html.ActionLink("Pagar", "Pay", new
+                                      {
+                                          receiptId = o.ReceiptId,
+                                                                                                                                 year = Model.Year,
+                                                                                                                                 monthNemotecnico = Model.MonthNemotecnico
                               }));
                           })
                           .Empty("No se encontraron datos")
                           .Filterable()
                           .Sortable()
-                          .Pageable()
+                          .Pageable(pager =>
+                            {
+                                pager.RowsPerPage = 10;
+                            })
+                    )
+                </div>
+                <br />
+                <h4 class="card-title">Recibos Pagados</h4>
+                <div class="row">
+                    @(Html
+                          .Grid(Model.ReceiptItemVM.Where(x => x.IsPaid == true))
+                          .Build(columns =>
+                          {
+                              columns.Add(model => model.FullName).Titled("Abonado");
+                              columns.Add(model => model.MeterSerialNumber).Titled("Medidor");
+                              columns.Add(model => model.TotalAmount).Titled("Monto Pagado");
+                          })
+                          .Empty("No se encontraron datos")
+                          .Filterable()
+                          .Sortable()
+                             .Pageable(pager =>
+                            {
+                                pager.RowsPerPage = 5;
+                            })
                     )
                 </div>
             </div>
@@ -50,7 +78,7 @@
                     <div class="col-md-12">
                         <div class="card ">
                             <div class="card-header ">
-                                <h4 class="card-title">Total de Efectivo</h4>  
+                                <h4 class="card-title">Total de Efectivo</h4>
                             </div>
                             <hr />
                             <div class="card-body" style="font-size: 20px; text-align:center">
@@ -63,7 +91,7 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-md-6" style="color:#2ee82e;"> 
+                                    <div class="col-md-6" style="color:#2ee82e;">
                                         @(Model.ChargedAmount)
                                     </div>
                                     <div class="col-md-6" style="color:orangered;">
@@ -84,7 +112,7 @@
                     <div class="col-md-12">
                         <div class="card ">
                             <div class="card-header ">
-                                <h4 class="card-title">Recibos</h4> 
+                                <h4 class="card-title">Recibos</h4>
                             </div>
                             <hr />
                             <div class="card-body ">
@@ -100,7 +128,7 @@
                 </div>
             </div>
         </div>
-    </div> 
+    </div>
 </form>
 
 <script>
@@ -112,7 +140,7 @@
       },
       axisY:{
           labelFontSize: 10
-            }, 
+            },
             data: [{
                 type: "pie",
                 startAngle: 90,
