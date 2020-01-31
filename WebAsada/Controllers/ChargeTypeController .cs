@@ -9,7 +9,7 @@ namespace WebAsada.Controllers
 {
     public class ChargeTypeController : BasicViewControllerActions<ChargeType>
     {
-        private const string ATTRIBUTES_TO_BIND = GeneralEntityAttributes.ATTRIBUTES_TO_BIND_DTO_SAVE + ",ChargeTypeCode,VatRate,IsVATCharge,IsWaterConsume,isBaseFare";
+        private const string ATTRIBUTES_TO_BIND = GeneralEntityAttributes.ATTRIBUTES_TO_BIND_DTO_SAVE + ",ChargeTypeCode,VatRate,IsVATCharge,IsWaterConsume,IsBaseFare";
 
         public ChargeTypeController(ChargeTypeRepository chargeTypeRepository) : base(chargeTypeRepository) { }
 

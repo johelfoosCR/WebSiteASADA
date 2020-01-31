@@ -7,8 +7,7 @@ namespace WebAsada.Models
     public class Measurement : BaseEntity
     {
         public Month Month { get; private set; }
-        public int MonthId { get; private set; }
-        public int MeasurementId { get; private set; }
+        public int MonthId { get; private set; } 
         public int Year { get; private set; }
         public SystemUser ReadUser { get; private set; }
         public string ReadUserId { get; private set; }
@@ -23,7 +22,11 @@ namespace WebAsada.Models
         public bool HasPaymentReceipts { get; private set; }
 
         public void SetHasPaymentReceipts() {
-            this.HasPaymentReceipts = true;
+            HasPaymentReceipts = true;
+        }
+        public void Activate()
+        {
+            IsActive = true;
         }
 
         internal static Measurement SincronizeObject(Measurement currentMeasurement, Measurement newMeasurement)
@@ -32,7 +35,7 @@ namespace WebAsada.Models
             currentMeasurement.MaxPaymentDate = newMeasurement.MaxPaymentDate;
             currentMeasurement.PaymentPlace = newMeasurement.PaymentPlace;
             currentMeasurement.ReadDate = newMeasurement.ReadDate;
-            currentMeasurement.ReadUser = newMeasurement.ReadUser;
+            currentMeasurement.ReadUserId = newMeasurement.ReadUserId;
             currentMeasurement.DateFrom = newMeasurement.DateFrom;
             currentMeasurement.DateTo = newMeasurement.DateTo;
             currentMeasurement.MonthId = newMeasurement.MonthId;

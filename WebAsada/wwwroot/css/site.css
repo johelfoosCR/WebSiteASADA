@@ -257,7 +257,9 @@ html {
     transform: translate3d(0,0,0);
 }
 
-
+.btn-light.disabled, .btn-light:disabled { 
+    border-color: #d2d2d2 !important;
+}
 
 @-webkit-keyframes fadeInLeft {
     from {

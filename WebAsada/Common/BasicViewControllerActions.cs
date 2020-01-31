@@ -8,7 +8,7 @@ using WebAsada.Helpers;
 
 namespace WebAsada.Common
 {
-    public class BasicViewControllerActions<T> : Controller where T : BaseEntity
+    public class BasicViewControllerActions<T> : BaseController where T : BaseEntity
     {
         private readonly CommonRepositoryEditorActions<T> _repository; 
 
@@ -33,6 +33,11 @@ namespace WebAsada.Common
         protected async Task<IActionResult> GetViewByObjectId<DtoType>(int? id, Action beforeExecution)
         {
             beforeExecution.Invoke();
+            return await GetViewByObjectId<DtoType>(id);
+        }
+        protected async Task<IActionResult> GetViewByObjectId<DtoType>(int? id, Func<Task> beforeExecution)
+        {
+            await beforeExecution.Invoke();
             return await GetViewByObjectId<DtoType>(id);
         }
 
@@ -76,6 +81,13 @@ namespace WebAsada.Common
             return await ConfirmEdit(id, dtoObject);
         }
 
+        protected async Task<IActionResult> ConfirmEdit<DtoType>(int? id, DtoType dtoObject, Func<Task> BeforeExecute)
+        {
+            await BeforeExecute.Invoke();
+            return await ConfirmEdit(id, dtoObject);
+        }
+
+
         protected async Task<IActionResult> ConfirmEdit<DtoType>(int? id, DtoType dtoObject)
         {
             if (!id.HasValue) return NotFound(); 
@@ -90,6 +102,12 @@ namespace WebAsada.Common
         protected async Task<IActionResult> ConfirmSave<DtoType>(DtoType dtoObject, Action BeforeExecute)
         {
             BeforeExecute.Invoke();
+            return await ConfirmSave(dtoObject);
+        }
+
+        protected async Task<IActionResult> ConfirmSave<DtoType>(DtoType dtoObject, Func<Task> BeforeExecute)
+        {
+            await BeforeExecute.Invoke();
             return await ConfirmSave(dtoObject);
         }
 

@@ -22,8 +22,7 @@ namespace WebAsada.Repository
 
         public async Task<IEnumerable<SystemUserVM>> GetAll()
         {
-            return await _applicationDbContext.SystemUser
-                                              .Include(x => x.Password)
+            return await _applicationDbContext.SystemUser 
                                               .Include(x => x.UserName)
                                               .Select(x => new SystemUserVM() {
                                                   Id = x.Id,

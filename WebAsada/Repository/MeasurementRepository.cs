@@ -1,5 +1,6 @@
 ﻿using CSharpFunctionalExtensions;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -43,7 +44,7 @@ namespace WebAsada.Repository
             if (measurement.HasValue)
             {
                 if (await _dbContext.Receipt.Include(x => x.Measurement)
-                                           .Where(m => m.Measurement.Id == id)
+                                           .Where(m => m.Measurement.Id == id && m.IsPaid == true)
                                            .ToAsyncEnumerable().Any())
                 {
                     measurement.Value.SetHasPaymentReceipts();
@@ -60,6 +61,21 @@ namespace WebAsada.Repository
                                                .Include(m => m.RegisterUser)
                                                .Include(m => m.Month)
                                               .FirstOrDefaultAsync(m => m.Id == id);
+        }
+
+        public async Task<Result> ActivateMeasurement(int id)
+        {
+            var result = await TryGetById(id);
+
+            if (result.HasNoValue) return Result.Failure("No se encontró la lectura informada");
+
+            var measurement = result.Value;
+            measurement.Activate();
+
+            MarkAsUpdated(measurement);
+            await SaveChanges();
+
+            return Result.Ok();
         }
 
         public async Task<Maybe<Measurement>> GetByMonthAndYear(string monthMnemonic, int year)

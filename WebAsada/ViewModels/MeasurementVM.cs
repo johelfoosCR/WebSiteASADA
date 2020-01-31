@@ -58,6 +58,7 @@ namespace WebAsada.ViewModels
         public string PaymentPlace { get; set; }
          
         public bool HasPaymentReceipts { get; set; }
+        public bool IsActive { get; set; }
     }
 
 

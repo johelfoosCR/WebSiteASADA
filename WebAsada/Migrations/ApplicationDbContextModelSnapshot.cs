@@ -341,8 +341,6 @@ namespace WebAsada.Migrations
 
                     b.Property<DateTime>("MaxPaymentDate");
 
-                    b.Property<int>("MeasurementId");
-
                     b.Property<string>("MessageOfTheMonth");
 
                     b.Property<int>("MonthId");
