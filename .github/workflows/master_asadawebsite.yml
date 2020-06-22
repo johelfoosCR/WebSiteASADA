@@ -31,5 +31,5 @@ jobs:
       with:
         app-name: 'asadawebsite'
         slot-name: 'production'
-        publish-profile: ${{ secrets.AzureAppService_PublishProfile_022aa8f83818449799faa03216e2b335 }}
+        publish-profile: ${{ secrets.AzureAppService_PublishProfile_192ef03386ce4d65a96817f1f612a8b8 }}
         package: ${{env.DOTNET_ROOT}}/myapp 
